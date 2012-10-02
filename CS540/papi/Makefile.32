@@ -1,0 +1,26 @@
+# Makefile for example programs
+#	where to find PAPI
+PAPI = /site/local/papi_32-3.7.0
+LIB_DIR		= $(PAPI)/lib
+
+#	where to find include files
+INCLUDE_DIR	= $(PAPI)/include
+
+CC	= gcc
+OPT	= -O3
+CFLAGS	= -I$(INCLUDE_DIR)
+LDFLAGS	= -L$(LIB_DIR) -static -lpapi -lm
+
+
+default: timeloop
+
+all: timeloop countloop
+
+clean:
+	rm -f *.o *.exe a.out timeloop countloop
+
+timeloop: timeloop.c
+	$(CC) $(CFLAGS) -o timeloop timeloop.c $(LDFLAGS)
+
+countloop: countloop.c
+	$(CC) $(CFLAGS) -o countloop countloop.c $(LDFLAGS)

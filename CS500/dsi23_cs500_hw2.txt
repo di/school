@@ -1,0 +1,35 @@
+Dustin Ingram
+CS500 - Database Theory
+Homework #2
+July 17, 2012
+
+1) Write a SQL query that returns the names of the students (lname, fname) and
+the major of the major with the most students. If more than one major is tied
+for the most students, then list all the names of the students from both majors
+(as well as the majors).  Order the results by major (in the case of a tie) and
+the alphabetically by last name and first name.
+
+    select lname, fname, major from student where major in (select major from (select * from (select *, rank() over (order by count desc) as rank from (select count(fname), major from student group by major) as foo) as bar where rank <= 1) as foo) order by major, lname, fname;
+
+2) Write a SQL query that returns the names of the students (lname, fname) who
+has at least 20 credits and have a GPA > 3, and are computer science majors.
+Order the results by last name and then first name.
+
+    select lname, fname from (select lname, fname, gpa from (select student.lname, student.fname, sum(course.credits * schedule.grade) / sum(course.credits) as gpa from course inner join schedule on course.id = schedule.course inner join student on schedule.student = student.id where student.id in (select id from (select student.*, sum(course.credits) as cred from course inner join schedule on course.id = schedule.course inner join student on schedule.student = student.id group by student.id order by cred desc, student.lname, student.fname) as foo where cred >= 20 and major = 'Computer Science') group by student.id) as foo where gpa > 3) as foo order by lname, fname;
+
+3) Write a SQL query that returns the average student GPA for a major in majors
+that have at least 2 students for students that have taken at least one course. 
+
+    select major, sum(gpa)/count(student) as avg from (select student, major, sum(credits * grade) / sum(credits) as gpa from (select student, grade, credits, major from schedule inner join student on student.id = schedule.student inner join course on course.id = course where student in (select student from (select count(course), student from schedule group by student) as foo where count >= 1) and major in (select major from (select count(id), major from student group by major) as foo where count > 1)) as foo group by student, major) as foo group by major;
+
+4) Write a SQL query that returns the names of the students (lname, fname) who
+have a grade for at least 3 classes, order the results by last name and then
+first name.
+
+    select lname, fname from (select fname, lname, student, count(grade) from schedule inner join student on schedule.student = student.id group by student, fname, lname) as foo where count >= 3 order by lname, fname;
+
+5) Write a SQL query that returns the names of students (lname, fname) that
+have taken all courses that may be offered by the CS department order the
+results by last name and then first name. That means they have a grade.
+
+    select lname, fname from (select student, count(grade) from (select distinct course.id from course inner join offering on course.dept = offering.dept and course.num = offering.num where course.dept = 'CS') as foo inner join schedule on foo.id = schedule.course group by student) as foo inner join student on foo.student = student.id where count = (select count(id) from course where dept = 'CS') order by lname, fname;

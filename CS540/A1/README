@@ -1,0 +1,101 @@
+CS540 Assignment 1
+Dustin Ingram <dsi23@drexel.edu>
+October 22, 2011
+
+= Files Included =
+
+  * README            - This file
+  * Makefile          - Builds opt, loop & block variants
+  * block.c           - Block matrix multiplication source (numrec)
+  * timeblockmm.c     - Timing & reporting source for block mm (numrec)
+  * matrixprod.c      - Matrix product (numrec)
+  * matrix.h          - Basic ijk matrix multiplication header (numrec)
+  * matrix.c          - Basic ijk matrix multiplication source (numrec)
+  * timemm.c          - Timing & reporting source for non-block mm (numrec)
+  * matrix_ikj.c      - ikj loop variant
+  * matrix_jik.c      - jik loop variant
+  * matrix_jki.c      - jki loop variant
+  * matrix_kij.c      - kij loop variant
+  * matrix_kji.c      - kji loop variant
+  * run.sh            - Binary executor & data compiler
+  * data.ods          - A massive spreadshet that combines *.dat files
+  * atlas/            
+  *     atlas.cc      - Source for ATLAS implementation
+  *     Makefile      - Builds ATLAS implementation only
+  *     matrix.c      - Symlink
+  *     matrix.h      - Symlink
+  *     run.sh        - Symlink
+  *     timeatlasmm.c - Timing & reporting source for ATLAS mm
+  * mkl/
+  *     mkl.cc        - Source for MKL implementation
+  *     Makefile      - Builds MKL implementation only
+  *     matrix.c      - Symlink
+  *     matrix.h      - Symlink
+  *     run.sh        - Symlink
+  *     timemklmm.c   - Timing & reporting source for MKL mm
+
+== Not Listed But Included ==
+
+  * .dat        - Individual Data Files (corresponding)
+  * .o          - Object files (for execution on float.cs)
+  * Binaries     - Not hard to figure out
+
+= Instructions =
+== Building Code ==
+
+The code can be built simply by calling the included Makefiles:
+
+  * For the GCC optimized, block, and loop variants:
+    
+    $ make all
+
+  * For the ATLAS and MKL implementations (within their dirs):
+
+    $ make
+
+To remove objects and binaries in both:
+
+    $ make clean
+
+== Using Code ==
+
+To test any binary executable individually, simply run it with
+a single argument, `n`, the matrix dimension. For example:
+
+    $ ./matrix 1000
+
+Once the code has been built, `run.sh` can be used to generate
+relevant data files. THIS WILL OVERWRITE OR APPEND TO EXISTING
+.DAT FILES WHICH HAVE PREVIOUSLY BEEN GENERATED.
+
+This bash script simply executes every executable in the local
+directory and outputs the results to a matching *.dat file. It 
+can be run as follows, where the first argument is the maximum
+matrix size, and the second is the iterative value.
+
+    $ ./run.sh 1000 10
+
+The ATLAS and MKL implementations have been put in their own
+directories because their Makefiles are crazy.
+
+== Interpreting Results ==
+
+Running a binary once results in a line of data as output:
+
+    $ ./matrix 1000
+    1000	46024222446	2001623738	1312586486	12823
+
+These values are interpreted in-order as follows:
+
+  * Matrix Dimension (n)
+  * Total Instruction Count
+  * Total Floating Point Operations
+  * Total L1 Data Cache Misses
+  * Time to Compute (in microseconds)
+
+The `run.sh` script simply repeats this over and over and then
+concatenates the data.
+
+The resulting *.dat files were combined and formated correctly
+for plottnig in LaTeX using the included .ods spreadshet and lots
+of copying and pasting.

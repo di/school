@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage{tikz,amsmath,siunitx}
+\usetikzlibrary{arrows,snakes,backgrounds,patterns,matrix,shapes,fit,calc,shadows,plotmarks}
+\usepackage[graphics,tightpage,active]{preview}
+\PreviewEnvironment{tikzpicture}
+\PreviewEnvironment{equation}
+\PreviewEnvironment{equation*}
+\newlength{\imagewidth}
+\newlength{\imagescale}
+\pagestyle{empty}
+\thispagestyle{empty}
+\begin{document}
+\begin{tikzpicture}
+\begin{loglogaxis}[
+xlabel=Cost,
+ylabel=Error]
+\addplot[color=red,mark=x] coordinates {
+    (5, 8.31160034e-02)
+    (17, 2.54685628e-02)
+    (49, 7.40715288e-03)
+    (129, 2.10192154e-03)
+    (321, 5.87352989e-04)
+    (769, 1.62269942e-04)
+    (1793, 4.44248889e-05)
+    (4097, 1.20714122e-05)
+    (9217, 3.26101452e-06)
+};
+\addplot[color=blue,mark=*]
+table[x=Cost,y=Error] {pgfplots.testtable};
+\legend{Case 1,Case 2}
+\end{loglogaxis}
+\end{tikzpicture}
+\end{document}

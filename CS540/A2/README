@@ -1,0 +1,99 @@
+CS540 Assignment 2
+Dustin Ingram <dsi23@drexel.edu>
+November 17, 2011
+
+= Files Included =
+
+  * README            - This file
+  * Makefile          - Builds all variants
+  * matrixprod.c      - Matrix product (numrec)
+  * matrix.h          - Basic ijk matrix multiplication header (numrec)
+  * matrix.c          - Basic ijk matrix multiplication source (numrec)
+  * timemmm.c         - Timing & reporting source 
+  * code0.c           - Identical to matrix.c
+  * code1.c           - Modified, MU = NU = 2, KU = 1
+  * code2.c           - Modified, MU = NU = 2, KU = 2
+  * code3.c           - Modified, MU = NU = 2, KU = 4
+  * code4.c           - Same as code3.c, but with jik loop order
+  * run.sh            - Binary executor & data compiler for all
+  * run_one.sh        - Similar to run.sh, modified to run one implementation
+  * data.ods          - A massive spreadshet that combines *.dat files
+
+= Data Files =
+
+  * code0.dat         - For comparison of implementations 
+  * code1.dat         - For comparison of implementations 
+  * code2.dat         - For comparison of implementations 
+  * code3.dat         - For comparison of implementations 
+  * code4.dat         - For comparison of implementations 
+  * code3_more.dat    - For additional searching for NB
+  * code0_80.dat      - For comparisons with best performing 
+  * code3_80.dat      - For comparisons with best performing 
+  * code3_144.dat     - For comparisons with best performing 
+  * code3_960.dat     - For loop ordering
+  * code4_960.dat     - For loop ordering
+
+== Not Listed But Included ==
+
+  * .o          - Object files (for execution on float.cs)
+  * Binaries    - Not hard to figure out
+
+= Instructions =
+== Building Code ==
+
+The code can be built simply by calling the included Makefiles:
+
+  * For all variants:
+    
+    $ make all
+
+To remove objects and binaries:
+
+    $ make clean
+
+== Using Code ==
+
+To test any binary executable individually, simply run it with
+two arguments: `N` (the matrix dimension), and `NB` (the block
+size). For example:
+
+    $ ./code3 144 2304
+
+Once the code has been built, `run.sh` can be used to generate
+relevant data files. THIS WILL OVERWRITE OR APPEND TO EXISTING
+.DAT FILES WHICH HAVE PREVIOUSLY BEEN GENERATED.
+
+This bash script simply executes every executable in the local
+directory and outputs the results to a matching *.dat file. It 
+can be run as follows, without arguments.
+
+    $ ./run.sh
+
+This bash script exists to test a single implementation over a
+range of values, and is meant to be modified. Its data must be
+piped to a separate file.
+
+    $ ./run_one.sh code3 >> somefile.dat
+
+== Interpreting Results ==
+
+Running any binary file once outputs one data line as follows:
+
+    $ ./code3 144 2304
+    2304    730973887175    77970170958 18237828395 217889
+
+These values are interpreted in-order as follows:
+
+  * Matrix Dimension (n)
+  * Total Instruction Count
+  * Total Floating Point Operations
+  * Total L1 Data Cache Misses
+  * Time to Compute (in microseconds)
+
+The `run.sh` script simply repeats this over and over and then
+concatenates the data.
+
+The resulting *.dat files were combined and formated correctly
+for plotting in LaTeX using the included *.ods spreadsheet and
+lots of copying and pasting.
+

@@ -1,0 +1,79 @@
+CS540 Assignment 3
+Dustin Ingram <dsi23@drexel.edu>
+December 5, 2011
+
+= Files Included =
+
+  * README            - This file
+  * Makefile          - Builds all variants
+  * matrixprod.c      - Matrix product (numrec)
+  * matrix.h          - Basic ijk matrix multiplication header (numrec)
+  * matrix.c          - Basic ijk matrix multiplication source (numrec)
+  * timemmm.c         - Timing & reporting source 
+  * code3_sse2.c      - Modified to support SSE2 
+  * code3_sse2.c      - Modified to support OpenMPM 
+  * run_one.sh        - Similar to run.sh, modified to run one implementation
+  * data.ods          - A massive spreadshet that combines *.dat files
+
+= Data Files =
+
+  * code3_sse2.dat    - Trial results 
+  * code3_openmp.dat  - Trial results 
+
+== Not Listed But Included ==
+
+  * .o          - Object files (for execution on float.cs)
+  * Binaries    - Not hard to figure out
+
+= Instructions =
+== Building Code ==
+
+The code can be built simply by calling the included Makefiles:
+
+  * For all variants:
+    
+    $ make all
+
+To remove objects and binaries:
+
+    $ make clean
+
+== Using Code ==
+
+To test any binary executable individually, simply run it with
+one argument: `N` (the matrix dimension). For example:
+
+    $ ./code3_sse2 1800
+
+Once the code has been built, `run_one.sh` can be used to make
+relevant data files. THIS WILL OVERWRITE OR APPEND TO EXISTING
+.DAT FILES WHICH HAVE PREVIOUSLY BEEN GENERATED.
+
+This bash script exists to test a single implementation over a
+range of values, and is meant to be modified. Its data must be
+piped to a separate file.
+
+    $ ./run_one.sh code3 >> somefile.dat
+
+== Interpreting Results ==
+
+Running any binary file once outputs one data line as follows:
+
+    $ ./code3 144 2304
+    2304    730973887175    77970170958 18237828395 217889
+
+These values are interpreted in-order as follows:
+
+  * Matrix Dimension (n)
+  * Total Instruction Count
+  * Total Floating Point Operations
+  * Total L1 Data Cache Misses
+  * Time to Compute (in microseconds)
+
+The `run_one.sh` script simply repeats this over and over then
+concatenates the data.
+
+The resulting *.dat files were combined and formated correctly
+for plotting in LaTeX using the included *.ods spreadsheet and
+lots of copying and pasting.
+

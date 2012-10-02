@@ -1,0 +1,28 @@
+Dustin Ingram
+CS500 - Database Theory
+Homework #1
+June 9, 2012
+
+1) Write an SQL query returning a list of unique course names offered in the CS department during the current term in alphabetical order.
+
+  select distinct name from Course order by name;
+
+2) Write an SQL query returning the names of students (lname, fname and the number of credits) in the major computer science who have taken a course with less than 3 credits. Order the results by the number of credits (descending order, then lname, fname)
+
+  select student.fname, student.lname, course.credits from student, schedule, course where student.id = schedule.student and schedule.course = course.id and student.major = 'Computer Science' and course.credits < 3 order by course.credits desc, student.lname, student.fname;
+
+3) Write an SQL query returning the names of students who have never taken a course. Order the results alphabetically by lname, fname.
+
+  select student.fname, student.lname from student where student.id not in (select schedule.student from schedule) order by student.lname, student.fname;
+
+4) Write a SQL query to compute the GPA for every student. Return student name (lname, fname) and GPA. Order by GPA and then last name and first name.
+
+  select student.lname, student.fname, sum(course.credits * schedule.grade) / sum(course.credits) as gpa from course inner join schedule on course.id = schedule.course inner join student on schedule.student = student.id group by student.id order by gpa desc, student.lname, student.fname;
+
+5) Write a SQL query that returns the names (fname and lname) of the students who took at least 5 credits. order by number of credits (descending) and then last name, first name.
+
+  select * from (select student.lname, student.fname, sum(course.credits) as cred from course inner join schedule on course.id = schedule.course inner join student on schedule.student = student.id group by student.id order by cred desc, student.lname, student.fname) as foo where cred >= 5;
+
+6) Write a SQL query that returns the most popular course (courses if it is a tie). Return the course name.
+
+  select course.name from (select * from ( select *, rank() over (order by count desc) as rank from (select count(student), course from schedule group by course) as foo) as bar where  rank <= 1) as c inner join course on course.id = c.course;
