@@ -1,0 +1,5 @@
+ieeevarstd_logic_1164ieee.sym/std_logic_1164/prim.var
+ieeesrcstd_logic_1164stdlogic.vhd
+.varfull_adder(behavioral)lab6.sym/full_adder/_behavioral.var
+.srcfull_adder(behavioral)full_adderb.vhd
+.varfull_adderlab6.sym/full_adder/prim.var

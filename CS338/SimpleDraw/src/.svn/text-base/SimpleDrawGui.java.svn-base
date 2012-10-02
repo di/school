@@ -1,0 +1,130 @@
+/*
+ * Dustin Ingram
+ * dustin@drexel.edu
+ * CS338:GUI, Assignment #1
+ */
+
+// http://www.cs.drexel.edu/~david/Classes/CS338/a2.html
+
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+public class SimpleDrawGui {
+
+	private JFrame frame;
+	private JSplitPane splitPane;
+	private JPanel leftPane;
+	private JPanel leftPaneTop;
+	private JPanel leftPaneBottom;
+	private JPanel rightPane;
+	private JList shapeListComponent;
+	private JScrollPane shapeListScrollPane;
+	private Canvas canvas;
+		
+	private Dimension maximumSize = new Dimension(600,25);
+	
+	private InputManager inputManager = new InputManager();
+	
+	public SimpleDrawGui() {		
+		
+		shapeListComponent = new JList();
+		shapeListComponent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		shapeListComponent.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				if(!arg0.getValueIsAdjusting()) {
+					if(shapeListComponent.getSelectedIndex() >= 0) {
+						System.out.println(shapeListComponent.getSelectedIndex());
+					}
+				}				
+			}			
+		});
+		
+		shapeListScrollPane = new JScrollPane(shapeListComponent);
+		shapeListScrollPane.setPreferredSize(new Dimension(240, 380));
+		
+		leftPaneTop = new JPanel();
+		leftPaneTop.setBorder(BorderFactory.createTitledBorder("Shape List:"));
+		leftPaneTop.add(shapeListScrollPane);		
+		
+		JButton addButton = new JButton("Add");
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				inputManager.add();
+				shapeListComponent.setListData(inputManager.getListData());
+				shapeListScrollPane.revalidate();
+				shapeListScrollPane.repaint();
+			} 
+		} );
+
+		JButton changeButton = new JButton("Change");
+		changeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedIndex = shapeListComponent.getSelectedIndex();
+				if (selectedIndex >= 0)
+				{
+					inputManager.remove(selectedIndex);
+					shapeListComponent.setListData(inputManager.getListData());
+				}
+				inputManager.add();
+				shapeListComponent.setListData(inputManager.getListData());
+				shapeListScrollPane.revalidate();
+				shapeListScrollPane.repaint();
+			} 
+		} );
+		
+		JButton removeButton = new JButton("Remove");
+		removeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedIndex = shapeListComponent.getSelectedIndex();
+				if (selectedIndex >= 0)
+				{
+					inputManager.remove(selectedIndex);
+					shapeListComponent.setListData(inputManager.getListData());
+				}
+			} 
+		} );
+		
+		leftPaneBottom = new JPanel();
+		leftPaneBottom.setBorder(BorderFactory.createTitledBorder("Actions:"));
+		leftPaneBottom.setMaximumSize(new Dimension(600, 600));
+		leftPaneBottom.add(addButton);
+		leftPaneBottom.add(changeButton);
+		leftPaneBottom.add(removeButton);
+		
+		leftPane = new JPanel();
+		leftPane.add(leftPaneTop);
+		leftPane.add(leftPaneBottom);
+		leftPane.setLayout(new BoxLayout(leftPane, BoxLayout.Y_AXIS));
+		
+		canvas = new Canvas();
+		canvas.setBackground(Color.white);
+		
+		rightPane = new JPanel();
+		rightPane.setLayout(new BoxLayout(rightPane, BoxLayout.Y_AXIS));
+		rightPane.setBorder(BorderFactory.createTitledBorder("Shape Canvas"));
+		rightPane.add(canvas);
+		
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane, rightPane);
+		splitPane.setOneTouchExpandable(true);
+		splitPane.setDividerLocation(260);
+		
+		frame = new JFrame( "SimpleDraw.java" );
+		frame.setSize( 750, 500 );
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		frame.getContentPane().add( splitPane );
+		frame.setVisible(true);		
+	}
+}

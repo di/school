@@ -1,0 +1,91 @@
+Title slide
+    Steal and edit from previous presentation.
+    Maybe put target crosshairs where his eye should be? :)
+    
+OMG WORLD WILL END WITHOUT THIS problem slide
+    NSA example(s)?
+
+OMG WORLD WILL END WITHOUT THIS impact slide(s)
+    Money, end of world, patriotism, etc.
+
+OMG WORLD WILL END WITHOUT THIS solution slide(s)
+    How we (help) solve this problem.
+
+Other Issues (previous presentation; slide #4)
+    What happens when someone starts a new web services without registering?
+    You don't know if every service is secure
+    We want more aggregate information about web services on our network
+
+Alternate/NearSame projects / How original is the project's idea?
+    Previous presentation, slide 7
+    Why don't these do the job?
+    Wireshark -- Brief example of doing the FIRST DEMO EXAMPLE in Wireshark
+    Snort -- Brief example of doing the FIRST DEMO EXAMPLE in Snort (possible?)
+
+DEMO!
+    example 1 -- compare it to Wireshark/Snort and why this is easier
+    example 2 -- Show which services appear to call other services?  Nested
+                 stuff
+    example 3 -- UDDI registry exporting?  Grab WSDL from .Net servers?
+    etc.
+
+Was the project carried out efficiently? / Was the project technically
+challenging?
+
+Did the team address the societal impact of their project?
+
+Software Development Tools
+    Git, Nose, **bug tracking?**, TeX(?), auto-format(?)
+    What did we use and why did we choose them?  Why didn't we use a bug
+    tracker?  Address it up front so it's not asked later (hopefully).
+    Something maybe like, "We worked with a tool model of using what was needed
+    instead of pre-building a lot of structure around us that could limit our
+    work instead of help it.  We didn't ever feel the need to have bug tracking
+    software, so we didn't spend resources setting one up and using it.  Email
+    and **social media and instant messaging** worked fine (maybe explain how
+    text messages, Twitter messages, IMs, and chat rooms all we used in our
+    development process).
+    Describing how "new tools that don't fit previous models" helped us on our
+    project is something I think a lot of the forward thinkers will like.
+
+Testing Strategy
+    Nose:  code coverage, branch coverage, etc.
+    Generate these slides as far to the end as possible so we can get more
+    tests done.  Just need to have a placeholder for now, as possibly describe
+    our testing model (TDD we weren't, but how did we test?)
+
+Requirements / Was the product well-specified? -- completely details the user's
+expectation of the product.
+    Hh'oh boy.
+
+Design
+    UML class layout
+    UML/Tiks
+
+Was an appropriate architecture selected?
+The design completely details the architecture of the product.  The design
+completely includes UML diagrams as well as other illustrations with full
+granularity and with a formal way to trace the design features back to the
+requirements document.
+    (see "Design" above -- combine?)
+    UML class layouts:  Need to make or update from design document.  Have
+                        interfaces!
+    Design:  Previous presentation; slides 27-31
+    Extensibility:  Previous presentation; slide 32
+    Python choice:  Previous presentation; slide 33
+
+Were alternative designs considered?
+Alternate designs were explained in significant detail with the pros and cons
+of the design completely explained.
+    What to put here?  Python vs. C?  PCAP vs NIDS?
+
+Was the project carried out efficiently?
+    Anything here?  Do we want to outline some design problems we had, but let
+    them be small so it looks good?  Like how we started with PCAP but moved to
+    NIDS, how we started with sockets but moved to queues, etc.?
+
+
+
+
+
+

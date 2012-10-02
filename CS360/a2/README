@@ -1,0 +1,24 @@
+Dustin Ingram (dsi23)
+CS360 Assn 2
+
+NOTE: this does not work.
+
+= What's Missing =
+
+I had a hard time deciding how to represent transitions in my NDFA class, as my implementation from last time (which worked) wan't adaptable enough to allow me to use it again. Therefore I ended up writing most of my code again.
+
+Because of that, the "joiner" class, which is the machinery that combines NDFA's, is not 100% there, mostly because I didn't know how to "shift" transitions when combining NDFA's.
+
+I had some code in ply.py but when cleaning up to submit I rm'd it and it is no more. It didn't work though, and I'd rather have this in on time than be late and have some broken half-implemented compiler compiler. I know how it works, but I wanted to put more of my time into the byHand implementation as it was significantly more work.
+
+
+= Recursive Descent Parser Grammar =
+
+<expr>   => <term> { '|' <term> }
+<term>   => <factor> { <factor> }
+<factor> => <base> *
+         | <base>
+<base>   => <paren>
+         | <char>
+<paren>  => '(' <expr> ')'
+<char>   => [a-zA-Z]

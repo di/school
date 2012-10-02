@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/133/docs/srs
+END
+srs.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/132/docs/srs/srs.pdf
+END
+introduction.tex
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/128/docs/srs/introduction.tex
+END
+gui.tex
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/128/docs/srs/gui.tex
+END
+overall-description.tex
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/128/docs/srs/overall-description.tex
+END
+srs.tex
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/130/docs/srs/srs.tex
+END
+non-functional.tex
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/132/docs/srs/non-functional.tex
+END
+usecases.tex
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/132/docs/srs/usecases.tex
+END

@@ -1,0 +1,28 @@
+.PHONY: all html clean distclean
+
+all: $(addsuffix .pdf, $(DOCS))
+
+html: $(addsuffix .html, $(DOCS))
+
+clean:
+	-@for file in $(DOCS); do \
+		rm $$file.{aux,log,nav,out,snm,toc,bbl,blg,tdo,glg,glo,gls,ist,lof,lot,4ct,4tc,dvi,idv,lg,tmp,xref,haux,htoc,image.tex,image.out} &> /dev/null; \
+	done
+
+distclean: clean
+	-@for file in $(DOCS); do \
+		rm $$file.{pdf,html,css} &> /dev/null; \
+		rm $$file*.png &> /dev/null; \
+	done
+
+%.pdf: %.tex
+	pdflatex -interaction=batchmode -file-line-error $*
+	pdflatex -interaction=batchmode -file-line-error $*
+	pdflatex -interaction=batchmode -file-line-error $*
+
+# Needs the hevea and netpbm packages installed
+%.html: %.tex
+	hevea -O -s png.hva $*
+	imagen -png -pdf $*
+	imagen -png -pdf $*
+	hevea -O -s png.hva $*

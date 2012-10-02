@@ -1,0 +1,14 @@
+To make a pipelined datapath, we will start with the original single-cycle datapath described below and tweak it. First, we will add four pipeline registers between the five sections of the datapath, which are used to hold information for a command while another command starts executing. We will also add a connection for write address through the last three pipeline registers in order to store the location necessary for a future write (otherwise, the write address held in the register could be one for a different instruction than needed). Lastly, we will modify the control unit accordingly so that it can handle the new pipeline registers and the new execution path of the pipelined datapath.
+
+
+
+Original single-cycle datapath:
+
+We are going to take the following four components and use them as building blocks to build a single-cycle datapath in VHDL:
+
+control unit
+alu
+memory unit
+register file
+
+We will use 3 alus, one control unit, 2 memory units, and 1 register file to accomplish all this. We will have the control unit connected to everything else since it's essentially the brain of the system. The first alu will take input from the pgoram counter and the constant 4 in order to increment the program counter, and its output will be connected to the second alu and a mux which decides if an incremented program counter is put back or one that is read from memory. The third alu takes read data for input in order to do mathematical calculations and outputs into memory. The first memory unit is for reading the address and storing the instruction, and the second memory unit is to save data after calculations and for storing into registers later. The register file is connected to the instruction memory, gives inputs to the third alu, and can write data from the second memory unit depending on what is needed.

@@ -1,0 +1,34 @@
+9
+
+dir
+179
+https://cs451windmillchess.googlecode.com/svn/trunk/src
+https://cs451windmillchess.googlecode.com/svn
+
+
+
+2010-03-15T16:28:14.331708Z
+179
+aaron.m.rosenfeld
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+24a24e6e-1b67-11df-b979-0f169b6e80d8
+
+tests
+dir
+
+chess
+dir
+

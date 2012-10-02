@@ -1,0 +1,168 @@
+\documentclass{article}
+\usepackage{ifpdf}
+\usepackage[utf8]{inputenc}
+\usepackage[USenglish]{babel}
+\usepackage[margin=2cm]{geometry}
+\title{BLAW 201 - Study Guide}
+\author{Dustin Ingram}
+\date{\today}
+\ifpdf
+\pdfinfo {
+	/Author (Dustin Ingram)
+}
+\fi
+\begin{document}
+	\maketitle
+	\section{Chapter 12 -- Contracts}
+	\begin{itemize}
+		\item Contract Definitions:
+		\begin{itemize}
+			\item Valid -- good, proper contract. A non-valid contract is not a contract
+			\item Voidable -- a valid contract, but either party can get out of the contract due to some law (rescind,set aside, disaffirm, avoid)
+			\item Void -- null, never a valid contract, i.e. illegal
+			\item Unenforceable -- vakudm but cannot be enforced in court due to law
+		\end{itemize}
+		\item Statue of Limitations -- expiration date, point at which a contract is unenforceable
+		\item Types of Contracts:
+		\begin{itemize}
+			\item Express -- in words, either written or oral, the intention and the terms of the contract
+			\item Implied -- words, actions, and circumstances which imply a contractural agreement, display intent
+			\item Quasi -- Not a contract, doctrine created by the court to prevent unjust enrichment. Elements include:
+			\begin{itemize}
+				\item Plaintiff has conferred a benefit on the defendent (service, money, etc)
+				\item Plaintiff has an expectation of payment or retribution
+				\item To allow the ``benefit'' to be free, the Defendent would be unjustly enriched at the Plaintiff's expense
+			\end{itemize}
+		\end{itemize}
+		\item Bilateral and Unilateral contracts
+		\begin{itemize}
+			\item Bilateral contract -- One thing in exchange for another
+			\item Unilateral contract -- The offeror may promise to do something or to pay a certain amount of money only when the offeree does an act
+		\end{itemize}
+	\end{itemize}
+	\section{Chapter 13 --Offer \& Acceptance}
+	\begin{itemize}
+		\item Requirements of an offer:
+		\begin{itemize}
+			\item Contractural Intention -- invitation to negotiate or agreement to make a contract in the future
+			\item Definiteness -- offer cannot be vague or indefinite
+			\item Communication of offer to offeree
+		\end{itemize}
+		\item Termination of an Offer
+		\begin{itemize}
+			\item Revocation:
+			\begin{itemize}
+				\item An offeror may revoke an offer in any way
+				\item A revocation is only effective when it is made known to the offeree
+			\end{itemize}	
+			\item Counteroffer:
+			\begin{itemize}
+				\item A counteroffer is a rejection of one offer, and the creation of a second offer
+				\item Any change to the terms of an offer is a counteroffer
+			\end{itemize}	
+			\item Rejection:
+			\begin{itemize}
+				\item A rejection of an offer by the offeree terminates the offer
+			\end{itemize}
+			\item Lapse of time:			
+			\begin{itemize}
+				\item When an offer is open until a particular date, the offer is terminated if it has not been accepted by that date
+				\item If an offer does not specify a time, it terminates after a reasonable amount of time
+			\end{itemize}
+		\end{itemize}
+		\item Acceptance of an Offer
+		\begin{itemize}
+			\item Only the offeree may accept an offer, and only after it is communicated to the offeree
+			\item An acceptance is effective upon dispatch by any means reasonable under the circumstances -- when it leaves the control of the offeree and into the control of some means of transmittal
+			\item To protect the offeror, they can say ``I must hear your acceptance by\dots'' which requires the offeror to get the acceptance by the set termination date
+			\item Called the ``Clang of the Mailbox'' rule. Can only be prevented by:
+			\begin{itemize}
+				\item ``I must hear acceptance by\dots'' clause
+				\item Intervening Rejection -- if a rejection is in transit, the Clang of the Mailbox rule does not apply, but rather is effective upon reciept
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	\section{Chapter 14A -- Capacity}
+	\begin{itemize}
+		\item Contractual capacity is the ability to understand that a contract is being made and to understand it's general meaning
+		\item Types of incapacity:
+		\begin{itemize}
+			\item Status Incapacity -- groups of people are incapable
+			\item Factual incapacity -- mental condition
+		\end{itemize}
+		\item Minors
+		\begin{itemize}
+			\item A contract made by a minor is voidable at the election of the minor
+			\item The minor may affirm or ratify the contract on attaining majority by performing the contract, expressly approving the contract, or allowing a reasonable amount of time to lapse without avoiding
+			\item The fact that a minor has misrepresented their age does not naffect the minor's power to disaffirm the contract. The other party may disaffirm it because of the fraud.
+			\item Sword/Shield rule -- PA law, which says a minor's rights are different depending on how they are using their minority
+			\begin{itemize}
+				\item If sword -- (initiation avoidance) must make an accounting to the adult for the damage and depreciation 
+				\item If shield -- must give back what he has to the extent he has it and then account for the rest, getting back what he gave
+			\end{itemize}
+			\item Necessity -- must pay a reasonable value for furnished necessaries
+			\item Minors cannot avoid contracts for loans, medical care, while running a business, a contract approved by a court, or relating to banking, insurance policies, or corporate stock
+			\item A parent is not liable on a contract made by their minor child, unless the child is acting as the agent of the contract
+			\item Cosigners are bound independently
+		\end{itemize}
+		\item Mentally Incompetent Persons
+		\begin{itemize}
+			\item Same rights as minors (including ratification upon removal of the disability)
+			\item A court-appointed guardian may ratify or disaffirm previously made contracts
+			\item Any contracts not made by a guardian after appointment are void
+		\end{itemize}
+		\item Intoxicated Persons
+		\begin{itemize}
+			\item The capacity of a party to contract and the validity of the contract are not affected by the party's being impaired by alcohol or other drugs
+			\item If the degree of intoxication is such that a person does not know that a contract is being made, the contract is voidable by that person.
+			\item The individual has a reasonable amount of time to avoid or rescind the contract
+		\end{itemize}
+	\end{itemize}
+	\section{Chapter 14B -- Mistake \& Fraud}
+	\begin{itemize}
+		\item Possible ground for avoiding a contract:
+		\begin{itemize}
+			\item Lack of contractual capacity (status incapacity, factual incapacity)
+			\item Mistake (unilateral mistake induced by or known to the other party, mutual)
+			\item Deception (innocent misrepresentation, nondisclosure, fraud)
+			\item Pressure (undue influence, physical/economic duress)
+		\end{itemize}
+		\item Types of Mistakes:			
+		\begin{itemize}
+			\item Unilateral mistake -- a mistake made only by one of the parties does not affect the contract when the mistake is unknown to the other contracting party. However, the party making the mistake may avoid the contract if the other contracting party knew or should have known of the mistake
+			\item Mutual mistake -- When both parties enter into a contract under a mutually mistaken understanding concerning a basic assumtion of fact or law on which the contract is made
+			\begin{itemize}
+				\item The contract is voidable by the adversely affected party if the mistake has a material effect on the agreed exchange
+				\item The contract is not voidable if it is based on a mutual mistake in judgement
+			\end{itemize}
+		\end{itemize}
+		\item For fraud (intentional misrepresentation) to be proved, all must be true:
+		\begin{itemize}
+			\item A material misrepresentation (not in accord with the facts)
+			\item Made with the intent to devieve or cause reliance
+			\item Reasonable reliance by the other party
+			\item Damage or Harm
+		\end{itemize}
+		\item Matters of opinion of value or opinions about future events are not regarded as fraudulent
+		\item In a bargaining transaction, there is no duty to disclose facts to the other side
+		\item Exceptions -- to the lack of duty to disclose information
+		\begin{itemize}
+			\item Where a statute/regulation/law requires disclosure, this is concealment
+			\item Postive action designed to hid the truth, or to stymie the other partie's discovery of the truth
+			\item Half-truth -- type of concealment
+			\item Where a party akes a statement in good faith, but superveneing events make it untrue
+		\end{itemize}
+		\item Only in Fraud -- you have a choice whether to avoid the contract, or to sue for damages, but not both
+		\item Duress:
+		\begin{itemize}
+			\item Grounds for: thread of imprisonment or injury to you or a close friend or loved one
+			\item Economic Duress -- in the face of a wrongful threat of either-or, did the one threat have a reasonable third alternative
+		\end{itemize}
+	\end{itemize}
+	
+	\section{Chapter 15 -- }
+	\begin{itemize}
+		\item Illusory contracts -- one party is not necessarily bound
+		\item Output \& Requirement contracts - All I may make, or all I will require, not WANT to buy
+	\end{itemize}
+\end{document}

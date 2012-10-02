@@ -1,0 +1,64 @@
+Dustin Ingram (dsi23)
+CS282 - February 13th 2009
+
+01234567890123456789012345678901234567890123456789012345678901234567890123456789
+
+6.4
+
+6.17
+
+   +----------------+--------------------------------------------------------------+
+   |  Instruction   |                   Cycle # and registers r/w                  |
+   |                |   1   |    2     |    3     |    4     |    5     |    6     |
+   +----------------+-------+----------+----------+----------+----------+----------+
+   | add $2, $3, $1 | Fetch | r $3, $1 |          |          | w $2     |          |
+   | sub $4, $3, $5 |       |          | r $3, $5 |          |          | w $4     |
+   | add $5, $3, $7 |       |          |          | r $3, $7 |          |          |
+   | add $7, $6, $1 |       |          |          |          | r $6, $1 |          |
+   | add $8, $2, $6 |       |          |          |          |          | r $2, $6 |
+   +----------------+-------+----------+----------+----------+----------+----------+
+
+   According to the table, at the end of the 5th cycle register $2 will be written and registers $6 and $1 will be read.
+
+6.18
+   During the fifth cycle of execution of the series of instructions above, the forwarding unit is checking whether or not it needs to forward by looking at the instructions in the 4th and 5th cycles.
+
+6.19
+   During the fifth cycle of execution of the series of instructions above, the hazard detection unit is checking whether or not it needs to stall. It determines this by first checking if the destination of the instruction is a register currently being read (in this case, whether $2 comes from $6 or $1)
+
+6.21
+   a.
+      Besides the required 1 cycle for each add instruction and the 1 cycle for each lw instruction, there will be an additional cycle between each lw and add. This is due to the "bubble" caused by add's load value being unavailable until the following stage.
+
+      3 cycles / 2 instructions = 1.5 CPI
+
+   b.
+      Without forwarding, each dependent instruction must wait for it's predecessor to complete. The add and lw instructions are each 3 cycles long, so a 2 cycle bubble must be inserted between every instruction.
+
+      6 cycles / 2 instructions = 3.0 CPI
+
+
+6.22
+
+text 456
+sol 73
+
+6.47
+
+6.48
+
+7.9
+
+7.10
+
+7.10 (part b)
+
+7.10 (part c)
+
+7.11
+
+7.17
+
+7.18
+
+7.35

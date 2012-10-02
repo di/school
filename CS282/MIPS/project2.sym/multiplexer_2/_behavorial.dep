@@ -1,0 +1,5 @@
+ieeevarstd_logic_1164ieee.sym/std_logic_1164/prim.var
+ieeesrcstd_logic_1164stdlogic.vhd
+.varmultiplexer_2(behavorial)project2.sym/multiplexer_2/_behavorial.var
+.srcmultiplexer_2(behavorial)multiplexer_2.vhd
+.varmultiplexer_2project2.sym/multiplexer_2/prim.var

@@ -1,0 +1,113 @@
+Dustin Ingram
+CS282 Assignment 3 part 1
+
+7.39)
+
+The total size of the page table for each process on this processor is the same as the number of entries * the size of the entry. 
+
+16KB page requires a 14b page offset
+Total address = 40, remaining bits = 40-14 = 26b
+
+2^26 * 32b = 256MB
+
+7.40)
+
+Image is attachced (7-40.jpg)
+
+8.1)
+
+A = 1500 op/s
+B = 1000 op/s
+
+Processor = 500,000,000 ins/s
+1 Transaction = 5 op
+1 op = 10,000 ins
+
+therefore...
+1 Transaction = 50,000 ins
+Processor = 500,000,000 ins/s / 50,000 ins = 10,000 trans/s
+
+The maximum transaction-per-second rate that each machine can sustain is:
+
+A = 1500/5 = 300 trans/s
+B = 1000/5 = 200 trans/s
+
+8.2)
+
+Latency A = 20ms
+Latency B = 
+   18ms (0 < n < 500)
+   25ms (500 < n < 1000)
+
+The maximum transaction rate that still allows every transaction to complete in 1 second is:
+
+A = 9 trans/s
+B = 11 trans/s (while n < 500)
+
+8.16)
+
+RPM = 10,000
+Seek Time = 8ms
+Transfer Rate = 50 MB/s
+Overhead = 2ms
+Step = 20,000,000 cycles
+Rate = 5 GHz
+
+Delay = Transfer Rate / (RPM / 60) = 0.5/(10,000/60) = 3ms
+Process Time = Step * Rate = 4ms
+
+Time = (Seek Time + Delay + Overhead)*2 + Process Time
+     = (8ms + 3ms + 2ms)*2 + 4ms = 30ms
+
+Blocks/s = 1/time = 1/30ms = 33.3 blocks
+
+8.18)
+
+4-16 32-bit word access
+64-bit synchronous bus @ 200MHz
+1 64-bit transfer = 1 cycle
+Between each operation = 2 cycles
+Memory access time = 200ns (1 <= n <= 4)
+                   = 20ns (4 < n)
+
+4-word transfer bandwidth = 71.11 MB/s
+16-word transfer bandwith = 224.56 MB/s
+
+Transfer rate = 50 MB/s
+
+Max simultaneous disk transfers = 
+  (Bus Bandwidth / Transfer rate)
+
+4-word disk transfers = 71.11/50 = 1.422 ~ 1 transfer
+16-word disk transfers = 224.56/50 = 4.491 ~ 4 transfers
+
+8.19)
+
+cont'd from 8.18...
+
+Memory access time = 150ns (1 <= n <= 4)
+                   = 30ns (4 < n)
+
+8.23)
+
+4-word blocks:
+
+Address & 1st word      1 cycle
+Time til write          40 cycles
+Time for next 3 words   3 cycles
+Bus idle                2 cycles
+Total                   46 cycles
+
+Latency = 64 * 46 = 2944 cycles * 5GHz = 14720ns
+Bandwidth = (256 * 4)/14720 = 69.57 MB/s
+
+8-word blocks
+
+Address & 1st word      1 cycle
+Time til write          40 cycles
+Time for next 7 words   7 cycles
+Bus idle (2)            4 cycles
+Total                   52 cycles
+
+Latency = 32 * 52 = 1664 cycles * 5GHz = 8320ns
+Bandwidth = (256 * 4)/8320 = 123.08 MB/s

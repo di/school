@@ -1,0 +1,81 @@
+\documentclass[mathserif]{beamer}
+
+\usepackage{beamerthemeshadow}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,petri,positioning}
+\usepackage[latin1]{inputenc}
+
+\author{Aaron M. Rosenfeld \\ Dustin S. Ingram}
+
+\title{STAGE Prototype}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\frame
+{
+    \frametitle{Overview}
+    STAGE is an event-based simulation environment used to compare the
+    effectiveness of different combinations of software agents, network
+    configurations, and sensor data in real-world environments.  It is comprised of
+    a distributed simulation engine, visualizer, and programming interface through
+    which developers create agent software and network topologies.  Communication
+    between virtual nodes is also simulated, providing highly realistic scenarios.
+}
+
+\frame
+{
+    \frametitle{Existing Emulators}
+
+    \begin{itemize}
+        \item \textbf{CORE:} Runs unmodified software on virtual machines (Linux namespaces), easy drag-and-drop configuration.  Developed by Boeing/NRL.
+        \item \textbf{EMANE:} Purely pre-scripted, one-to-one physical architecture, pub-sub event channel.  Developed by CenGen/NRL.
+        \item \textbf{NS 2\&3:} Requires re-writing of existing protocols \& software, proven-accurate radio models.
+        \item \textbf{AGLOBE} 
+    \end{itemize}
+}
+
+\frame
+{
+    \frametitle{Goals}
+    \begin{itemize}
+        \item Allow for human-in-the-loop interaction
+        \item Make writing agents extremely simple
+        \item Easy to define scenarios and network topologies
+        \item Entirely event-driven
+        \item Agents can be intelligent, pre-scripted, or live-feeds
+        \item Visualization flexibility
+        \item Distributed
+        \item Future: integration of high-quality network models (NS2/3)
+    \end{itemize}
+}
+
+\frame
+{
+    \frametitle{Definitions}
+    \textbf{Agent API}
+    \begin{itemize}
+        \item Communication between agents
+        \item Publication and subscription to common event channel
+    \end{itemize}
+
+    \textbf{Scenario}
+    \begin{itemize}
+        \item Virtual node positioning
+        \item Agent-node mapping
+    \end{itemize}
+
+    \textbf{Network}
+    \begin{itemize}
+        \item Interface specifications
+        \item Physical/MAC layer definitions
+        \item Routing protocols
+    \end{itemize}
+}
+
+\end{document}

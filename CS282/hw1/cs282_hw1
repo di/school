@@ -1,0 +1,106 @@
+Dustin Ingram (dsi23)
+CS282 - January 11th 2009
+
+4.8
+   
+   The peak performance for P1 would be a set of instructions consisting
+      entirely from Class A, as they have the lowest CPI of 1. Therefore:
+
+      P = 4 GHz / 1 = 4000 MIPS
+
+   The peak performance for P2 would be a set of instructions consisting
+      entirely from Classes A, B and C, as they have the lowest CPI of
+      2. Therefore:
+
+      P = 6 GHz / 2 = 3000 MIPS
+
+4.10
+
+      clock rate I1   clock rate I2
+      ------------- : -------------
+        CPI of I1       CPI of I2
+
+   Using C1:
+      CPI of I1 = (0.4 x 2 + 0.4 x 3 + 0.2 x 5) = 3
+      CPI of I2 = (0.4 x 1 + 0.2 x 2 + 0.4 x 2) = 1.6
+
+      (6 GHz / 3 CPI) / (3 GHz / 1.6 CPI) = 1.0666 times faster
+
+   Using C2:
+      CPI of I1 = (0.4 x 2 + 0.2 x 3 + 0.4 x 5) = 3.4
+      CPI of I2 = (0.4 x 1 + 0.4 x 2 + 0.2 x 2) = 1.6
+
+      (3 GHz / 1.6 CPI) / (6 GHz / 3.4 CPI) = 1.0625 times faster
+
+   Using C3:
+      CPI of I1 = (0.5 x 2 + 0.25 x 3 + 0.25 x 5) = 3
+      CPI of I2 = (0.5 x 1 + 0.25 x 2 + 0.25 x 2) = 1.5
+
+   The best compiler would be C3 as it gives the lowest CPI for both I1
+      and I2. Using the best compiler, I2 has a better performance than
+      I1 and should be the implementation to purchase.
+
+4.12
+
+   Cycle time is computed by the number of instructions times the time 
+      per instruction.
+
+      Change #1: 1-(0.20) x 1+(0.20) = 0.96 times faster
+      Change #2: 1-(0.10) x 1+(0.10) = 0.99 times faster
+
+   The first change is the optimal choice.
+
+4.14
+
+   Computer A = 2 + 20 + 200 = 222 seconds
+   Computer B = 5 + 20 + 50  = 75 seconds
+   Computer C = 10 + 20 + 15 = 45 seconds
+
+   Computer C is the fastest.
+
+   Compared to computer A:
+      222/45 = 4.93 times faster
+
+   Compared to computer B:
+      75/45 = 1.666 times faster
+
+4.25
+
+   The inverse of the General Mean of the execution times
+      will yeild comparable times:
+       ___________________________________
+      /
+    \/  (Program 1 Time) x (Program 2 Time)
+
+    Computer A = (1 x 1000)^(-1/2) = 31.6
+    Computer B = (10 x 100)^(-1/2) = 31.6
+    Computer C = (20 X 20)^(-1/2) = 20
+
+    Therefore, Computer C is the fastest.
+
+
+4.27
+                         |     Dhrystone     |   Multiplier  |
+                         |   O=0   |   O=3   |  O=0  |  O=3  |
+                         |---------+---------+-------+-------|
+   Computer A  (dubuntu) | 3901677 | 8445946 | 12.93 |  5.12 |
+                         |---------+---------+-------+-------|
+   Computer B  (tux)     | 3182686 | 6906077 | 26.63 |  9.40 |
+
+   a. 3901677:3181686   = 1.224:1
+   b. 12.93:26.63       = 1:2.060
+   c. 8445946:6906077   = 1.223:1
+   d. 5.12:9.40         = 1:1.836
+   e. 3901677:8445946   = 1:2.165
+   f. 12.93:5.12        = 2.525:1
+   g. 3182686:6906077   = 1:2.170
+   h. 26.63:9.40        = 2.833:1
+
+   Does a = b and c = d? No.
+   
+   Does e = f and g = h? No.
+
+   It seems that one computer can process the benchmark faster than the
+   other, therefore the results are skewed from the Dhrystone benchmark
+   to the Multiplier benchmark.
+

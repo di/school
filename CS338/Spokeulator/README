@@ -1,0 +1,13 @@
+Dustin Ingram - CS338
+THE SPOKEULATOR
+March 13th, 2009
+
+This project compiles the same as any other java project. You can likely run the untared files directly by typing:
+
+   $> java Spokeulator
+
+No additional modules are needed or included.
+
+Please keep in mind that a wheel with only 16 spokes and 5 crosses (for example) doesn't really make sense and won't look pretty.
+
+Thanks!

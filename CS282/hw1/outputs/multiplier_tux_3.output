@@ -1,0 +1,9 @@
+$ ./multiplier_3
+Enter n1:  30
+n1 = 30
+Enter n2:  30
+n2 = 30
+n = 30 X 30 = 900
+Time for matrix_prod = 9.400000 sec
+Time for block_prod = 2.420000 sec
+

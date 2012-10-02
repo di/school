@@ -1,0 +1,372 @@
+\documentclass{article}
+
+\usepackage{fullpage}   % Use the whole page
+\usepackage{fancyhdr}   % Nice headers/footers
+\usepackage{mdwlist}    % For itemize* and enumerate*
+\usepackage{hyperref}   % Hyperlink references and URLs
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={ServiceSniffer Software Requirements Specification v2},
+    pdfauthor={Justin Courts; Philip Cristiano; Charles Rumford; Thomas Wambold}
+}
+
+% So we can number paragraphs too
+\setcounter{secnumdepth}{1}
+
+% For headers and footers
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{25pt}
+\pagestyle{fancy}
+	
+% Page style for the title page
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% Just so we don't have to specify this twice
+\newcommand\mytitle{Peer Review for Team 2 \\ \large{Reviewed by Team 11}}
+\newcommand\mydate{January 19, 2010}
+
+% Page style for every other page
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{ServiceSniffer}
+\fancyhead[C]{\mytitle}
+\fancyhead[R]{\mydate}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{\textbf{\mytitle}}
+\author{
+    Justin Courts \\\url{justin@servicesniffer.net}
+    \and Philip Cristiano \\\url{phil@servicesniffer.net}
+    \and Charles Rumford \\\url{charlesr@servicesniffer.net}
+    \and Thomas Wambold \\\url{tom@servicesniffer.net}
+}
+\date{\mydate}
+
+\begin{document}
+\maketitle
+
+%------------------------------------------------------------------------------
+
+\section{Requirements Document}
+
+\subsection{Document-wide}
+
+\begin{itemize}
+    \item Lots of use of they/them/their/etc. in singular context.  
+    \item Move Definition of Roles and Glossary to the top of the document,
+        where they're most useful.  Also, include more terms (like Stream) -
+        all terms that are unique or otherwise specific to this system.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsection{1 Abstract}
+
+\begin{itemize}
+    \item Refer to your project by name at least once
+    \item 4th generation phones? Doesn't really seem clear as to what a 4th
+        generation phone is although 4g networks makes sense, I've never heard
+        to it as 4th generation phone.
+    \item Minor thing, if you are using \LaTeX\ (it looks like you are) you can
+        use the ``abstract'' environment instead of a section to get a nicely
+        formatted abstract.  Like this:
+    \begin{verbatim}
+    \begin{abstract}
+       ...
+    \end{abstract}
+    \end{verbatim}
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsection{2 Introduction}
+
+\subsubsection{2.1 Purpose}
+
+\begin{itemize}
+    \item Seems weird to have a 2.1 heading when there's no 2.2 or more.  Add
+        another heading, or combine this all under simple ``2 Introduction''?
+    \item ``not only for audio communication, but video streaming as well''
+        $\rightarrow$ ``[\dots] but also for video streaming as well'' --
+        parallelism and not only/but also.  Also, remove the comma before
+        ``but'' as it's not needed (dependent clause)
+    \item ``provide one with'' sounds weird here.  ``provides
+              consumers/users/something with''?
+    \item ``This document outline [\dots]'' $\rightarrow$ ``outlines''
+    \item ``[\dots] that such as system [\dots]'' $\rightarrow$ ``a system''
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsection{3 Functional Requirement}
+
+\subsubsection{3.1 Client}
+
+\paragraph{3.1.1 Video Streaming Service}
+
+\begin{itemize}
+    \item 3.1.1.1  Pause and Un-Pause
+    \begin{itemize}
+        \item Does pausing cause the data to be buffered to send after being
+            unpaused, or just pick up streaming in realtime?
+        \item What type of user notification is there that the stream if being
+            paused?
+        \item What does it mean to disconnect?
+        \item What is the relationship between the client and the server in
+        regards to stream?
+        \item Why can't I pause a stream with audio?
+    \end{itemize}
+    \item 3.1.1.3  Volume Control
+    \begin{itemize}
+        \item Does the volume control have any effect on the audio being sent
+            to the server?  Is there a way to mute on the Video Streaming
+            Screen?
+        \item What's the default?
+    \end{itemize}
+    \item 3.1.1.4  Logout
+    \begin{itemize}
+        \item Is there a confirmation screen for this?
+        \item Is there any way to be automatically logged out, like timeout,
+            disconnection, etc?
+        \item Is logout the right word or you just want to suspend streaming.
+            Will they no longer be able to use the app if they have surpassed
+            their quota?  How can they remove any video if they cannot log in
+            again?
+    \end{itemize}
+    \item 3.1.1.5 Storage
+    \begin{itemize}
+        \item What is tho storage for?
+        \item Is there an easy way to clean out the storage?
+    \end{itemize}
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\paragraph{3.1.2 Credentials Management Screen}
+
+\begin{itemize}
+    \item 3.1.2.1 Username --- Max/min length?  Bad characters?  Case
+        matters?
+    \item 3.1.2.2 Password --- Max/min length?  Bad characters?  Case
+        matters?
+    \item 3.1.2.3 Store Credentials --- No confirmation or way to cancel?
+    \item 3.1.2.4  Login
+    \begin{itemize}
+        \item ``loging'' $\rightarrow$ ``logging''
+        \item ``begining'' $\rightarrow$ ``beginning''
+        \item ``will, if necessary, initiate cause credentials to be stored''
+            $\rightarrow$ initiate or cause, but not both
+        \item ``logic'' $\rightarrow$ ``login''
+    \end{itemize}
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\paragraph{3.1.4 Update on Login}
+
+Updates for login. You may want to have a minimal acceptable version.  During
+an emergency you may not want to require software updates in every case.
+
+%------------------------------------------------------------------------------
+
+\subsubsection{3.2 Server}
+
+\paragraph{3.2.1 Login Page} Security type/details?
+
+%------------------------------------------------------------------------------
+
+\paragraph{3.2.3 Download Page} What browser?  All?  Any?  The default?  A
+    specific one you dictate?
+
+%------------------------------------------------------------------------------
+
+\paragraph{3.2.4 Sidebar Navigation}
+\subparagraph{3.2.4.3  Recently Viewed Slices} up to 5 slices
+\subparagraph{3.2.4.5  My Adopted Slices} up to 5 slices
+
+%------------------------------------------------------------------------------
+
+\paragraph{3.2.5 Main Page}
+
+\subparagraph{3.2.5.2 Search} Capitalize "The" (first word in paragraph)
+
+%------------------------------------------------------------------------------
+
+\paragraph{3.2.6 View Slices Page}
+
+\subparagraph{3.2.6.4 Two Way Audio Controls}
+    Are Two Way audio conversations recorded with each slice?  If so, can you
+    record without the audio?
+\subparagraph{3.2.6.5 Exit Button}
+    Confirmation box?
+
+%------------------------------------------------------------------------------
+
+\paragraph{3.2.7 Slice Edit Page}
+
+\begin{itemize}
+    \item Moderator hasn't been defined, I don't think.  
+    \item "to modify or to delete" is ambiguous -- either option needs to be
+        available, or users should be allowed to pick either option?
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\paragraph{3.2.8 User Settings Page}
+\subparagraph{3.2.8.1  Change Password}
+    Be clearer as to whether the newly typed password is the new password to be
+    set.  I know it is, but it should be clearer in the document to avoid any
+    ambiguity
+\subparagraph{3.2.8.2  Change Email Address}
+    Same as with Change Password above
+
+%------------------------------------------------------------------------------
+
+\paragraph{3.2.9  User Management Page}
+\begin{itemize}
+    \item Random password:  What parameters?  Length/Characters/etc
+    \item Is this new password only available for a certain timeframe?
+    \item Must this password be changed on next login, or is it permanent?
+    \item You shouldn't send passwords via email. Send a new link to the user
+        to allow them to reset a password.  Considering the time taken to
+        mention encryption everywhere else it would be bad to send it via
+        plaintext.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsection{4 Non-Functional Requirements}
+
+\paragraph{4.1  Security}
+\subparagraph{4.1.1  Stream Encryption}
+    What type of encryption?
+\subparagraph{4.1.2  Server Login/Sign-Up Encryption}
+    What type of encryption?
+\subparagraph{4.1.3  Client Login Encryption}
+    What type of encryption?
+
+%------------------------------------------------------------------------------
+
+\paragraph{4.2 Client Platform Requirements}
+    The numbering below is off (4.2.0.1 should be 4.2.1, etc.)
+\subparagraph{4.2.0.1  Operating System}
+    What versions?  All?
+\subparagraph{4.2.0.2  Camera}
+    Can all Android cameras record video?
+\subparagraph{4.2.0.4  Speaker}
+    Speaker as in speaker phone, or would a normal headset speaker work?
+\subparagraph{4.2.0.6  Connectivity}
+    List protocols
+
+%------------------------------------------------------------------------------
+
+\paragraph{4.3  Server Platform Requirements}
+    What version of Firefox, and what version of Java?  If no specific
+    versions, which minimum versions?
+
+%------------------------------------------------------------------------------
+
+\paragraph{4.5  Client Configuration}
+    The numbering below is off (4.5.0.1 should be 4.5.1, etc.)
+\subparagraph{4.5.0.3  Server Settings}
+    What happens if the settings are missing or wrong?
+\subparagraph{4.5.0.4  GPS Updates}
+    \begin{itemize}
+        \item Units?
+        \item You mention using GPS but don't have it as a requirement for the
+        client. Will you also use trilateralization of cell sites? I know it's
+        built into Blackberry OS, not sure about Android, but the API is the
+        same you just have to specify precision if you want to use GPS.
+        \item Your 10 foot limit is with in the 3m accuracy of GPS. You will
+        get false movement.
+    \end{itemize}
+\subparagraph{4.5.0.5  Lost Data Limit}
+    Default?  Metric used for this (e.g. dropped packets over a rolling minute
+    window)?
+
+%------------------------------------------------------------------------------
+
+\paragraph{4.6  Server Configuration}
+    The numbering below is off (4.6.0.6 should be 4.6.1, etc.)
+\subparagraph{4.6.0.6  Max Incoming Streams}
+    Are they queued or rejected?
+\subparagraph{4.6.0.7  Max Outgoing Streams}
+    Are they queued or rejected?
+\subparagraph{4.6.0.8  User Space Quota}
+    No message?
+\subparagraph{4.6.0.10  User Sign-Up Approval}
+    Approval at what level?  Email approval?  Moderator approval?
+    Administrator approval?
+\subparagraph{4.6.0.11  Account Requires Valid Email Address}
+    What if someone changes an email address incorrectly?  They're locked out
+    for good? (``The system must allow a User to login only after he/she has
+    clicked on the verification link.'') --- the last two sentences are unclear
+    how the system will work for an email change.
+
+%------------------------------------------------------------------------------
+
+\paragraph{4.7  Video-Audio-GPS Stream}
+\begin{itemize}
+    \item The numbering below is off (4.7.0.12 should be 4.7.1, etc.)
+    \item What happens if the stream doesn't hold up to 720*480 @ 30fps?
+    \item 720x480x30 seems quite high for mobile streaming. Do you know that that
+works?
+    \item You will find that this is a lot of data to push over WiMax,
+    especially with no multicast support.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsubsection{5  System Evolution}
+\paragraph{5.1  Multiple Tags from Multiple Users}
+\begin{itemize}
+    \item ``furture'' $\rightarrow$ ``future''
+    \item ``tages'' $\rightarrow$ ``tags''
+\end{itemize}
+\paragraph{5.2  Comments System}
+    Remove the comma after ``slice''
+\paragraph{5.7  Buffer Failed Data}
+    Because it was dropped?  Because it was paused?  Both?
+
+%------------------------------------------------------------------------------
+
+\section{Acceptance Test Plan}
+
+\subsection{Document-wide}
+
+\begin{itemize}
+    \item Not a big change, but I suggest making every single test individual
+        subheadings (so instead of, for example, 1.4.1 \#13 you have 1.4.1.13).
+        It'll make it easier to reference on failure/success
+    \item Not "should" but "shall"
+    \item Otherwise, pretty complete and good.  Just some small points below:
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsection{1 Client Application}
+
+\paragraph{1.1  Custom Client Build}
+    What process included with the system?
+
+%------------------------------------------------------------------------------
+
+\subsection{2 Server Application}
+\subparagraph{2.3.3  Approval Required}
+    I suggest more detail here, like ``the same Sign-Up tests'' --- refer to them
+    by section number.  Also, ``Approve the user'' is meaningless without
+    reference or explanation.
+
+\paragraph{2.4  Log-In Page}
+    Testing server?  To the index page of the default site?  To something
+    specific?  Give an example.
+
+\end{document}

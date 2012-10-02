@@ -1,0 +1,26 @@
+\documentclass[10pt]{article}
+
+\usepackage{tikz}
+\usepackage[active,tightpage]{preview}
+\usepackage{fix-cm}
+\PreviewEnvironment{tikzpicture}
+\usetikzlibrary{shapes,snakes}
+\begin{document}
+
+
+
+% Define box and box title style
+\tikzstyle{mybox} = [draw=red, fill=blue!20, very thick,
+    rectangle, rounded corners, inner sep=5pt, inner ysep=20pt]
+
+\begin{tikzpicture}
+\node [mybox] (box){%
+   \fontsize{6cm}{7.2cm}
+   \selectfont
+   \textbf{STAGE}
+
+};
+\end{tikzpicture}
+
+\end{document}
+

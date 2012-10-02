@@ -1,0 +1,125 @@
+\documentclass[letterpaper,titlepage]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Config
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Page layout, header, footer
+\usepackage{fullpage}
+%\usepackage{indentfirst}
+%\setlength{\parindent}{0pt}
+	
+% For graphics
+\usepackage{graphicx}
+\graphicspath{{./gfx/}}
+\usepackage{wrapfig}
+
+% For URLs
+\usepackage[colorlinks,
+            linkcolor=black,
+            filecolor=black,
+	            urlcolor=black]
+            {hyperref}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{25pt}
+\pagestyle{fancy}
+	
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{Software Requirements Specification}
+\fancyfoot[L]{\today}
+\fancyfoot[C]{Section \thesection}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Signature Stuff
+\newcommand{\sigline}[1]{
+  \rule{\textwidth}{.5pt}\\
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l r }
+  #1 & Date\\[2.5cm]
+  \end{tabular*}
+}
+	
+% Shortcut commands
+\newcommand{\bullets}[1]{\begin{itemize} #1 \end{itemize}}
+\newcommand{\deflist}[1]{\begin{description} #1 \end{description}}
+	
+\begin{document}
+\pagenumbering{roman}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{Software Requirements Specification}}
+\author{\textbf{Windmill Software }\\
+        Steven Cornella \\ Armon Entezari \\ Dustin Ingram \\ Aaron Rosenfeld \\ Michael Vadovszki
+	}
+\date{\today\\Revision 1}
+\maketitle
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Approval Sheet
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Approval Sheet}
+\thispagestyle{plain}
+
+\vspace{4cm}
+\sigline{Steven Cornella}
+\sigline{Armon Entezari}
+\sigline{Dustin Ingram}
+\sigline{Aaron Rosenfeld}
+\sigline{Michael Vadovszki}
+%\newpage
+%\vspace{4cm}
+%\sigline{Trevor Adams}
+%\sigline{Henry Blum}
+%\sigline{Nikita Byalsky}
+%\sigline{Joshua Watson}
+%\sigline{Alexander Ivanov}
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Revisions
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{plain}
+\section*{Revision History}
+    \bigskip
+    \begin{center}
+	    \begin{tabular*}{.8\textwidth}{@{\extracolsep{\fill}} lll }
+        \bf Date            & \bf Description               & \bf Revision\\
+        \hline \hline
+        February 8, 2010 & Initial specifications & 0 \\
+        \hline
+        March 13, 2010 & Revised use-cases & 1 \\
+        \hline
+    \end{tabular*}
+    \end{center}
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{plain}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\input{introduction}
+\input{overall-description}
+\input{usecases}
+\input{non-functional}
+\input{gui}
+
+	
+\end{document}
+

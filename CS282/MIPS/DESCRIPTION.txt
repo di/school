@@ -1,0 +1,12 @@
+Aaron Rosenfeld
+Frank Clark
+Nikita Byalsky
+Dustin Ingram
+Matt Matteis
+Systems Architecture II
+Project 2, Part 2
+email: ar374@drexel.edu 
+
+Included are all of the files for a fully functional single-cycle MIPS datapath.  The program encoded in instruction_memory.vhd is listed as "Old Program" on the course page and sums the first 8 values in memory and stores them in the 9th memory offset.  The screenshots included show the beginning (beginning.jpg) and end (end.jpg) of the waveform since the entire waveform was too long to include in one screenshot - the entire waveform can be validated by running single_cycle.vhd as toplevel.  Additionally, end_registers.jpg show the state of the register file at the end of the program and end_memory.jpg shows the memory unit at the end of the program.  Our pipeline plan is in pipeline.txt.
+
+The only major complication we encountered was the register file.  For reasons that are still not clear, having the read_data outputs mapped to values in the register-table variable caused the outputs to not update in value asynchroniously.  Instead, we placed the reading and writing instructions in two seperate processes which works as intended.

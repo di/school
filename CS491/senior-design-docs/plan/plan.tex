@@ -1,0 +1,132 @@
+\documentclass{article}
+
+\newcommand\mydate{October 13, 2009}
+
+\usepackage{fullpage}   % Use the whole page
+\usepackage{fancyhdr}   % Nice headers/footers
+\usepackage{lastpage}   % Macro for the last page
+\usepackage{url}        % Deal with URLs better
+\usepackage{graphicx}
+
+% For headers and footers
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{25pt}
+\pagestyle{fancy}
+	
+% Page style for the title page
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\thepage/\pageref{LastPage}}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% Page style for every other page
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{ServiceSniffer}
+\fancyhead[C]{Project Plan}
+\fancyhead[R]{\mydate}
+\fancyfoot[C]{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{\textbf{Project Plan}}
+\author{
+    Justin Courts \\\url{justin@servicesniffer.net}
+    \and Philip Cristiano \\\url{phil@servicesniffer.net}
+    \and Charles Rumford \\\url{charlesr@servicesniffer.net}
+    \and Thomas Wambold \\\url{tom@servicesniffer.net}
+}
+\date{\mydate}
+
+\begin{document}
+\begin{figure}
+    \vspace{-6em}
+    \centering
+    \includegraphics[width=0.6\textwidth]{../logo}
+    \vspace{-4em}
+\end{figure}
+\maketitle
+
+\begin{abstract}
+The goal of this project is to automate the passive discovery, recognition, and
+consumption of semantic web services.  The system will contain no central
+registry but will examine network traffic patterns to identify specific
+services and how to invoke them.  As well as running with known service
+definitions, the system should be able to (a) identify new services as unknown,
+and (b) analyze relevant network traffic to determine how to consume the
+service.  This application will be constructed of an extensible core framework
+upon which future modules can be developed and integrated.
+\end{abstract}
+
+\section{Project Framework}
+
+The system will provide a framework to provide a structure to allow for
+acquisition, processing, and reason of data and web services. This allows for
+different modules to developed to process different types of data or process
+them in different manners.  A common API will be provided between the
+different layers that enables easy development pluggable modules.
+
+Each part of the framework will have the following stages:
+\begin{itemize}
+    \item \textbf{Prototype} - A proof-of-concept of the component.
+    \item \textbf{Initial Integration} - The component will be combined with
+        other components.
+    \item \textbf{Component Rewrite} - The component will be re-designed with
+        information learned from prototyping and integration.
+    \item \textbf{Final Integration} - All the components will be combined into
+        the final system.
+\end{itemize}
+
+\subsection{Data Acquisition}
+
+The Data Acquisition component component is responsible for pulling data from
+the network for processing in subsequent components.  Also, preliminary
+filtering of network data can be performed here.
+
+\noindent\textbf{Lead:} Charles Rumford
+
+\subsection{Protocol Identification}
+
+The Protocol Identification component is responsible for taking the data
+collected by the Data Acquisition component, and creating protocol-specific
+data structures.  These data structures contain data at a higher level view,
+rather than a single packet view.  For example, TCP streams could be
+represented as a single logical object.
+
+\noindent\textbf{Lead:} Justin Courts
+
+\subsection{Semantic Reasoning}
+
+The Semantic Reasoning component takes all the data collected and attempts to
+extract useful information.  This could be the type of data in a stream
+(weather data, etc.), or web service mappings.
+
+\noindent\textbf{Lead:} Tom Wambold
+
+\subsection{User Applications}
+
+This could actually be a number of components that take the data from the other
+components and actually does something useful with it.  This could be a number
+of things:
+
+\begin{itemize}
+    \item Data visualization - Show mapping of network services
+    \item Service configurator - Allow users to take advantage of public
+        services
+    \item Web service generator - Figure out how to utilize web services
+        on-the-fly
+\end{itemize}
+
+\noindent\textbf{Lead:} Phil Cristiano
+
+\section{Completion Dates}
+
+\begin{itemize}
+    \item Prototype: Mid-November (User Applications Late-November)
+    \item Initial Integration: Late-December
+    \item Component Rewrite: Mid-February
+    \item Final Integration: Early-April
+\end{itemize}
+
+\end{document}

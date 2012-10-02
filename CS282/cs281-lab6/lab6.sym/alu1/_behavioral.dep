@@ -1,0 +1,5 @@
+ieeevarstd_logic_1164ieee.sym/std_logic_1164/prim.var
+ieeesrcstd_logic_1164stdlogic.vhd
+.varalu1(behavioral)lab6.sym/alu1/_behavioral.var
+.srcalu1(behavioral)alu1b-so.vhd
+.varalu1lab6.sym/alu1/prim.var

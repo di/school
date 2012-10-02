@@ -1,0 +1,7 @@
+Having just a little trouble with this. I believe most of my code to be correct, but can't find where the bug is.
+
+When using the supplied data and images, the image compiles into a movie and cross-dissolves. For some reason there is no apparent warping of the images.
+
+When using my own artifacts, it doesn't like my data. You can see that I was able to create one movie - I'm not sure what the differences between the two are.
+
+-dsi23

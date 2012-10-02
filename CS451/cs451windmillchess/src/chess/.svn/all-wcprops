@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/179/trunk/src/chess
+END
+Connection.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/179/trunk/src/chess/Connection.java
+END
+JChessPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/116/trunk/src/chess/JChessPanel.java
+END
+Position.java
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/149/trunk/src/chess/Position.java
+END
+JHistoryArea.java
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/154/trunk/src/chess/JHistoryArea.java
+END
+Pawn.java
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/155/trunk/src/chess/Pawn.java
+END
+Game.java
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/179/trunk/src/chess/Game.java
+END
+Rook.java
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/155/trunk/src/chess/Rook.java
+END
+ChessBoard.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/181/trunk/src/chess/ChessBoard.java
+END
+Queen.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/155/trunk/src/chess/Queen.java
+END
+ConnectionSetup.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/181/trunk/src/chess/ConnectionSetup.java
+END
+StateUpdate.java
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/179/trunk/src/chess/StateUpdate.java
+END
+Knight.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/155/trunk/src/chess/Knight.java
+END
+Bishop.java
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/155/trunk/src/chess/Bishop.java
+END
+Piece.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/155/trunk/src/chess/Piece.java
+END
+King.java
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/155/trunk/src/chess/King.java
+END

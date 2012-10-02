@@ -1,0 +1,752 @@
+\documentclass[titlepage]{article}
+
+\usepackage{fullpage}   % Use the whole page
+\usepackage{fancyhdr}   % Nice headers/footers
+\usepackage{graphicx}   % Importing graphics
+\usepackage{mdwlist}    % For itemize* and enumerate*
+\usepackage{hyperref}   % Hyperlink references and URLs
+\usepackage{subfig}
+\usepackage{appendix}
+\usepackage{listings}
+%\usepackage{todonotes}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={ServiceSniffer Software Requirements Specification v2},
+    pdfauthor={Justin Courts; Philip Cristiano; Charles Rumford; Thomas Wambold}
+}
+
+% So we can number paragraphs too
+\setcounter{secnumdepth}{5}
+
+% For headers and footers
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{25pt}
+\pagestyle{fancy}
+	
+% Page style for the title page
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% Just so we don't have to specify this twice
+\newcommand\mytitle{Software Requirements Specification}
+\newcommand\mydate{January 12, 2010}
+
+% Page style for every other page
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{ServiceSniffer}
+\fancyhead[C]{\mytitle}
+\fancyhead[R]{\mydate}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{\textbf{\mytitle}}
+\author{
+    Justin Courts \\\url{justin@servicesniffer.net}
+    \and Philip Cristiano \\\url{phil@servicesniffer.net}
+    \and Charles Rumford \\\url{charlesr@servicesniffer.net}
+    \and Thomas Wambold \\\url{tom@servicesniffer.net}
+}
+\date{\mydate\\Version 2}
+
+\begin{document}
+\pagenumbering{roman}
+
+\begin{figure}
+    \vspace{-6em}
+    \centering
+%    \includegraphics[width=0.6\textwidth]{../logo}
+    \vspace{-4em}
+\end{figure}
+
+\maketitle
+
+\begin{abstract}
+STAGE provides the capability to test the veracity of system-level sensors and component-level algorithms in the laboratory against virtual operations using data from simulated sensors and nodes. These nodes will work with scripted or real time data, depending on the user's need. This network and sensor testbed allows users to independently vary its topology, application suites, and the environment. It also emulates the communication between these components. A visualization tool is provided to the user for demoing and analyzing.
+\end{abstract}
+
+\setcounter{tocdepth}{4}
+\tableofcontents
+\pagebreak
+\pagenumbering{arabic}
+
+%\listoftodos
+
+%___________________________________________________________________________
+
+\section{Introduction%
+  \label{introduction}%
+}
+
+%___________________________________________________________________________
+
+\subsection{Purpose%
+  \label{purpose}%
+}
+
+This requirements document defines the functional and non-functional requirements for the STAGE project.  These requirements will include, but are not limited to, the performance, interfaces, and hardware goals and limitations.  The information presented here is intended for the development team and the external stakeholders, currently Dr. William Regli, Mr. Joseph B. Kopena, Mr. Joeseph P. Macker, and The U.S. Naval Research Laboratory.
+
+%___________________________________________________________________________
+
+\subsection{Scope%
+  \label{scope}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The goal of the ServiceSniffer project is to automate the passive discovery,
+recognition, and consumption of semantic web services.  ServiceSniffer does not
+require any central registry of services but will examine network traffic
+patterns to identify specific services, how to invoke them and report
+specific, user chosen information.  As well as running with known service
+definitions, the system will identify new services and analyze
+relevant network traffic to determine how to consume the service.  This
+application will be constructed of an extensible core framework upon which
+future modules can be developed and integrated.
+
+ServiceSniffer is split into 3 general pieces: the data input, data processing,
+and user interface modules.  The data input module is responsible for
+collecting traffic off the network or using a Pcap file as a source instead of
+a live network.  The data processing module, which is constructed from various
+filters and processors (which will be described in more depth later), applies
+filters to collected information and transforms it into
+various and configurable reports and views depending on what the user wants to
+see.  Some examples of these reports will be described later.  Lastly,
+ServiceSniffer has both a CLI and a GUI for viewing the various data returned
+by the data processors and filters.  These interfaces will allow users to
+interact with the data returned.  For example, a user could apply additional
+display filters, such as filtering by a specific destination IP.  Both
+interfaces will offer to users a report of what web services appear to be
+available on the network and supply a report - an ad-hoc registry of sorts -
+which users can use to consume the web service.  Users may specify a additional
+types of filters or processors to generate different types of reports via an
+extension system.
+
+Users of ServiceSniffer are chunked into 3 loose groups: system/network
+administrators who wish to control all of the ServiceSniffer pieces (data
+input, data processing, and the user interface), developers who wish to or are
+tasked with developing custom data filters and/or processors so users can have
+new/custom reports, and UI users who only wish to analyze the data collected
+and processed by ServiceSniffer.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%___________________________________________________________________________
+
+\subsection{Definitions, Acronyms, and Abbreviations%
+  \label{definitions}%
+}
+
+\begin{description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item[Foobar]
+    A foobar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{description}
+
+%___________________________________________________________________________
+
+\subsection{References%
+  \label{references}%
+}
+
+These documents explain in-depth about the various technologies involved in
+this project.
+%
+\begin{itemize*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item WSDL Specification: \url{http://www.w3.org/TR/wsdl20/}
+\item SOAP Specification: \url{http://www.w3.org/TR/soap/}
+\item libpcap Homepage: \url{http://www.tcpdump.org/}
+\item MVP-E Project (Team 10): \url{http://www.cs.drexel.edu/SeniorDesign/2010Material/Projects2010.html}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{itemize*}
+
+%___________________________________________________________________________
+
+\subsection{Overview%
+  \label{overview}%
+}
+
+The rest of this document is organized as follows: 
+\begin{itemize*}
+\item[-]Section
+\ref{overall-description} gives a high level overview of the project
+requirements.  
+\item[-]Section \ref{specific-requirements} gives more detailed project
+requirements.  
+\item[-]Sections \ref{input-formats} and \ref{output-formats} provides
+detail in the inputs and outputs of the system, 
+\item[-]Section \ref{functional}
+specifies what the software will do, 
+\item[-]Section \ref{performance} gives
+performance requirements for the underlying system.
+\end{itemize*}
+The rest of Section
+\ref{specific-requirements} explains other minor requirements.
+
+
+%___________________________________________________________________________
+
+\section{Overall Description%
+  \label{overall-description}%
+}
+
+%___________________________________________________________________________
+
+\subsection{Product Perspective%
+  \label{product-perspective}%
+}
+
+STAGE can be used as a testbed for sensors and respective algorithms in the laboratory against virtual operations using data from simulated sensors and nodes. The ability to independently and quickly vary the network topology, application suites, environment, or any other variable will be essential to collect data which would be cost-prohitive to produce in a real-world scenario. Furthermore, the visualization tool can be used for conceptual demonstrations.
+
+%___________________________________________________________________________
+
+\subsubsection{System Interfaces%
+  \label{system-interfaces}%
+}
+\begin{figure}
+    \centering
+%    \includegraphics[width=0.75\textwidth]{gfx/figure}
+    \caption{A high level diagram of the ServiceSniffer architecture.}
+    \label{g:system}
+\end{figure}
+
+ServiceSniffer combines:
+\begin{itemize}
+    \item Capture - Reading from network/pcap files
+    \item Filters - Removes specified data from the dataset
+    \item Processors - Transforms data into other formats
+    \item System Kernel - Coordinates information flow between other components
+    \item User Interfaces - Displays data, reports it to users, and allows them
+        to control the system
+\end{itemize}
+See Figure~\ref{g:system} for a visualization of the ServiceSniffer
+architecture.
+
+%___________________________________________________________________________
+
+\subsubsection{User Interfaces%
+  \label{user-interfaces}%
+}
+
+The user interface allows the user to access and control the system. Two
+interfaces are provided, each for different tasks and uses. The graphical user
+interface (GUI) allows for the visual representation of the information
+collected from the network. The command line interface (CLI) allows for the textual
+representation of the same information.
+
+%___________________________________________________________________________
+
+\subsubsection{Hardware Interfaces%
+  \label{hardware-interfaces}%
+}
+
+ServiceSniffer requires that the machine running the system has a network
+device that libpcap supports.
+
+%___________________________________________________________________________
+
+\subsubsection{Software Interfaces%
+  \label{software-interfaces}%
+}
+
+ServiceSniffer requires the use of libpcap in order to capture packets from
+network devices.
+
+%___________________________________________________________________________
+
+\subsubsection{Memory Constraints%
+  \label{memory-constraints}%
+}
+
+ServiceSniffer requires a machine with at least one gigabyte of RAM.
+
+%___________________________________________________________________________
+
+\subsubsection{Site Adaptation Requirements%
+  \label{site-adaptation-requirements}%
+}
+
+ServiceSniffer requires that the system is configured per-site to set the
+appropriate network interface or file to read from.
+
+%___________________________________________________________________________
+
+\subsection{Product Functions%
+  \label{product-functions}%
+}
+
+This software performs two major functions: collecting network traffic related
+to web services, and anyalizing collected data in a user specified
+way using built-in or user-defined filters and processors.  In performing these
+actions separately, either piece may be substituted by third-party software
+which performs the same actions and communicates over the same interface
+described in this document.  
+
+Network administrators, among other technical people, want to know what web
+services are being used on their network.  Some users may not report that
+they're using specific web services on a network when they are, which may 
+conflict with other services.  By being able to see all of the web service
+invocations on a network, an administrator can determine where rogue web
+services are being used and better determine whether they offer something
+useful on the network.  
+
+Also, not all networks have a central registry of web services offered on the
+network, and most do not have a record of what web services from outside the
+network are consumed by users on the network.  More, many web services aren't
+clearly defined in WSDL or an equivalent format, so it is unclear how to consume
+the web service without a formal definition.  ServiceSniffer constructs an
+ad-hoc registry of web services is observes being consumed in a defined way.
+This registry can then be used to let users consume these previously undefined
+web services.
+
+Some networks have a requirement that all services being used on them be
+encrypted as the network itself cannot be trusted.  ServiceSniffer is able to
+show which services being used on a network are secure (either fully encrypted
+traffic or encrypted data with cleartext headers) and which are insecure.  By
+looking at the specific traffic an administrator can learn what pieces of the
+network are vulnerable.
+
+Questions commonly asked consist of: whether a web service is actively being used, if
+there's a pattern to who uses a specific web service, or whether there's a
+pattern to when a specific web service is used.  Web service developers,
+as well as network administrators, frequently want to know what users and/or
+servers are using specific web services and when.  This allows them to
+determine to whom a specific service is useful, who uses an unauthorized web
+service, and other similar situations.
+
+In debugging web services, developers need to see what data is being sent to
+the web service during invocation and usage.  Instead of using a program like
+Wireshark to have to look at the packets of a web service invocation,
+developers can use ServiceSniffer to see where, if anywhere, the data actually
+sent differs from what should be sent.
+
+%___________________________________________________________________________
+
+\subsection{User Characteristics%
+  \label{user-characteristics}%
+}
+
+The system has three different types of users:  administrators, developers and
+traditional users.  Each type of user has different goals and needs to use
+different parts of the system.  These user roles, while they may be performed
+by the same user, are here split into the three distinct roles for clairty:
+
+%___________________________________________________________________________
+
+\subsubsection{Users: Jamie, Junior Data Analyst%
+  \label{jamie}%
+}
+
+Jamie solely uses the GUI to run/view web service analyst reports.  Jamie wants
+to complete the tasks below on a network in real-time as allowed by the
+administrator, or based on a saved file of a previous capture in the GUI.
+%
+Tasks:
+\begin{itemize*}
+    \item Get the full list of all services invoked
+    \item See how to invoke a specific service
+    \item View common services
+    \item View rare services
+    \item Finding patterns in service invocations
+    \item Finding exceptions (anti-patterns) to the previous patterns
+    \item Run reports and filtering by any combination of:
+    \begin{itemize*}
+        \item specific services
+        \item service specific criteria (e.g. Google Maps search vs. Google Maps display)
+        \item source IP address
+        \item destination IP address
+        \item protocol
+        \item protocol specific criteria (e.g. filtering SOAP content by Request Time)
+        \item date/time
+        \item secure services
+        \item insecure services
+    \end{itemize*}
+    \item Run reports with custom filters and processors setup by Susan
+\end{itemize*}
+
+%___________________________________________________________________________
+
+\subsubsection{Developers: Susan; Senior Applications Developer%
+  \label{susan}%
+}
+
+Susan needs to add more functionality to the application.  Susan wants to
+complete the following tasks on a network in real-time as allowed by the administrator,
+or based on a saved file of a previous capture in either CLI or GUI mode.
+%
+Tasks:
+\begin{itemize*}
+    \item Use an API
+    \item Run application in CLI mode and/or GUI mode for testing
+    \item Inspect their own services
+    \item Add new protocols and/or services to be reported on
+\end{itemize*}
+
+%___________________________________________________________________________
+
+\subsubsection{Administrators: Zed; Systems Administrator%
+  \label{zed}%
+}
+
+Zed needs to capture traffic coming over the network card to store it in Pcap
+format and/or allow Susan and Jamie to run analysis against the live network
+stream.  Zed needs to do this, as capturing from the network card requires root
+level access on the computer the system is being run on.  
+%
+Zed also needs to be able to:
+\begin{itemize*}
+    \item Deploy the software
+    \begin{itemize*}
+        \item on a single machine for full network scanning
+        \item on a single machine for scanning that same single machine
+        \item on a single machine for analysis of previously saved captures
+        \item with the GUI frontend (and associated files)
+        \item with the Data Processing layer (and associated files)
+    \end{itemize*}
+    \item Capture from the network in real time
+    \item Store the capture in a Pcap file
+\end{itemize*}
+
+%___________________________________________________________________________
+
+\subsection{Constraints%
+  \label{constraints}%
+}
+
+The system must be able to record and/or process all packets it receives.  If
+this isn't possible for any reason, the system should inform the user of this.
+The only piece of the code that should run with elevated privileges is the
+collection of packets over the network.  If a Pcap file is supplied as the
+input, or if a stream of the network packets is otherwise supplied, no piece of
+this system requires elevated privileges.
+
+%___________________________________________________________________________
+
+\subsection{Assumptions and Dependencies%
+  \label{assumptions-and-dependencies}%
+}
+
+It is assumed that a user, administrator, or developer has the ability to
+install required libraries which will named in the future as a result of the
+development process.
+
+It is assumed that system will not have to deal with encrypted networks and
+will have access to raw unencrypted packets. Also, it is assumed that the user
+has local privileges to be able to capture packets in real time. Otherwise, the
+system will only be able to process Pcap files.
+
+%___________________________________________________________________________
+
+\section{Specific Requirements%
+  \label{specific-requirements}%
+}
+
+%___________________________________________________________________________
+
+\subsection{Functional Requirements%
+    \label{functional}%
+}
+
+%___________________________________________________________________________
+
+\subsubsection{Data Input} \label{data_input}
+
+\paragraph{Live Capture}
+
+The system shall be able to read live traffic from a network device connected
+to the system.  The user must be able to gain the necessary permissions in
+order to read data from the network device.  If the system cannot read from the
+network device for any reason, the user must be notified with an error, and the
+system shall exit.
+
+\paragraph{Offline Capture}
+
+The system shall be able to read stored traffic from a Pcap formatted file.
+The file must exist and be readable by the user running the system.  If the
+file cannot be read, or is of an incorrect format, the user must be notified
+with an error, and the system shall exit.
+
+%___________________________________________________________________________
+
+\subsubsection{Filters}
+The system shall use filters in order to reduce the data into specific data
+subsets.  These datasets will then be passed into other filters or
+processors for analysis.
+
+\paragraph{Secure Connections}
+
+The system shall provide a filter that takes as input a set of service
+invocations and will only return secured (encrypted) service invocations.  If
+the input is malformed, the filter shall return nothing.
+
+\paragraph{Unsecure Connections}
+
+The system shall provide a filter that takes as input a set of service
+invocations and will only return unsecured (unencrypted) service invocations.
+If the input is malformed, the filter shall return nothing.
+
+\paragraph{Source IP}
+
+The system shall provide a filter that takes as input a set of available
+services and returns a list of available services from a specified source IP
+address, if any.  The source IP address is a required parameter for this
+filter, if not present the filter shall return all services inputted.  If the
+input is malformed, the filter shall return nothing.
+
+\paragraph{Destination IP}
+
+The system shall provide a filter that takes as input a set of available
+services and returns a list of available services which have been invoked by a
+particular user's IP address.  The user IP address is a required parameter for
+this filter, if not present the filter shall return all services inputted.  If
+the input is malformed, the filter shall return nothing.
+
+%___________________________________________________________________________
+
+\subsubsection{Processors}
+
+The system shall use processors in order to transform data from one
+form to another.  The output data will then be passed into other filters or
+processors for analysis.
+
+\paragraph{Service Listing}
+
+The system shall provide a processor which will take as input a set of TCP
+packets and return a list of service tuples.  These service tuples shall
+contain:
+\begin{itemize*}
+    \item server name (obtained from DNS)
+    \item server IP address
+    \item type of service (SOAP, etc)
+    \item service definition (WSDL, if possible)
+\end{itemize*}
+If the input is malformed, the processor should return nothing.
+
+\paragraph{Service Invocations}
+
+The system shall provide a processor which will take as input a set of TCP
+packets and returns a list of invocation tuples.  The processor shall take as a
+required parameter the IP address and service name of the service in question.
+The invocation tuples represent a single service invocation, and shall contain:
+\begin{itemize*}
+    \item client IP address
+    \item timestamp of invocation
+    \item data sent (arguments) to service
+\end{itemize*}
+If the input is malformed, or the required parameters are missing or invalid,
+the processor shall return nothing.
+
+\paragraph{Useful Services} 
+Within a network, some services are more useful to other users on the network
+than others. The usefulness of a service can be determined based on the number
+of invocations that are made to it over a given period of time.  Using the
+information regarding service invocation, the system shall be able to determine
+usefulness of a service relative to the number of invocations.
+
+The output of this type of analysis shall be a list of services containing the
+following information:
+\begin{itemize*}
+    \item server name (obtained from DNS)
+    \item server IP address
+    \item name of service
+    \item number of invocations
+    \item most recent invocation (YYYYMMDDHHMMSS)
+\end{itemize*}
+This list shall be sorted in descending order by the number of invocations.
+
+\paragraph{Abnormal Services} 
+With in a network system, there may be a pattern to which services are
+accessed. This information is obtained based on what services different users
+connect to. After determining a pattern for which users are connecting to a set
+of services, a set of services and users that don't follow the pattern can be
+abstracted. The system shall be able to determine this list of abnormal
+services based on the invocation of different web services by users.
+            
+The output of this type of analysis shall be a list of abnormal services
+containing the following information:
+\begin{itemize*}
+    \item server name (obtained from DNS)
+    \item server IP address
+    \item name of service
+    \item number of invocations
+    \item most recent invocation (YYYYMMDDHHMMSS)
+    \item list of IP making it abnormal
+\end{itemize*}
+This list shall be sorted in order of number of invocations in ascending order.
+This will place the most abnormal services at the top of the list.
+
+%___________________________________________________________________________
+
+\subsubsection{Data Storage%
+  \label{data-storage}%
+}
+  \begin{enumerate}
+    \item No outside database system will be used for data storage
+    \item Filtered PCAP network scans can be stored from a live capture
+  \end{enumerate}
+
+%___________________________________________________________________________
+
+\subsection{Runtime Environment} 
+\begin{itemize*}
+    \item Operating Systems:  Unix / Linux / Mac
+    \item Processor:  A modern 32- or 64-bit x86 processor
+    \item Memory:  512MB RAM minimum
+    \item Network connection:  Any recent network card which is currently connected to the network the user wishes to collect data from.
+    \item GUI:  For using the GUI, a web browser supporting HTML 4.01 is required.
+\end{itemize*}
+
+%___________________________________________________________________________
+
+\subsection{Input Formats%
+  \label{input-formats}%
+}
+
+\subsubsection{Packets}
+\begin{enumerate}
+    \item The system shall be able to read raw packets from a network device
+        with libpcap.
+    \item The system shall be able to read raw packets from a file in the PCAP
+        format.
+\end{enumerate}
+
+\subsubsection{Protocols}
+\begin{enumerate}
+    \item The system shall support HTTP as a transport protocol.
+    \item The system shall support SMTP as a transport protocol.
+    \item The system shall be able to recognize SOAP service invocations.  An
+        example is in Appendix \ref{a:soap}.
+    \item The system shall support extensions to recognize other protocols.
+    \item The system shall collate packets from recognized service invocations
+        into single logical units.
+\end{enumerate}
+
+%___________________________________________________________________________
+
+\subsection{Output Formats%
+  \label{output-formats}%
+}
+
+\begin{enumerate}
+    \item The system shall support exporting a subset of captured packets into
+        a user specified PCAP formatted file.
+    \item The system shall support exporting user defined PDF/HTML reports from
+        data gathered by the system.
+    \item The system shall support generating WSDL for discovered web services.
+\end{enumerate}
+
+%___________________________________________________________________________
+\subsection{User Interface%
+  \label{user-interface}%
+}
+
+These requirements apply to both the Graphical User Interface (GUI) and the
+Command Line Interface (CLI).
+
+\begin{enumerate}
+    \item The interface shall provide access to raw unfiltered captured
+        web service information.
+    \item The interface shall provide the ability to filter web
+        services based on user supplied criteria.
+    \item The interface shall provide the ability to process web
+        service lists to gain more information.
+    \item The interface shall give the user the ability to produce
+        reports based off the information in the interface.
+    \item The interface shall provide a method for providing a
+        detailed inspection of web services.
+    \item The interface shall provide a method for viewing
+        communication chain (Per user queries/responses from a server).
+\end{enumerate}
+
+%\begin{figure}
+%    \centering
+%    \subfloat[The main ServiceSniffer GUI]{\label{g:main}\includegraphics[width=0.4\textwidth]{gfx/main}}
+%    \subfloat[The properties of a particular service]{\label{g:detail}\includegraphics[width=0.4\textwidth]{gfx/detail}}
+%    \caption{A mockup of the ServiceSniffer GUI}
+%    \label{g:gui}
+%\end{figure}
+%
+%See Figure~\ref{g:gui} shows mockups of our Graphical User Interface.
+%Figure~\ref{g:main} shows the main window, and Figure~\ref{g:detail} shows a
+%properties dialog for a particular web service.
+
+%___________________________________________________________________________
+
+\subsection{Extensibility%
+  \label{extensibility}%
+}
+\begin{enumerate}
+    \item The system shall provide a means for users to create custom filters.
+    \item The system shall provide a means for users to create custom processors.
+\end{enumerate}
+
+\subsection{Testing%
+    \label{testing}%
+}
+All code with in the system must be tested. Core functionality of the software
+will have 100\% code coverage with automated unit and integration tests.  The
+GUI testing will be done manually as it is a smaller component and would
+otherwise require a disproportionately large investment in initial setup.  Unit
+tests will cover the algorithms used in our system while integration tests will
+be used to test our data-flow.  
+
+\section{System Evolution}
+
+With more time, the ServiceSniffer team could further develop filters and
+processors in order to generate more reports without user customization.  Also,
+with our reliance on UNIX Domain Sockets for communication between processes,
+ServiceSniffer currently would only run on UNIX operating systems.  Further
+development could lead to a platform that included Windows.
+
+%___________________________________________________________________________
+
+\subsection{Performance%
+    \label{performance}%
+}
+
+%___________________________________________________________________________
+
+\subsubsection{Real Time}\label{realtime} 
+The system shall have the ability to run in real time. Real time is defined as
+constantly processing the packets as they come off the wire. As the packets are
+processed the data will be presented to the user in either graphical form, or
+on a console.  Much like \nameref{nonrealtime} execution, all packets which
+have been determined to belong to a web service communication as defined in
+Section~\ref{definitions} will be stored in a Pcap file for later processing
+should the user choose to save this data.
+
+%___________________________________________________________________________
+
+\subsubsection{Non-Real Time}\label{nonrealtime}
+The system shall have the ability to run in non-real time. Non-real time is
+defined as collecting the packets as they come off the wire and storing them in
+a data store for later processing and analysis.  The format for storage of all  
+web service packets is Pcap.
+
+%___________________________________________________________________________
+
+\subsection{Documentation%
+  \label{documentation}%
+}
+\begin{enumerate}
+    \item The software shall provide a User Manual containing  step-by-step
+        instructions for user perspective in Section~\ref{user-characteristics}.
+    \item The software shall provide Developer Documentation containing:
+    \begin{enumerate}
+        \item Interface definitions for provided filters and processors
+        \item Requirements for 3rd party filters and processors
+    \end{enumerate}
+\end{enumerate}
+
+%___________________________________________________________________________
+
+\appendix
+\pagebreak
+
+\end{document}

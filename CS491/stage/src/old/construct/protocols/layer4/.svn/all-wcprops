@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer4
+END
+udp.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer4/udp.py
+END
+sctp.py
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer4/sctp.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer4/__init__.py
+END
+isup.py
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer4/isup.py
+END
+tcp.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer4/tcp.py
+END

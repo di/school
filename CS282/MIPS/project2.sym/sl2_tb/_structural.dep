@@ -1,0 +1,5 @@
+ieeevarstd_logic_1164ieee.sym/std_logic_1164/prim.var
+ieeesrcstd_logic_1164stdlogic.vhd
+.varsl2_tb(structural)project2.sym/sl2_tb/_structural.var
+.srcsl2_tb(structural)sl2_tb.vhd
+.varsl2_tbproject2.sym/sl2_tb/prim.var

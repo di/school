@@ -1,0 +1,1102 @@
+%!PS-Adobe-2.0 EPSF-2.0
+%%Title: /home/dustin/School/CS451/cs451windmillchess/docs/sdd/class-diagram.dia
+%%Creator: Dia v0.97
+%%CreationDate: Sun Mar 14 00:07:10 2010
+%%For: dustin
+%%Orientation: Portrait
+%%Magnification: 1.0000
+%%BoundingBox: 0 0 648 461
+%%BeginSetup
+%%EndSetup
+%%EndComments
+%%BeginProlog
+[ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright
+/parenleft /parenright /asterisk /plus /comma /hyphen /period /slash /zero /one
+/two /three /four /five /six /seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at /A /B /C /D /E
+/F /G /H /I /J /K /L /M /N /O
+/P /Q /R /S /T /U /V /W /X /Y
+/Z /bracketleft /backslash /bracketright /asciicircum /underscore /quoteleft /a /b /c
+/d /e /f /g /h /i /j /k /l /m
+/n /o /p /q /r /s /t /u /v /w
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section /dieresis /copyright
+/ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron /degree /plusminus /twosuperior /threesuperior
+/acute /mu /paragraph /periodcentered /cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf
+/threequarters /questiondown /Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis /Eth /Ntilde
+/Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply /Oslash /Ugrave /Uacute /Ucircumflex
+/Udieresis /Yacute /Thorn /germandbls /agrave /aacute /acircumflex /atilde /adieresis /aring
+/ae /ccedilla /egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide /oslash /ugrave
+/uacute /ucircumflex /udieresis /yacute /thorn /ydieresis] /isolatin1encoding exch def
+/cp {closepath} bind def
+/c {curveto} bind def
+/f {fill} bind def
+/a {arc} bind def
+/ef {eofill} bind def
+/ex {exch} bind def
+/gr {grestore} bind def
+/gs {gsave} bind def
+/sa {save} bind def
+/rs {restore} bind def
+/l {lineto} bind def
+/m {moveto} bind def
+/rm {rmoveto} bind def
+/n {newpath} bind def
+/s {stroke} bind def
+/sh {show} bind def
+/slc {setlinecap} bind def
+/slj {setlinejoin} bind def
+/slw {setlinewidth} bind def
+/srgb {setrgbcolor} bind def
+/rot {rotate} bind def
+/sc {scale} bind def
+/sd {setdash} bind def
+/ff {findfont} bind def
+/sf {setfont} bind def
+/scf {scalefont} bind def
+/sw {stringwidth pop} bind def
+/tr {translate} bind def
+
+/ellipsedict 8 dict def
+ellipsedict /mtrx matrix put
+/ellipse
+{ ellipsedict begin
+   /endangle exch def
+   /startangle exch def
+   /yrad exch def
+   /xrad exch def
+   /y exch def
+   /x exch def   /savematrix mtrx currentmatrix def
+   x y tr xrad yrad sc
+   0 0 1 startangle endangle arc
+   savematrix setmatrix
+   end
+} def
+
+/mergeprocs {
+dup length
+3 -1 roll
+dup
+length
+dup
+5 1 roll
+3 -1 roll
+add
+array cvx
+dup
+3 -1 roll
+0 exch
+putinterval
+dup
+4 2 roll
+putinterval
+} bind def
+/Times-Roman-latin1
+    /Times-Roman findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Times-Italic-latin1
+    /Times-Italic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Times-Bold-latin1
+    /Times-Bold findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Times-BoldItalic-latin1
+    /Times-BoldItalic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/AvantGarde-Gothic-latin1
+    /AvantGarde-Gothic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/AvantGarde-BookOblique-latin1
+    /AvantGarde-BookOblique findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/AvantGarde-Demi-latin1
+    /AvantGarde-Demi findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/AvantGarde-DemiOblique-latin1
+    /AvantGarde-DemiOblique findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Bookman-Light-latin1
+    /Bookman-Light findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Bookman-LightItalic-latin1
+    /Bookman-LightItalic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Bookman-Demi-latin1
+    /Bookman-Demi findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Bookman-DemiItalic-latin1
+    /Bookman-DemiItalic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Courier-latin1
+    /Courier findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Courier-Oblique-latin1
+    /Courier-Oblique findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Courier-Bold-latin1
+    /Courier-Bold findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Courier-BoldOblique-latin1
+    /Courier-BoldOblique findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Helvetica-latin1
+    /Helvetica findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Helvetica-Oblique-latin1
+    /Helvetica-Oblique findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Helvetica-Bold-latin1
+    /Helvetica-Bold findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Helvetica-BoldOblique-latin1
+    /Helvetica-BoldOblique findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Helvetica-Narrow-latin1
+    /Helvetica-Narrow findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Helvetica-Narrow-Oblique-latin1
+    /Helvetica-Narrow-Oblique findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Helvetica-Narrow-Bold-latin1
+    /Helvetica-Narrow-Bold findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Helvetica-Narrow-BoldOblique-latin1
+    /Helvetica-Narrow-BoldOblique findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/NewCenturySchlbk-Roman-latin1
+    /NewCenturySchlbk-Roman findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/NewCenturySchlbk-Italic-latin1
+    /NewCenturySchlbk-Italic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/NewCenturySchlbk-Bold-latin1
+    /NewCenturySchlbk-Bold findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/NewCenturySchlbk-BoldItalic-latin1
+    /NewCenturySchlbk-BoldItalic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Palatino-Roman-latin1
+    /Palatino-Roman findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Palatino-Italic-latin1
+    /Palatino-Italic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Palatino-Bold-latin1
+    /Palatino-Bold findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Palatino-BoldItalic-latin1
+    /Palatino-BoldItalic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/Symbol-latin1
+    /Symbol findfont
+definefont pop
+/ZapfChancery-MediumItalic-latin1
+    /ZapfChancery-MediumItalic findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+/ZapfDingbats-latin1
+    /ZapfDingbats findfont
+    dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding isolatin1encoding def
+    currentdict end
+definefont pop
+8.242569 -8.242569 scale
+28.050000 -40.850000 translate
+%%EndProlog
+
+
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 15.000000 -15.000000 m 15.000000 -13.600000 l 31.670000 -13.600000 l 31.670000 -15.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 -15.000000 m 15.000000 -13.600000 l 31.670000 -13.600000 l 31.670000 -15.000000 l cp s
+/Helvetica-BoldOblique-latin1 ff 0.700000 scf sf
+(Piece) dup sw 2 div 23.335000 ex sub -14.250000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 15.000000 -13.600000 m 15.000000 -9.400000 l 31.670000 -9.400000 l 31.670000 -13.600000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 -13.600000 m 15.000000 -9.400000 l 31.670000 -9.400000 l 31.670000 -13.600000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(+PieceType: static enum) 15.150000 -13.060000 m
+ gs 1 -1 sc sh gr
+(+PieceColor: static enum) 15.150000 -12.260000 m
+ gs 1 -1 sc sh gr
+(#position: Position) 15.150000 -11.460000 m
+ gs 1 -1 sc sh gr
+(#type: PieceType) 15.150000 -10.660000 m
+ gs 1 -1 sc sh gr
+(#color: PieceColor) 15.150000 -9.860000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 15.000000 -9.400000 m 15.000000 -3.600000 l 31.670000 -3.600000 l 31.670000 -9.400000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 -9.400000 m 15.000000 -3.600000 l 31.670000 -3.600000 l 31.670000 -9.400000 l cp s
+(+Piece\(position:Position,color:PieceColor\)) 15.150000 -8.860000 m
+ gs 1 -1 sc sh gr
+(+getType\(\): PieceType) 15.150000 -8.060000 m
+ gs 1 -1 sc sh gr
+(+getColor\(\): PieceColor) 15.150000 -7.260000 m
+ gs 1 -1 sc sh gr
+(+getPosition\(\): Position) 15.150000 -6.460000 m
+ gs 1 -1 sc sh gr
+(+setPosition\(newPosition:Position\): void) 15.150000 -5.660000 m
+ gs 1 -1 sc sh gr
+(+move\(newPosition:Position\): StateUpdate) 15.150000 -4.860000 m
+ gs 1 -1 sc sh gr
+/Courier-BoldOblique-latin1 ff 0.560000 scf sf
+(+getAllowedMoves\(\): ArrayList<Position>) 15.150000 -4.060000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 15.000000 2.000000 m 15.000000 3.400000 l 30.515000 3.400000 l 30.515000 2.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 2.000000 m 15.000000 3.400000 l 30.515000 3.400000 l 30.515000 2.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(Position) dup sw 2 div 22.757500 ex sub 2.750000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 15.000000 3.400000 m 15.000000 4.400000 l 30.515000 4.400000 l 30.515000 3.400000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 3.400000 m 15.000000 4.400000 l 30.515000 4.400000 l 30.515000 3.400000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(-cellNumber: int) 15.150000 3.940000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 15.000000 4.400000 m 15.000000 9.400000 l 30.515000 9.400000 l 30.515000 4.400000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 4.400000 m 15.000000 9.400000 l 30.515000 9.400000 l 30.515000 4.400000 l cp s
+(+Position\(cellNumber:int\)) 15.150000 4.940000 m
+ gs 1 -1 sc sh gr
+(+getFile\(\): int) 15.150000 5.740000 m
+ gs 1 -1 sc sh gr
+(+getRank\(\): int) 15.150000 6.540000 m
+ gs 1 -1 sc sh gr
+(+equals\(p:Position\): boolean) 15.150000 7.340000 m
+ gs 1 -1 sc sh gr
+(+fileCharFromInt\(file:int\): static char) 15.150000 8.140000 m
+ gs 1 -1 sc sh gr
+(+getCellNumber\(\): int) 15.150000 8.940000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 15.000000 15.000000 m 15.000000 16.400000 l 36.675000 16.400000 l 36.675000 15.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 15.000000 m 15.000000 16.400000 l 36.675000 16.400000 l 36.675000 15.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(StateUpdate) dup sw 2 div 25.837500 ex sub 15.750000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 15.000000 16.400000 m 15.000000 19.800000 l 36.675000 19.800000 l 36.675000 16.400000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 16.400000 m 15.000000 19.800000 l 36.675000 19.800000 l 36.675000 16.400000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(-oldPosition: Position) 15.150000 16.940000 m
+ gs 1 -1 sc sh gr
+(-newPosition: Position) 15.150000 17.740000 m
+ gs 1 -1 sc sh gr
+(+capturedPiece: Piece.PieceType = null) 15.150000 18.540000 m
+ gs 1 -1 sc sh gr
+(+movedPiece: Piece.PieceType = null) 15.150000 19.340000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 15.000000 19.800000 m 15.000000 28.000000 l 36.675000 28.000000 l 36.675000 19.800000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 19.800000 m 15.000000 28.000000 l 36.675000 28.000000 l 36.675000 19.800000 l cp s
+(+StateUpdate\(oldPosition:Position,newPosition:Position\)) 15.150000 20.340000 m
+ gs 1 -1 sc sh gr
+(+getOldPosition\(\): Position) 15.150000 21.140000 m
+ gs 1 -1 sc sh gr
+(+getNewPosition\(\): Position) 15.150000 21.940000 m
+ gs 1 -1 sc sh gr
+(+setOldPosition\(oldPosition:Position\): void) 15.150000 22.740000 m
+ gs 1 -1 sc sh gr
+(+setNewPosition\(newPosition:Position\): void) 15.150000 23.540000 m
+ gs 1 -1 sc sh gr
+(+print\(message:String\): void) 15.150000 24.340000 m
+ gs 1 -1 sc sh gr
+(+getMovedPiece\(\): Piece.PieceType) 15.150000 25.140000 m
+ gs 1 -1 sc sh gr
+(+setMovedPiece\(movedPiece:Piece.PieceType\): void) 15.150000 25.940000 m
+ gs 1 -1 sc sh gr
+(+getcapturedPiece\(\): Piece.PieceType) 15.150000 26.740000 m
+ gs 1 -1 sc sh gr
+(+setCapturedPiece\(capturedPiece:Piece.PieceType\): void) 15.150000 27.540000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n -7.000000 11.000000 m -7.000000 12.400000 l 11.980000 12.400000 l 11.980000 11.000000 l f
+0.000000 0.000000 0.000000 srgb
+n -7.000000 11.000000 m -7.000000 12.400000 l 11.980000 12.400000 l 11.980000 11.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(ChessBoard) dup sw 2 div 2.490000 ex sub 11.750000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n -7.000000 12.400000 m -7.000000 23.000000 l 11.980000 23.000000 l 11.980000 12.400000 l f
+0.000000 0.000000 0.000000 srgb
+n -7.000000 12.400000 m -7.000000 23.000000 l 11.980000 23.000000 l 11.980000 12.400000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(-layeredPane: JLayeredPane) -6.850000 12.940000 m
+ gs 1 -1 sc sh gr
+(-historyArea: JHistoryArea) -6.850000 13.740000 m
+ gs 1 -1 sc sh gr
+(-chessBoard: JPanel) -6.850000 14.540000 m
+ gs 1 -1 sc sh gr
+(-chessPiece: JLabel) -6.850000 15.340000 m
+ gs 1 -1 sc sh gr
+(-xAdjustment: int) -6.850000 16.140000 m
+ gs 1 -1 sc sh gr
+(-yAdjustment: int) -6.850000 16.940000 m
+ gs 1 -1 sc sh gr
+(+NUMBER_OF_RANKS: static final int = 8) -6.850000 17.740000 m
+ gs 1 -1 sc sh gr
+(+NUMBER_OF_FILES: static final int = 8) -6.850000 18.540000 m
+ gs 1 -1 sc sh gr
+(-boardSize: Dimension = new Dimension\(600,600\)) -6.850000 19.340000 m
+ gs 1 -1 sc sh gr
+(-move: StateUpdate = new StateUpdate\(null, null\)) -6.850000 20.140000 m
+ gs 1 -1 sc sh gr
+(-origin: int) -6.850000 20.940000 m
+ gs 1 -1 sc sh gr
+(-waitObj: Object = new Object\(\)) -6.850000 21.740000 m
+ gs 1 -1 sc sh gr
+(-iconPath: String) -6.850000 22.540000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n -7.000000 23.000000 m -7.000000 40.800000 l 11.980000 40.800000 l 11.980000 23.000000 l f
+0.000000 0.000000 0.000000 srgb
+n -7.000000 23.000000 m -7.000000 40.800000 l 11.980000 40.800000 l 11.980000 23.000000 l cp s
+(+ChessBoard\(\)) -6.850000 23.540000 m
+ gs 1 -1 sc sh gr
+(-createImageIcon\(path:String\): ImageIcon) -6.850000 24.340000 m
+ gs 1 -1 sc sh gr
+(-setupBoard\(\): void) -6.850000 25.140000 m
+ gs 1 -1 sc sh gr
+(+addPieces\(piece:Piece\): void) -6.850000 25.940000 m
+ gs 1 -1 sc sh gr
+(+addPieceToBoard\(piece:Piece\): void) -6.850000 26.740000 m
+ gs 1 -1 sc sh gr
+(+movePiece\(state:StateUpdate\)) -6.850000 27.540000 m
+ gs 1 -1 sc sh gr
+(+mousePressed\(e:MouseEvent\): void) -6.850000 28.340000 m
+ gs 1 -1 sc sh gr
+(+shadeMoves\(origin:int\): void) -6.850000 29.140000 m
+ gs 1 -1 sc sh gr
+(+unshadeMoves\(\): void) -6.850000 29.940000 m
+ gs 1 -1 sc sh gr
+(+mouseReleased\(e:MouseEvent\): void) -6.850000 30.740000 m
+ gs 1 -1 sc sh gr
+(+mouseDragged\(me:MouseEvent\): void) -6.850000 31.540000 m
+ gs 1 -1 sc sh gr
+(+getMove\(\): StateUpdate) -6.850000 32.340000 m
+ gs 1 -1 sc sh gr
+(+showWin\(\): void) -6.850000 33.140000 m
+ gs 1 -1 sc sh gr
+(+showLoss\(\): void) -6.850000 33.940000 m
+ gs 1 -1 sc sh gr
+(+showDisconnect\(\): void) -6.850000 34.740000 m
+ gs 1 -1 sc sh gr
+(-addHistory\(\): void) -6.850000 35.540000 m
+ gs 1 -1 sc sh gr
+(+mouseClicked\(e:MouseEvent\): void) -6.850000 36.340000 m
+ gs 1 -1 sc sh gr
+(+mouseMoved\(e:MouseEvent\): void) -6.850000 37.140000 m
+ gs 1 -1 sc sh gr
+(+mouseEntered\(e:MouseEvent\): void) -6.850000 37.940000 m
+ gs 1 -1 sc sh gr
+(+mouseExited\(e:MouseEvent\): void) -6.850000 38.740000 m
+ gs 1 -1 sc sh gr
+(+setIconPath\(iconPath:String\): void) -6.850000 39.540000 m
+ gs 1 -1 sc sh gr
+(+getHistoryArea\(\): JHistoryArea) -6.850000 40.340000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n -7.000000 -15.000000 m -7.000000 -13.600000 l 7.360000 -13.600000 l 7.360000 -15.000000 l f
+0.000000 0.000000 0.000000 srgb
+n -7.000000 -15.000000 m -7.000000 -13.600000 l 7.360000 -13.600000 l 7.360000 -15.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(Connection) dup sw 2 div 0.180000 ex sub -14.250000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n -7.000000 -13.600000 m -7.000000 -10.200000 l 7.360000 -10.200000 l 7.360000 -13.600000 l f
+0.000000 0.000000 0.000000 srgb
+n -7.000000 -13.600000 m -7.000000 -10.200000 l 7.360000 -10.200000 l 7.360000 -13.600000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(-listenSocket: ServerSocket) -6.850000 -13.060000 m
+ gs 1 -1 sc sh gr
+(-comSocket: Socket) -6.850000 -12.260000 m
+ gs 1 -1 sc sh gr
+(-out: ObjectOutputStream) -6.850000 -11.460000 m
+ gs 1 -1 sc sh gr
+(-in: ObjectInputStream) -6.850000 -10.660000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n -7.000000 -10.200000 m -7.000000 -4.400000 l 7.360000 -4.400000 l 7.360000 -10.200000 l f
+0.000000 0.000000 0.000000 srgb
+n -7.000000 -10.200000 m -7.000000 -4.400000 l 7.360000 -4.400000 l 7.360000 -10.200000 l cp s
+(+Connection\(established:Socket\)) -6.850000 -9.660000 m
+ gs 1 -1 sc sh gr
+(+Connection\(listenPort:int\)) -6.850000 -8.860000 m
+ gs 1 -1 sc sh gr
+(+awaitConnection\(\): void) -6.850000 -8.060000 m
+ gs 1 -1 sc sh gr
+(+connectionEstablished\(\): boolean) -6.850000 -7.260000 m
+ gs 1 -1 sc sh gr
+(+sendState\(update:StateUpdate\): void) -6.850000 -6.460000 m
+ gs 1 -1 sc sh gr
+(+awaitState\(\): StateUpdate) -6.850000 -5.660000 m
+ gs 1 -1 sc sh gr
+(+getNetworkInfo\(\): String) -6.850000 -4.860000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n -28.000000 -15.000000 m -28.000000 -13.600000 l -12.485000 -13.600000 l -12.485000 -15.000000 l f
+0.000000 0.000000 0.000000 srgb
+n -28.000000 -15.000000 m -28.000000 -13.600000 l -12.485000 -13.600000 l -12.485000 -15.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(Game) dup sw 2 div -20.242500 ex sub -14.250000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n -28.000000 -13.600000 m -28.000000 -7.800000 l -12.485000 -7.800000 l -12.485000 -13.600000 l f
+0.000000 0.000000 0.000000 srgb
+n -28.000000 -13.600000 m -28.000000 -7.800000 l -12.485000 -7.800000 l -12.485000 -13.600000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(-setup: ConnectionSetup) -27.850000 -13.060000 m
+ gs 1 -1 sc sh gr
+(-connection: Connection) -27.850000 -12.260000 m
+ gs 1 -1 sc sh gr
+(-board: ChessBoard) -27.850000 -11.460000 m
+ gs 1 -1 sc sh gr
+(-gameState: Piece[]) -27.850000 -10.660000 m
+ gs 1 -1 sc sh gr
+(-instance: Game) -27.850000 -9.860000 m
+ gs 1 -1 sc sh gr
+(-setup: ConnectionSetup) -27.850000 -9.060000 m
+ gs 1 -1 sc sh gr
+(-color: Piece.PieceColor) -27.850000 -8.260000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n -28.000000 -7.800000 m -28.000000 3.600000 l -12.485000 3.600000 l -12.485000 -7.800000 l f
+0.000000 0.000000 0.000000 srgb
+n -28.000000 -7.800000 m -28.000000 3.600000 l -12.485000 3.600000 l -12.485000 -7.800000 l cp s
+(-Game\(\)) -27.850000 -7.260000 m
+ gs 1 -1 sc sh gr
+(+getColor\(\): Piece.PieceColor) -27.850000 -6.460000 m
+ gs 1 -1 sc sh gr
+(+setColor\(color:Piece.PieceColor\): void) -27.850000 -5.660000 m
+ gs 1 -1 sc sh gr
+(+getNext\(\): boolean) -27.850000 -4.860000 m
+ gs 1 -1 sc sh gr
+(+setNext\(next:boolean\): void) -27.850000 -4.060000 m
+ gs 1 -1 sc sh gr
+(+start\(\): void) -27.850000 -3.260000 m
+ gs 1 -1 sc sh gr
+(+isAllowed\(move:StateUpdate\): boolean) -27.850000 -2.460000 m
+ gs 1 -1 sc sh gr
+(+isOccupied\(cellNumber:int\): boolean) -27.850000 -1.660000 m
+ gs 1 -1 sc sh gr
+(+connect\(ip:String,port:int\): void) -27.850000 -0.860000 m
+ gs 1 -1 sc sh gr
+(+listen\(port:int\): void) -27.850000 -0.060000 m
+ gs 1 -1 sc sh gr
+(+isEmpty\(position:Position\): Piece) -27.850000 0.740000 m
+ gs 1 -1 sc sh gr
+(+getInstance\(\): Game) -27.850000 1.540000 m
+ gs 1 -1 sc sh gr
+(+getGameState\(\): Piece[]) -27.850000 2.340000 m
+ gs 1 -1 sc sh gr
+(+main\(\): void) -27.850000 3.140000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -7.000000 m 35.000000 -5.600000 l 50.515000 -5.600000 l 50.515000 -7.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -7.000000 m 35.000000 -5.600000 l 50.515000 -5.600000 l 50.515000 -7.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(Knight) dup sw 2 div 42.757500 ex sub -6.250000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -5.600000 m 35.000000 -5.200000 l 50.515000 -5.200000 l 50.515000 -5.600000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -5.600000 m 35.000000 -5.200000 l 50.515000 -5.200000 l 50.515000 -5.600000 l cp s
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -5.200000 m 35.000000 -4.200000 l 50.515000 -4.200000 l 50.515000 -5.200000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -5.200000 m 35.000000 -4.200000 l 50.515000 -4.200000 l 50.515000 -5.200000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(+getAllowedMoves\(\): ArrayList<Position>) 35.150000 -4.660000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -3.000000 m 35.000000 -1.600000 l 50.515000 -1.600000 l 50.515000 -3.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -3.000000 m 35.000000 -1.600000 l 50.515000 -1.600000 l 50.515000 -3.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(Bishop) dup sw 2 div 42.757500 ex sub -2.250000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -1.600000 m 35.000000 -1.200000 l 50.515000 -1.200000 l 50.515000 -1.600000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -1.600000 m 35.000000 -1.200000 l 50.515000 -1.200000 l 50.515000 -1.600000 l cp s
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -1.200000 m 35.000000 -0.200000 l 50.515000 -0.200000 l 50.515000 -1.200000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -1.200000 m 35.000000 -0.200000 l 50.515000 -0.200000 l 50.515000 -1.200000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(+getAllowedMoves\(\): ArrayList<Position>) 35.150000 -0.660000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 35.000000 1.000000 m 35.000000 2.400000 l 50.515000 2.400000 l 50.515000 1.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 1.000000 m 35.000000 2.400000 l 50.515000 2.400000 l 50.515000 1.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(Queen) dup sw 2 div 42.757500 ex sub 1.750000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 35.000000 2.400000 m 35.000000 2.800000 l 50.515000 2.800000 l 50.515000 2.400000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 2.400000 m 35.000000 2.800000 l 50.515000 2.800000 l 50.515000 2.400000 l cp s
+1.000000 1.000000 1.000000 srgb
+n 35.000000 2.800000 m 35.000000 3.800000 l 50.515000 3.800000 l 50.515000 2.800000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 2.800000 m 35.000000 3.800000 l 50.515000 3.800000 l 50.515000 2.800000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(+getAllowedMoves\(\): ArrayList<Position>) 35.150000 3.340000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 35.000000 5.000000 m 35.000000 6.400000 l 50.515000 6.400000 l 50.515000 5.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 5.000000 m 35.000000 6.400000 l 50.515000 6.400000 l 50.515000 5.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(King) dup sw 2 div 42.757500 ex sub 5.750000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 35.000000 6.400000 m 35.000000 6.800000 l 50.515000 6.800000 l 50.515000 6.400000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 6.400000 m 35.000000 6.800000 l 50.515000 6.800000 l 50.515000 6.400000 l cp s
+1.000000 1.000000 1.000000 srgb
+n 35.000000 6.800000 m 35.000000 7.800000 l 50.515000 7.800000 l 50.515000 6.800000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 6.800000 m 35.000000 7.800000 l 50.515000 7.800000 l 50.515000 6.800000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(+getAllowedMoves\(\): ArrayList<Position>) 35.150000 7.340000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -11.000000 m 35.000000 -9.600000 l 50.515000 -9.600000 l 50.515000 -11.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -11.000000 m 35.000000 -9.600000 l 50.515000 -9.600000 l 50.515000 -11.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(Rook) dup sw 2 div 42.757500 ex sub -10.250000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -9.600000 m 35.000000 -9.200000 l 50.515000 -9.200000 l 50.515000 -9.600000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -9.600000 m 35.000000 -9.200000 l 50.515000 -9.200000 l 50.515000 -9.600000 l cp s
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -9.200000 m 35.000000 -8.200000 l 50.515000 -8.200000 l 50.515000 -9.200000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -9.200000 m 35.000000 -8.200000 l 50.515000 -8.200000 l 50.515000 -9.200000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(+getAllowedMoves\(\): ArrayList<Position>) 35.150000 -8.660000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -15.000000 m 35.000000 -13.600000 l 50.515000 -13.600000 l 50.515000 -15.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -15.000000 m 35.000000 -13.600000 l 50.515000 -13.600000 l 50.515000 -15.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(Pawn) dup sw 2 div 42.757500 ex sub -14.250000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -13.600000 m 35.000000 -13.200000 l 50.515000 -13.200000 l 50.515000 -13.600000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -13.600000 m 35.000000 -13.200000 l 50.515000 -13.200000 l 50.515000 -13.600000 l cp s
+1.000000 1.000000 1.000000 srgb
+n 35.000000 -13.200000 m 35.000000 -12.200000 l 50.515000 -12.200000 l 50.515000 -13.200000 l f
+0.000000 0.000000 0.000000 srgb
+n 35.000000 -13.200000 m 35.000000 -12.200000 l 50.515000 -12.200000 l 50.515000 -13.200000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(+getAllowedMoves\(\): ArrayList<Position>) 35.150000 -12.660000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n -28.000000 11.000000 m -28.000000 12.400000 l -8.250000 12.400000 l -8.250000 11.000000 l f
+0.000000 0.000000 0.000000 srgb
+n -28.000000 11.000000 m -28.000000 12.400000 l -8.250000 12.400000 l -8.250000 11.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(ConnectionSetup) dup sw 2 div -18.125000 ex sub 11.750000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n -28.000000 12.400000 m -28.000000 31.000000 l -8.250000 31.000000 l -8.250000 12.400000 l f
+0.000000 0.000000 0.000000 srgb
+n -28.000000 12.400000 m -28.000000 31.000000 l -8.250000 31.000000 l -8.250000 12.400000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(+mainFrame: JFrame) -27.850000 12.940000 m
+ gs 1 -1 sc sh gr
+(+contentPane: JPanel) -27.850000 13.740000 m
+ gs 1 -1 sc sh gr
+(+fieldPane: JPanel) -27.850000 14.540000 m
+ gs 1 -1 sc sh gr
+(+submitPane: JPanel) -27.850000 15.340000 m
+ gs 1 -1 sc sh gr
+(+directoryPane: JPanel) -27.850000 16.140000 m
+ gs 1 -1 sc sh gr
+(+ipLabel: JLabel) -27.850000 16.940000 m
+ gs 1 -1 sc sh gr
+(+portLabel: JLabel) -27.850000 17.740000 m
+ gs 1 -1 sc sh gr
+(+currentDirectoryLabel: JLabel) -27.850000 18.540000 m
+ gs 1 -1 sc sh gr
+(+editorPane: JEditorPane) -27.850000 19.340000 m
+ gs 1 -1 sc sh gr
+(+connectionChoice: ButtonGroup) -27.850000 20.140000 m
+ gs 1 -1 sc sh gr
+(+listenButton: JRadioButton) -27.850000 20.940000 m
+ gs 1 -1 sc sh gr
+(+connectButton: JRadioButton) -27.850000 21.740000 m
+ gs 1 -1 sc sh gr
+(+ipField: JTextField) -27.850000 22.540000 m
+ gs 1 -1 sc sh gr
+(+portField: JTextField) -27.850000 23.340000 m
+ gs 1 -1 sc sh gr
+(+directoryField: JTextField) -27.850000 24.140000 m
+ gs 1 -1 sc sh gr
+(+submit: JButton) -27.850000 24.940000 m
+ gs 1 -1 sc sh gr
+(+browse: JButton) -27.850000 25.740000 m
+ gs 1 -1 sc sh gr
+(+adapterPane: JScrollPane) -27.850000 26.540000 m
+ gs 1 -1 sc sh gr
+(+connect: boolean = true) -27.850000 27.340000 m
+ gs 1 -1 sc sh gr
+(+netInfo: String) -27.850000 28.140000 m
+ gs 1 -1 sc sh gr
+(+chooserTitle: String) -27.850000 28.940000 m
+ gs 1 -1 sc sh gr
+(+gameInstance: final Game) -27.850000 29.740000 m
+ gs 1 -1 sc sh gr
+(+chooser: JFileChooser) -27.850000 30.540000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n -28.000000 31.000000 m -28.000000 40.800000 l -8.250000 40.800000 l -8.250000 31.000000 l f
+0.000000 0.000000 0.000000 srgb
+n -28.000000 31.000000 m -28.000000 40.800000 l -8.250000 40.800000 l -8.250000 31.000000 l cp s
+(+ConnectionSetup\(gameInstance:Game,netInfo:String\)) -27.850000 31.540000 m
+ gs 1 -1 sc sh gr
+(+setupComponents\(\): void) -27.850000 32.340000 m
+ gs 1 -1 sc sh gr
+(+validateIP\(\): boolean) -27.850000 33.140000 m
+ gs 1 -1 sc sh gr
+(+validatePort\(\): boolean) -27.850000 33.940000 m
+ gs 1 -1 sc sh gr
+(+throwErrorWindow\(\): void) -27.850000 34.740000 m
+ gs 1 -1 sc sh gr
+(+attemptConnection\(\): void) -27.850000 35.540000 m
+ gs 1 -1 sc sh gr
+(+actionPerformed\(e:ActionEvent\): void) -27.850000 36.340000 m
+ gs 1 -1 sc sh gr
+(-chooseDirectory\(\): void) -27.850000 37.140000 m
+ gs 1 -1 sc sh gr
+(+keyPressed\(ke:KeyEvent\)) -27.850000 37.940000 m
+ gs 1 -1 sc sh gr
+(+keyReleased\(arg0:KeyEvent\)) -27.850000 38.740000 m
+ gs 1 -1 sc sh gr
+(+keyTyped\(ke:KeyEvent\): void) -27.850000 39.540000 m
+ gs 1 -1 sc sh gr
+(+getIconPath\(\): String) -27.850000 40.340000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 32.581803 -9.900000 m 33.309762 -9.900000 l 33.309762 -13.600000 l 34.949523 -13.600000 l s
+0 slj
+1.000000 1.000000 1.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0.000000 0.000000 0.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 32.581803 -9.900000 m 33.309762 -9.900000 l 33.309762 -9.600000 l 34.949523 -9.600000 l s
+0 slj
+1.000000 1.000000 1.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0.000000 0.000000 0.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 32.581803 -9.900000 m 33.309762 -9.900000 l 33.309762 -5.600000 l 34.949523 -5.600000 l s
+0 slj
+1.000000 1.000000 1.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0.000000 0.000000 0.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 32.581803 -9.900000 m 33.309762 -9.900000 l 33.309762 -1.600000 l 34.949523 -1.600000 l s
+0 slj
+1.000000 1.000000 1.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0.000000 0.000000 0.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 32.581803 -9.900000 m 33.309762 -9.900000 l 33.309762 2.400000 l 34.949523 2.400000 l s
+0 slj
+1.000000 1.000000 1.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0.000000 0.000000 0.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 32.581803 -9.900000 m 33.309762 -9.900000 l 33.309762 6.400000 l 34.949523 6.400000 l s
+0 slj
+1.000000 1.000000 1.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0.000000 0.000000 0.000000 srgb
+n 32.581803 -10.300000 m 31.781803 -9.900000 l 32.581803 -9.500000 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 22.757500 1.949542 m 22.757500 -0.800053 l 23.335000 -0.800053 l 23.335000 -2.291070 l s
+[] 0 sd
+0 slj
+0 slc
+1.000000 1.000000 1.000000 srgb
+n 23.335000 -3.549649 m 23.575000 -2.849649 l 23.335000 -2.149649 l 23.095000 -2.849649 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+0.000000 0.000000 0.000000 srgb
+n 23.335000 -3.549649 m 23.575000 -2.849649 l 23.335000 -2.149649 l 23.095000 -2.849649 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 22.757500 9.450458 m 22.757500 12.200029 l 25.837500 12.200029 l 25.837500 13.691022 l s
+[] 0 sd
+0 slj
+0 slc
+1.000000 1.000000 1.000000 srgb
+n 25.837500 14.949600 m 25.597500 14.249600 l 25.837500 13.549600 l 26.077500 14.249600 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+0.000000 0.000000 0.000000 srgb
+n 25.837500 14.949600 m 25.597500 14.249600 l 25.837500 13.549600 l 26.077500 14.249600 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 0.115350 -4.350272 m -0.021816 7.000000 l -20.925000 7.000000 l -20.925000 4.858579 l s
+[] 0 sd
+0 slj
+0 slc
+1.000000 1.000000 1.000000 srgb
+n -20.925000 3.600000 m -20.685000 4.300000 l -20.925000 5.000000 l -21.165000 4.300000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+0.000000 0.000000 0.000000 srgb
+n -20.925000 3.600000 m -20.685000 4.300000 l -20.925000 5.000000 l -21.165000 4.300000 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 1.965704 10.968262 m 1.826367 7.000000 l -20.925000 7.000000 l -20.925000 4.858579 l s
+[] 0 sd
+0 slj
+0 slc
+1.000000 1.000000 1.000000 srgb
+n -20.925000 3.600000 m -20.685000 4.300000 l -20.925000 5.000000 l -21.165000 4.300000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+0.000000 0.000000 0.000000 srgb
+n -20.925000 3.600000 m -20.685000 4.300000 l -20.925000 5.000000 l -21.165000 4.300000 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n -19.000000 11.000000 m -19.000000 7.000000 l -20.925000 7.000000 l -20.925000 4.858579 l s
+[] 0 sd
+0 slj
+0 slc
+1.000000 1.000000 1.000000 srgb
+n -20.925000 3.600000 m -20.685000 4.300000 l -20.925000 5.000000 l -21.165000 4.300000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+0.000000 0.000000 0.000000 srgb
+n -20.925000 3.600000 m -20.685000 4.300000 l -20.925000 5.000000 l -21.165000 4.300000 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 15.000000 -8.900000 m 12.000000 -8.900000 l 12.000000 7.000000 l -20.925000 7.000000 l -20.925000 4.858579 l s
+[] 0 sd
+0 slj
+0 slc
+1.000000 1.000000 1.000000 srgb
+n -20.925000 3.600000 m -20.685000 4.300000 l -20.925000 5.000000 l -21.165000 4.300000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+0.000000 0.000000 0.000000 srgb
+n -20.925000 3.600000 m -20.685000 4.300000 l -20.925000 5.000000 l -21.165000 4.300000 l cp s
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 14.949668 21.500000 m 13.489979 21.500000 l 13.489979 25.900000 l 13.288870 25.900000 l s
+[] 0 sd
+0 slj
+0 slc
+1.000000 1.000000 1.000000 srgb
+n 12.030291 25.900000 m 12.730291 25.660000 l 13.430291 25.900000 l 12.730291 26.140000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+0.000000 0.000000 0.000000 srgb
+n 12.030291 25.900000 m 12.730291 25.660000 l 13.430291 25.900000 l 12.730291 26.140000 l cp s
+0.100000 slw
+[] 0 sd
+1.000000 1.000000 1.000000 srgb
+n 15.000000 35.000000 m 15.000000 36.400000 l 37.830000 36.400000 l 37.830000 35.000000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 35.000000 m 15.000000 36.400000 l 37.830000 36.400000 l 37.830000 35.000000 l cp s
+/Helvetica-Bold-latin1 ff 0.700000 scf sf
+(JHistoryArea) dup sw 2 div 26.415000 ex sub 35.750000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 15.000000 36.400000 m 15.000000 37.400000 l 37.830000 37.400000 l 37.830000 36.400000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 36.400000 m 15.000000 37.400000 l 37.830000 37.400000 l 37.830000 36.400000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+(-lastMove: StateUpdate) 15.150000 36.940000 m
+ gs 1 -1 sc sh gr
+1.000000 1.000000 1.000000 srgb
+n 15.000000 37.400000 m 15.000000 40.800000 l 37.830000 40.800000 l 37.830000 37.400000 l f
+0.000000 0.000000 0.000000 srgb
+n 15.000000 37.400000 m 15.000000 40.800000 l 37.830000 40.800000 l 37.830000 37.400000 l cp s
+(+JHistoryArea\(\)) 15.150000 37.940000 m
+ gs 1 -1 sc sh gr
+(+updateJHistoryArea\(update:StateUpdate\): void) 15.150000 38.740000 m
+ gs 1 -1 sc sh gr
+(-updateTextArea\(update:String\): void) 15.150000 39.540000 m
+ gs 1 -1 sc sh gr
+(-characterFromPieceType\(movedPiece:PieceType\): static char) 15.150000 40.340000 m
+ gs 1 -1 sc sh gr
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+n 13.288494 25.900000 m 13.030291 25.900000 l 13.030291 30.600000 l 26.415000 30.600000 l 26.415000 35.000000 l s
+[] 0 sd
+0 slj
+0 slc
+1.000000 1.000000 1.000000 srgb
+n 12.029916 25.900000 m 12.729916 25.660000 l 13.429916 25.900000 l 12.729916 26.140000 l ef
+0.100000 slw
+[] 0 sd
+0 slj
+0 slc
+0.000000 0.000000 0.000000 srgb
+n 12.029916 25.900000 m 12.729916 25.660000 l 13.429916 25.900000 l 12.729916 26.140000 l cp s
+/Courier-latin1 ff 0.560000 scf sf
+showpage

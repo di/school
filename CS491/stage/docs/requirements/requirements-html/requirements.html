@@ -1,0 +1,625 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>requirements</TITLE>
+<META NAME="description" CONTENT="requirements">
+<META NAME="keywords" CONTENT="requirements">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="requirements.css">
+
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html2"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR>
+<B> Next:</B> <A NAME="tex2html3"
+  HREF="node1.html">About this document ...</A>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+RequirePackagefix-cm
+documentclass[titlepage]article
+par
+usepackagefullpage   
+usepackagefancyhdr   
+usepackagegraphicx   
+usepackagegraphics   
+usepackagemdwlist    
+usepackagehyperref   
+usepackagesubfig
+usepackageappendix
+usepackagelistings
+usepackagetikz
+usepackagepgf
+usepackagescalefnt
+usepgfmoduleshapes
+usepgfmoduleplot
+usetikzlibraryshapes,snakes,arrows,decorations
+par
+hypersetup
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle=STAGE Software Requirements Specification V6,
+    pdfauthor=Dustin Ingram, Aaron Rosenfeld, Maria Kolakowska, Frank Clark
+
+par
+setcountersecnumdepth5
+par
+setlengthheadheight15pt
+setlengthheadsep25pt
+pagestylefancy
+par
+fancypagestyleplain
+    fancyhf
+    renewedcommandheadrulewidth0pt
+    renewedcommandfootrulewidth0pt
+
+par
+newedcommandmytitleSoftware Requirements Specification
+newedcommandmydatetoday
+par
+fancyhf fancyhead[L]STAGE
+fancyhead[C]mytitle
+fancyhead[R]mydate
+fancyfoot[C]thepage
+renewedcommandheadrulewidth0.4pt
+renewedcommandfootrulewidth0.4pt
+par
+titletextbfmytitle
+author
+	Frank Clark 
+<BR>
+urlfrancis.j.clark@drexel.edu
+    and Dustin Ingram 
+<BR>
+urldustin.s.ingram@drexel.edu
+	and Maria Kolakowska 
+<BR>
+urlmaria.j.kolakowska@drexel.edu
+    and Aaron Rosenfeld 
+<BR>
+urlaaron.rosenfeld@drexel.edu
+
+datemydate
+<BR>
+Version 6
+par
+begindocument
+pagenumberingroman
+par
+beginfigure
+    vspace-2em
+    centering
+    par
+begintikzpicture[scale=1]
+par
+pgfsetlinewidth3pt
+par
+colorcyan!70!black
+	pgfpathmovetopgfpointxy-52
+	pgfpathlinetopgfpointxy-511
+	pgfpathlinetopgfpointxy-211.9	
+	pgfpathlinetopgfpointxy211.9	
+	pgfpathlinetopgfpointxy511
+	pgfpathlinetopgfpointxy52
+	pgfpathclose 
+	pgfusepathfill,stroke 
+par
+colorgreen!70!black
+	pgfsetstrokecolorblack
+	pgfpathmovetopgfpointxy-21.5
+	pgfpathcurvetopgfpointxy-21.5pgfpointxy-61.5pgfpointxy-62.5
+	pgfpathlinetopgfpointxy-64
+	pgfpathlinetopgfpointxy64
+	pgfpathlinetopgfpointxy62.5
+	pgfpathcurvetopgfpointxy61.5pgfpointxy21.5pgfpointxy21.5
+	pgfpathclose 
+	pgfusepathfill,stroke 
+par
+colorred!70!black
+	pgfsetstrokecolorblack
+par
+pgfpathmovetopgfpointxy-611
+	pgfpathlinetopgfpointxy-62.5
+	pgfpathcurvetopgfpointxy-62.2pgfpointxy-3.52.2pgfpointxy-3.52.5
+	pgfpathcurvetopgfpointxy-3.53pgfpointxy-3.54pgfpointxy-4.55
+	pgfpathcurvetopgfpointxy-2.57pgfpointxy-411pgfpointxy-311.5
+	pgfpathcurvetopgfpointxy-411pgfpointxy-2.57pgfpointxy-4.55
+	pgfpathcurvetopgfpointxy-2.57pgfpointxy-611pgfpointxy-311.5
+	pgfpathcurvetopgfpointxy-611pgfpointxy-2.57pgfpointxy-4.55
+	pgfpathcurvetopgfpointxy-2.57pgfpointxy-811pgfpointxy-311.5
+	pgfpathcurvetopgfpointxy-811pgfpointxy-2.57pgfpointxy-4.55
+	pgfpathcurvetopgfpointxy-2.57pgfpointxy-2.511pgfpointxy-311.5
+	pgfusepathfill,stroke
+par
+pgfsetlinewidth3pt
+	pgfpathmovetopgfpointxy611
+	pgfpathlinetopgfpointxy62.5
+	pgfpathcurvetopgfpointxy62.2pgfpointxy3.52.2pgfpointxy3.52.5
+	pgfpathcurvetopgfpointxy3.53pgfpointxy3.54pgfpointxy4.55
+	pgfpathcurvetopgfpointxy2.57pgfpointxy411pgfpointxy311.5
+	pgfpathcurvetopgfpointxy411pgfpointxy2.57pgfpointxy4.55
+	pgfpathcurvetopgfpointxy2.57pgfpointxy611pgfpointxy311.5
+	pgfpathcurvetopgfpointxy611pgfpointxy2.57pgfpointxy4.55
+	pgfpathcurvetopgfpointxy2.57pgfpointxy811pgfpointxy311.5
+	pgfpathcurvetopgfpointxy811pgfpointxy2.57pgfpointxy4.55
+	pgfpathcurvetopgfpointxy2.57pgfpointxy2.511pgfpointxy311.5
+	pgfusepathfill,stroke
+par
+pgfpathmovetopgfpointxy-212
+	pgfpathcurvetopgfpointxy-212pgfpointxy-612pgfpointxy-611
+	pgfpathcurvetopgfpointxy-59pgfpointxy-211pgfpointxy-211.85
+	pgfpathcurvetopgfpointxy-211.5pgfpointxy-4.59.5pgfpointxy-611
+	pgfpathcurvetopgfpointxy-4.59.5pgfpointxy-211.5pgfpointxy-211.85
+	pgfpathcurvetopgfpointxy-212pgfpointxy-3.510.4pgfpointxy-611
+	pgfpathcurvetopgfpointxy-3.510.4pgfpointxy-212pgfpointxy-211.85
+par
+pgfpathcurvetopgfpointxy-110.5pgfpointxy110.5pgfpointxy211.85
+	pgfpathcurvetopgfpointxy110.5pgfpointxy-110.5pgfpointxy-211.85	
+	pgfpathcurvetopgfpointxy-111pgfpointxy111pgfpointxy211.85
+	pgfpathcurvetopgfpointxy111pgfpointxy-111pgfpointxy-211.85	
+	pgfpathcurvetopgfpointxy-110pgfpointxy110pgfpointxy211.85
+par
+pgfpathcurvetopgfpointxy211.5pgfpointxy4.59.5pgfpointxy611
+	pgfpathcurvetopgfpointxy4.59.5pgfpointxy211.5pgfpointxy211.85
+	pgfpathcurvetopgfpointxy212pgfpointxy3.510.4pgfpointxy611
+	pgfpathcurvetopgfpointxy3.510.4pgfpointxy212pgfpointxy211.85
+	pgfpathcurvetopgfpointxy211pgfpointxy59pgfpointxy611
+	pgfpathcurvetopgfpointxy612pgfpointxy212pgfpointxy212
+	pgfpathclose 
+	pgfusepathfill,stroke 
+par
+pgfsetstrokecolorblack
+	pgfpathmovetopgfpointxy-4.55
+	pgfpathcurvetopgfpointxy-4.55pgfpointxy-65pgfpointxy-65.5
+	pgfusepathstroke	
+	pgfsetstrokecolorblack
+	pgfpathmovetopgfpointxy4.55
+	pgfpathcurvetopgfpointxy4.55pgfpointxy65pgfpointxy65.5
+	pgfusepathstroke
+par
+node[color=black] at (0,0) scalefont10.0STAGE;
+par
+endtikzpicture
+    vspace-4em
+endfigure
+par
+maketitle
+par
+beginabstract
+STAGE is an event-based simulation environment used to compare the effectiveness of different combinations of software agents, network configurations, and sensor data in real-world environments.  It is comprised of a distributed simulation engine, visualizer, and programming interface through which developers create agent software and network topologies.  Communication between virtual nodes is also simulated, providing highly realistic scenarios.
+endabstract
+par
+setcountertocdepth4
+tableofcontents
+pagebreak
+listoffigures
+pagebreak
+pagenumberingarabic
+par
+sectionIntroductionlabelintroduction
+par
+subsectionPurposelabelpurpose
+par
+This requirements document defines the functional and non-functional requirements for the STAGE project.  These requirements include, but are not limited to, the performance, interfaces, and hardware goals and limitations.  The information presented here is intended for the development team and the external stakeholders, currently Dr. William Regli, Mr. Joseph B. Kopena, Mr. Joeseph P. Macker, and The U.S. Naval Research Laboratory.
+par
+subsectionScopelabelscope
+par
+The goal of the STAGE project is to allow for the testing of agents working together on separate nodes across multiple scenario and topology situations.  STAGE allows the user to examine how effectively nodes (with agents running on them) interact with one another.  This includes network connections between nodes, the fidelity of these connections, and the proficiency of the agents to process and transmit data.
+par
+STAGE consists of six main components: Visualization, Topology, Scenario, Agent Framework, Distribution Framework, and the API.  The Visualization allows the user to see what is happening in the simulation.  For example, network links and their strength, movement of nodes in the virtual world, as well as the movement of non-agent world objects all have a visual representation over a map of the world.  The Topology is a scripted language that defines interfaces and network connections on each node.  It also describes any changes in the network that do not result from mobility.  The Scenario is a scripted language that defines the location and mobility patterns of each node and non-node world object. It also handles the timing of events. An Agent Framework indicates the agent(software) running on each node and permits different algorithms to be tested on different nodes.  The Distribution Framework helps to distribute the simulation across multiple physical nodes in a cluster.  An API is also provided to allow the user to interact with the simulation.  For example, it allows a user to trigger outside events or query information being generated by the simulation. 
+par
+Users of STAGE are researchers looking to improve or test their current agent/network interactions across different topology and scenario combinations.  
+par
+subsectionDefinitions, Acronyms, and Abbreviationslabeldefinitions
+par
+begindescription
+item[Agent]
+	Agents are simulated pieces of software that run on nodes in the network. They consist of different algorithms that are relevant for the user to test on different scenarios and topologies.   
+par
+item[Distribution]
+	Distribution refers to the process of distributing the simulation across a multi-platform physical cluster.  This allows the system to exceed the number of nodes per platform for a single simulation at the system's discretion.  A framework will be provided to allow the user to distribute their simulation. 	
+par
+item[Node]
+	Nodes are virtual or physical machines that consist of agents and network interfaces.  If nodes are virtual, many nodes may run on one physical machine.  
+par
+item[Scenario]
+	Scenario is comprised of a scripted language indicating the location simulated nodes within the virtual world. These nodes consist of agents (see definition of `Agent') and non-agent world objects such as planes, boats, ground vehicles, etc. 
+par
+item[Terrain]
+	Terrain refers to the simulated landscape.  This includes such geography as the slope of the land, the tree density, water v.s. land surfaces, etc.
+par
+item[Topology]
+	Topology describes time-dependent connections between nodes and their characteristics (e.g. radio model). It is described with a scripting language which specifies the details of network interfaces on each simulated node, including radio models and throughput characteristics.  It describes any physical or wireless links that connect these interfaces.  Further, it indicates changes in linkage over time such as a wireless interface switches, wireless LANs, or a physical link being created or severed. 
+par
+item[Visualizer]
+	The Visualizer allows the simulations to be superimposed over real-world topography.  This permits the user to examine the behavior of the agents.  It also allows for overlays such as link quality, traffic rates, and other metrics deemed important to specific components.
+par
+enddescription
+par
+subsectionReferenceslabelreferences
+par
+These documents have been used as reference materials for various technologies involved with this project.
+beginitemize*
+	item SPEYES: Sensing and Patrolling Enablers Yielding Effective SASO: urlhttp://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=1559616
+	item Service Sniffer Requirements Document: urlhttp://servicesniffer.net/documents/requirements.html
+    item Developing an Agent Systems Reference Architecture: urlwww.cs.drexel.edu/&nbsp;dn53/papers/paper_cameraready.pdf
+enditemize*
+par
+subsectionOverviewlabeloverview
+par
+The rest of this document is organized as follows: 
+beginitemize*
+	item[-]Section refoverall-description gives a high level overview of the project requirements.  
+	item[-]Section refspecific-requirements gives more detailed project requirements.  
+	item[-]Sections refinput-formats and refoutput-formats provides detail in the inputs and outputs of the system, 
+	item[-]Section reffunctional specifies what the software will do, 
+enditemize*
+The rest of Section refspecific-requirements explains other minor requirements.
+par
+sectionOverall Descriptionlabeloverall-description
+par
+subsectionProduct Perspectivelabelproduct-perspective
+par
+STAGE is used as a testbed for sensors and respective algorithms in the laboratory against virtual operations using data from simulated sensors and nodes. The ability to independently and quickly vary the network topology, application suites, environment, or any other variable is essential to collect data which would be cost-prohibitive to produce in a real-world scenario. Furthermore, the visualization tool is used for conceptual demonstrations.
+par
+subsubsectionSystem Interfaceslabelsystem-interfaces
+par
+STAGE combines:
+beginitemize
+    item Scenario Language - Defining the entire scenario in a very simple language
+    item Agent Framework - Supporting the customization of semi-intelligent agents
+    item Topology Creator - Creating a virtual topology of nodes defined in the Scenario Language
+    item Distribution Framework - Distributing a large-scale simulation across numerous physical machines
+    item Data-Collection API - Collecting all relevant data through a simple API
+    item Visualization Engine - Conceptually visualizing terrain, node movement, link status, etc.
+enditemize
+par
+subsubsectionUser Interfaceslabeluser-interfaces
+par
+STAGE's user interface is two-fold, with each interface for different tasks and uses. The basic interface allows a user to simply and quickly define a scenario with the Scenario Language and begin an experiment, using the API to collect data in a way that is defined by the user. The Visualization Engine allows the user to interpret the experiment visually, without a need for data-collection or the API.
+par
+subsectionProduct Functionslabelproduct-functions
+par
+This software is a testbed, where the users specify an environment, network configuration, and agent software running in
+the simulation. Each of these items may be varied independently at runtime.
+par
+The primary function of this software is to coordinate an event-based simulation comprised of virtual nodes, other world objects,
+agent software, and network devices.  Specifically the software starts simulations, handles all events, and determines
+when a scenario is complete.  The simulation may run in either simulated time or real-time depending on the user's
+configuration.
+par
+STAGE also provides an optional visualization component, useful for monitoring the current simulation state.  The
+visualization uses data provided by the simulation to display world objects including nodes and terrain, as well as
+annotations such as network-link changes and node paths.
+par
+Simulation of inter-node communications is handled by STAGE's networking component.  This component provides realistic
+simulation of network links and virtual node networking stacks.
+par
+subsectionUser Characteristicslabeluser-characteristics
+par
+The system has four different types of users.  Each type of user has different goals and needs to use different parts of the system.  These user roles, while they may be performed by the same user, are here split into the four distinct roles for clarity:
+par
+subsubsectionFictional User: Alice, Project Managerlabelalice
+par
+Alice uses STAGE for demonstrations and to acquire funding for research.  Alice wants to complete the tasks below with
+the visualization:
+par
+beginitemize*
+    item Start a simulation
+    item View the simulation in real or simulated time
+    item Move the viewpoint
+    item Visualize simulation events including link changes and entity movements
+    item View output from agents if implemented
+enditemize*
+par
+beginfigure
+    centering
+    begintikzpicture [scale=.4]
+    path[fill=yellow!10,rounded corners, draw=black!50, dashed]
+                (-3,10) rectangle (10,-3);
+    draw (-3,10) node[anchor=north west, draw=none]1.;
+par
+draw[very thick,dashed] (0,0) circle (2.2);
+    draw[very thick,dashed] (3,2) circle (2.2);
+    draw[very thick,dashed] (7,7) circle (2.2);
+    draw[very thick,dashed] (6,1) circle (2.2);
+    draw[very thick,dashed] (1,6) circle (2.2);
+par
+node[diamond, draw, fill=green!20] (a) at (0,0) A;
+    node[diamond, draw, fill=green!20] (b) at (3,2) B;
+    node[diamond, draw, fill=green!20] (c) at (7,7) C;
+    node[diamond, draw, fill=green!20] (d) at (6,1) D;
+    node[diamond, draw, fill=green!20] (e) at (1,6) E;
+par
+path[fill=yellow!30,rounded corners, draw=black!50, dashed]
+                (10,10) rectangle (23,-3);
+    draw (10,10) node[anchor=north west, draw=none]2.;
+par
+draw[very thick,dashed] (14,2) circle (2.2);
+    draw[very thick,dashed] (16,4) circle (2.2);
+    draw[very thick,dashed] (20,7) circle (2.2);
+    draw[very thick,dashed] (19,1) circle (2.2);
+    draw[very thick,dashed] (14,6) circle (2.2);
+par
+node[diamond, draw, fill=red!20] (a2) at (14,2) A;
+    node[diamond, draw, fill=red!20] (b2) at (16,4) B;
+    node[diamond, draw, fill=green!20] (c2) at (20,7) C;
+    node[diamond, draw, fill=green!20] (d2) at (19,1) D;
+    node[diamond, draw, fill=red!20] (e2) at (14,6) E;
+par
+path[-, very thick] (b2) edge (a2);
+    path[-, very thick] (b2) edge (e2);
+par
+path[fill=yellow!50,rounded corners, draw=black!50, dashed]
+                (23,10) rectangle (36,-3);
+    draw (23,10) node[anchor=north west, draw=none]3.;
+par
+draw[very thick,dashed] (27,2) circle (2.2);
+    draw[very thick,dashed] (29,4) circle (2.2);
+    draw[very thick,dashed] (33,4) circle (2.2);
+    draw[very thick,dashed] (31,2) circle (2.2);
+    draw[very thick,dashed] (27,6) circle (2.2);
+par
+node[diamond, draw, fill=red!20] (a3) at (27,2) A;
+    node[diamond, draw, fill=red!20] (b3) at (29,4) B;
+    node[diamond, draw, fill=red!20] (c3) at (33,4) C;
+    node[diamond, draw, fill=red!20] (d3) at (31,2) D;
+    node[diamond, draw, fill=red!20] (e3) at (27,6) E;
+par
+path[-, very thick] (b3) edge (a3);
+    path[-, very thick] (b3) edge (e3);
+    path[-, very thick] (b3) edge (d3);
+    path[-, very thick] (d3) edge (c3);
+par
+endtikzpicture
+    caption[Prototype Use Case Diagram]A prototype of what ``Bob'' may create: emph1. Agents have been configured to perform random walks within a boundary, and each contains a wireless interface. emph2. When nodes recieve an event indicating they are in range of another node, they hold their position and create a network link. emph3. A static network is formed.   
+endfigure
+par
+subsubsectionFictional User: Bob, Agent Algorithm Researcherlabelbob
+par
+Bob researches agent algorithms and uses STAGE to compare their effectiveness.  Bob wants to complete the tasks below:
+par
+beginitemize*
+    item Use the API to implement agents which run on network nodes
+    item Use the visualizer to assure scenarios are properly setup
+    item Disable the visualizer and run scenarios many times
+    item Collect aggregate data from scenario trials via subscription to the API's event channel
+enditemize*
+par
+subsubsectionFictional User: Carol, Network Protocol Developerlabelbob
+par
+Carol uses STAGE to test networking protocols.  Specifically, she tries different network protocols with a single agent
+setup to find the best combination.  Carol wants to complete the tasks below:
+par
+beginitemize*
+    item Use the networking component to implement networking protocols
+    item Disable the visualizer and run scenarios many times
+    item Collect aggregate data from scenario trials via subscription to the API's event channel
+enditemize*
+par
+subsubsectionFictional User: Dave, Large Scale Simulatorlabelbob
+par
+Dave uses STAGE to run large scale simulations which run slower than real-time on his personal computer.  Dave wants to
+complete the tasks below:
+par
+beginitemize*
+    item Distribute agent instances to multiple physical machines
+    item Abstract the physical links from the simulation
+    item Coordinate data collection after simulations
+enditemize*
+par
+subsectionConstraintslabelconstraints
+par
+The system is able to interpret and/or process any agent or topology it is given.  If this isn't possible for any reason, the system informs the user of this. No piece of this system requires elevated privileges.
+par
+subsectionAssumptions and Dependencieslabelassumptions-and-dependencies
+par
+It is assumed that a user, administrator, or developer has the ability to install required libraries which will named in the future as a result of the development process.
+par
+sectionSpecific Requirementslabelspecific-requirements
+par
+subsectionFunctional Requirementslabelfunctional
+par
+beginfigure[hb]
+  centering
+  includegraphics[scale=.3]../prototype/images/ss2.png
+  caption[A screenshot of the STAGE Display Tool (SDT)]The STAGE Display Tool (SDT) shows mobile nodes (represented by the helicopters) interacting on the world map.  The terrain (the city below) can
+  also be seen.  The red lines between nodes represent a network connection.  Connected nodes become stationary as
+  unconnected nodes continuosly change their position in the simulation until they come within range of another node.
+endfigure
+par
+subsubsectionVisualization
+The following applies to STAGE's Visualization Engine (VE):
+    paragraphTerrain The Visualization Engine displays varying types of terrain, as defined by the environment.
+    paragraphWorld Objects The Visualization Engine displays mobile and static world objects, as defined by the scenario.
+    paragraphMobile Agents The Visualization Engine displays mobile nodes.
+    paragraphPath-finding The Visualization Engine finds the path for an object to move to a given coordinate.
+    paragraphMaximum Models The Visualization Engine is able to display 300 models in a given scenario.
+    paragraphModularity The Visualization Engine component is modular, i.e. it can be removed from the framework without affecting functionality (with the exception of the visuals).
+    paragraphTiming The Visualization Engine runs in real-time.
+    paragraphViewpoints The Visualization Engine is able to display the world from more than one point of view.
+    paragraphViewpoints The Visualization Engine is able to display the world from any given point of view.
+par
+subsubsectionSimulation Engine
+	The following applies to STAGE's Simulation Engine (SE):
+    paragraphTiming The Simulation Engine runs in real-time.
+    paragraphLimitations of Movement The Simulation Engine limits the movement of models to specific areas or types of terrain (e.g. boats may only move on river).
+    paragraphPath-drawing The Simulation Engine finds the path for an object to move to a given coordinate.
+    paragraphCollision Prevention When finding a path, the Simulation Engine ensures the path will not steer an agent to navigate into world objects.
+    paragraphMaximum Models The Simulation Engine keeps in memory up to 300 nodes.
+    paragraphUser Intervention The Simulation Engine allows for the interruption or change of events by human input.
+par
+subsubsectionNetwork Definition
+	paragraphInterfaces The definition language specifies interfaces on each virtual node.  Specifically, each interface is described with a physical model (radio, wired, etc.) and an appropriate link-layer protocol.
+	paragraphNetworks The definition language specifies networks to which interfaces may interact.  Networks are described with a unique identifier and physical layer model (e.g. radio propagation model).
+	paragraphLinks The definition language specifies one-to-one links between interfaces.  A link is	described by a physical layer model.
+par
+subsubsectionScenario Definition
+	paragraphLocation The scenario definition language defines the location of agent and non-agent world objects.
+	paragraphMobility The scenario definition language describes the mobility or each virtual node as a function of time.
+	paragraphEvents Mobility is alterable as a result of events, specified in the scenario definition.
+	paragraphNon-node Behavior The scenario definition language describes the movement of and events triggered by entities other than virtual nodes.
+par
+subsubsectionAgent Framework
+	paragraphAgent Location The agent framework specifies on which virtual node(s) a given agent should operate.
+	paragraphStartup The agent framework specifies the startup parameters of each agent.
+	paragraphCollection The agent framework specifies the output parameters of each agent instance.
+par
+subsubsectionDistribution Framework
+	The Distribution Framework uses the API to spread the simulation across a Physical Distribution, and to aggregate trial data. It consists of a network of one-to-many physical machines.
+	paragraphPhysical Distribution The distribution framework distributes virtual nodes evenly across physical nodes. Further, it handles the establishment and initialization of agents on their respective physical node.
+	paragraphSimulation Server The distribution framework organizes physical nodes hierarchically to interact with the simulation server.
+par
+subsubsectionData Aggregation
+    paragraphReal-Time Event Subscription The simulator has an open API channel which should be used to monitor real-time events published by the simulation.
+par
+subsubsectionData Storagelabeldata-storage
+    paragraphOutside Databases No outside database system is used for data storage, unless it is introduced by the user via the API
+    paragraphScenario Definitions Scenario definitions, including the topology and agents, are stored and parsed by the system
+par
+subsectionNon-Functional Requirements 
+par
+subsubsectionHardware Interfaceslabelhardware-interfaces
+par
+STAGE requires that the machine running the system has one to many network interfaces to support distribution.
+par
+subsubsectionSoftware Interfaceslabelsoftware-interfaces
+par
+STAGE requires the use of OpenGL in order to use the visualizer.
+par
+subsubsectionMemory Constraintslabelmemory-constraints
+par
+STAGE requires a machine with at least 4GB of RAM.
+par
+subsubsectionSite Adaptation Requirementslabelsite-adaptation-requirements
+par
+STAGE requires that the system is configured per-site to create a distributed simulation, or to interact on-the-fly.
+par
+subsubsectionOperating Systemlabeloperating-system
+par
+STAGE is able to run on Unix, Linux, and Mac
+par
+subsubsectionProcessorlabelprocessor
+par
+STAGE requires at least a 32- or 64-bit x86 3.0GHz processor
+par
+subsubsectionNetwork Connectionlabelnetwork-connection
+par
+STAGE requires any recent network card which is currently connected to the simulation network (if the simulation is
+distributed)
+par
+subsubsectionVisualizerlabelvisualizer
+par
+STAGE requires a graphics card which will support OpenGL or an equivalent
+par
+subsectionInput Formatslabelinput-formats
+par
+subsubsectionScenario
+    paragraphLocation Data The simulation is able to read location data for nodes.
+	paragraphMobility Data The simulation is able to read mobility data for nodes.
+	paragraphScenario Input The simulation is able to respond to event input from scenario input files
+par
+subsubsectionTopology
+    paragraphNetwork Interfaces The simulation is able to read network interfaces for nodes
+    paragraphNetwork Links The simulation is able to read links in the network between interfaces
+    paragraphNetwork Topology The simulation is able to read changes to the network topology
+par
+subsectionOutput Formatslabeloutput-formats
+subsubsectionScenario
+    paragraphNetwork Changes The system supports outputting network data changes over time post-simulation
+    paragraphNetwork Fidelity The system supports outputting network fidelity over time post-simulation
+par
+subsubsectionTopology
+	paragraphTopology Changes The system supports outputting topology changes over time post-simulation
+	paragraphMobility Patterns The system supports outputting agent and non-agent mobility patterns post simulation
+par
+subsectionUser Interfacelabeluser-interface
+par
+The following applies to STAGE's basic interface:
+subsubsectionScenarios
+    paragraphScenario The interface allows a user to define a scenario.
+    paragraphScenario Language The scenario defined by the interface is written in the Scenario Language.
+subsubsectionExperimentation
+    paragraphBeginning Experiment The interface allows a user to begin an experiment.
+    paragraphEnding Experiment The interface allows a user to end an experiment.
+par
+subsectionExtensibilitylabelextensibility
+subsubsectionCustomization
+    paragraphCustom Topologies The system provides a means for users to create custom topologies.
+    paragraphCustom Agents The system provides a means for users to create custom agents.
+par
+subsectionTestinglabeltesting
+All code with in the system must be tested. Core functionality of the software has 100% code coverage with automated unit and integration tests.  The visualizer testing is done manually as it is a smaller component and would otherwise require a disproportionately large investment in initial setup.  Unit tests cover the algorithms used in our system while integration tests are used to test our data-flow.  
+par
+sectionSystem Evolution
+par
+With more time, the STAGE team could create additional tools to aid in the the development of more complex agents or topologies, so that user customization does not become too granular.  Furthermore, tools which can automate or assist in data collection and parsing could be implements.  Even further development could lead to a platform that included Windows or other operating systems.
+par
+subsectionDocumentationlabeldocumentation
+beginenumerate
+    item The software provides a User Manual containing step-by-step instructions for user perspective in Section&nbsp;refuser-characteristics.
+    item The software provides Developer Documentation containing:
+    beginenumerate
+        item Scenario Language syntax and usage
+        item Network Topology definitions and example networks
+        item Agent Framework definitions and example agents
+    endenumerate
+endenumerate
+par
+appendix
+pagebreak
+par
+enddocument
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html4"
+  HREF="node1.html">About this document ...</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html2"
+  HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR>
+<B> Next:</B> <A NAME="tex2html3"
+  HREF="node1.html">About this document ...</A></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Dustin Ingram
+2011-01-04
+</ADDRESS>
+</BODY>
+</HTML>

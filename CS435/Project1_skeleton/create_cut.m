@@ -1,0 +1,221 @@
+%%
+%% create_cut.m
+%%
+%% Computational Photography Assignment 1
+%%
+%% John Novatnack
+%% jmn27@cs.drexel.edu
+%%
+%% Adapted from skeleton code by:
+%%
+%% 	Konstantinos Bitsakos
+%% 	Department of Computer Science 
+%% 	University of Maryland, College Park
+%% 	kbits@cs.umd.edu
+%%
+%% Further reference on Intelligent Scissors:
+%%	"Intelligent Scissors for Image Composition", E. Mortensen and W. Barret
+%%	SIGGRAPH 1995.
+%%
+%%
+%% Given a NxM image, a cost matrix, a seed point and an endpoint finds
+%% the least cost path between the seed and the endpoint.
+%%
+%% INPUT
+%%	1) img		- N x M x 3 image
+%%	2) cost_mat	- N x M x 8 cost matrix
+%%	3) s_x		- Seed point x
+%%	4) s_y		- Seed point y
+%%	5) e_x		- End point x
+%%	6) e_y		- End point y
+%%
+%% 
+%% OUTPUT
+%%	1) wire		- N x M binary wire matrix
+%%
+
+%%
+%% !! Also check neighbors.m, neighbor_cost.m, extractmin.m, insert.m !!
+%%
+function wire = create_cut(img,cost_mat,s_x,s_y,e_x,e_y)
+
+  [rows, columns, c] = size(img);
+  img = double(img);
+
+
+
+   
+  %%
+  %% Each node will experience three states: INITIAL=0, ACTIVE=1, EXPANDED=2
+  %%
+  %% Defining this variable as global will allow you to access it in any
+  %% subroutines you write, though this may not be necessary.
+  %%
+  global NodeState
+  NodeState=zeros(rows,columns); 
+
+
+
+
+  %%
+  %% Create an array of pointers and initialize it to Infinity.  
+  %%
+  %% Defining this variable as global will allow you to access it in any
+  %% subroutines you write, though this may not be necessary.
+  %%
+  global Pointers
+  Pointers_row=ones(rows,columns);
+  Pointers_column=ones(rows,columns);
+  
+
+
+
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Minimum Cost Path Algorithm %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+  %%
+  %% Initialize the priority queue
+  %% pq is an array with 3 rows: First row contains the x coordinate, the
+  %% second row the y coordinate and the third row the value for a given
+  %% point
+  %%
+  %% pq must be defined as a global variable for the routines insert and
+  %% extractmin to work.
+  global pq
+  pq=zeros(3,0); 
+ 
+
+  %%
+  %% Set the total cost of seed to be zero    
+  %%
+  %%
+  %% Insert the seed into the priority queue
+  %%
+  insert(s_x,s_y,0);
+
+
+  %%
+  %% Extract the minimum cost point from the priority queue
+  %%
+  [q_x,q_y,q_cost]=extractmin;
+
+
+  %%
+  %% Loop until the priority queue is empty 
+  %%
+  
+  while(q_x ~= 0 & q_y ~= 0)
+
+      %%
+      %% Mark (q_x,q_y) as expanded
+      %% 
+      
+      NodeState(q_x, q_y) = 2;
+
+      %%
+      %% For each point p in the neighborhood of (q_x,q_y);
+      %% 
+      
+      neighborhood = neighbors(q_x, q_y);
+      
+      for i=1:length(neighborhood),
+
+
+        %%
+        %% if p has not been EXPANDED
+        %% 
+        
+        if NodeState(neighborhood(i,1),neighborhood(i,2)) ~= 2
+
+          %%
+          %% Mark p as ACTIVE;
+          %% 
+
+          NodeState(neighborhood(i,1),neighborhood(i,2)) = 1;
+
+          %%
+          %% Insert p in pq with the sum of the total cost of q and link cost
+          %% from q to p as its total cost;
+          %%
+          
+          changed = insert(neighborhood(i,1),neighborhood(i,2),q_cost + cost_mat(neighborhood(i,1),neighborhood(i,2),i));
+          
+          %%
+          %% If inserting p has changed it
+          %% 
+          
+          if changed,
+
+            %%
+            %% Make an entry for p in the Pointers array indicating that currently the
+            %% best way to reach p is from q.
+            %%
+              
+              Pointers(neighborhood(i,1),neighborhood(i,2),:) = [q_x,q_y];
+              
+          end;
+          
+        end;
+
+      %%
+      %% Extract the minimum cost point from the priority queue
+      %%
+      [q_x,q_y,q_cost]=extractmin;
+          
+      end;
+          
+  end;
+
+  %%
+  %% Initialize wire array to be zeros.
+  %%
+  wire = zeros(rows,columns);
+
+
+
+
+
+  %%
+  %% Trace back your solution.
+  %%
+  %%
+  %% While current pixel ~= seed pixel
+  %% 
+  %%
+  %% Set current pixel to the goal pixel.
+  %% 
+  current_pixel_x = e_x;
+  current_pixel_y = e_y;
+  
+
+
+  %%
+  %% Loop until you reach the seed point
+  %%
+  
+  while(current_pixel_x ~= s_x && current_pixel_y ~= s_y)
+
+    %%
+    %% Set current pixel in wire to be 1
+    %% 
+      
+    wire(current_pixel_x,current_pixel_y) = 1;
+    
+
+    %%
+    %% Set current pixel to be predecessor to current pixel retrieved from Pointers
+    %%
+
+    current_pixel_x = Pointers(current_pixel_x,current_pixel_y,1);
+    current_pixel_y = Pointers(current_pixel_x,current_pixel_y,2);
+    
+  end;
+  
+
+
+
+
+    

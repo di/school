@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem
+END
+fat12.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem/fat12.py
+END
+ntfs5.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem/ntfs5.py
+END
+fat32.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem/fat32.py
+END
+cdfs.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem/cdfs.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem/__init__.py
+END
+mbr.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem/mbr.py
+END
+fat16.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem/fat16.py
+END
+ext2.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem/ext2.py
+END
+ext3.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/58/trunk/src/old/construct/formats/filesystem/ext3.py
+END

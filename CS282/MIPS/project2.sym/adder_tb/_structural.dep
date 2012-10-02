@@ -1,0 +1,5 @@
+ieeevarstd_logic_1164ieee.sym/std_logic_1164/prim.var
+ieeesrcstd_logic_1164stdlogic.vhd
+.varadder_tb(structural)project2.sym/adder_tb/_structural.var
+.srcadder_tb(structural)adder_tb.vhd
+.varadder_tbproject2.sym/adder_tb/prim.var

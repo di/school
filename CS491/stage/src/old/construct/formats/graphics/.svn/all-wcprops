@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/58/trunk/src/old/construct/formats/graphics
+END
+wmf.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/58/trunk/src/old/construct/formats/graphics/wmf.py
+END
+bmp.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/58/trunk/src/old/construct/formats/graphics/bmp.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/58/trunk/src/old/construct/formats/graphics/__init__.py
+END
+png.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/58/trunk/src/old/construct/formats/graphics/png.py
+END
+gif.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/58/trunk/src/old/construct/formats/graphics/gif.py
+END
+jpeg.py
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/58/trunk/src/old/construct/formats/graphics/jpeg.py
+END
+emf.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/58/trunk/src/old/construct/formats/graphics/emf.py
+END

@@ -1,0 +1,9 @@
+CS 435 - Project 3
+Dustin Ingram
+March 14th, 2008
+
+I feel like all my code is 100% there, and that I'm computing everything right, but I can't for the life of me find out where the error is coming from.
+
+In "homography2d.m", the variable "A" is being passed to the svd() function. Occasionally, "A" contains some NaNs. I'm not sure where these are coming from. The only values being passed to homography2d() are two vectors of valid numbers ("srccorners" and "targetcorners"). 
+
+So, I'll submit this *nearly* done. I've already put alot of work into it, and since matlab is currently segfaulting on the lab machines, the application had to be (slowly) run though a X11 forward from tux, making testing a very slow, arduous and frustrating process.

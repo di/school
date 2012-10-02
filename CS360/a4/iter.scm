@@ -1,0 +1,5 @@
+(define (iterator l)
+  (define i (range l))
+  (define t '())
+  ((begin (set! t (car i)) (set! i (cdr i)) t))
+)

@@ -1,0 +1,137 @@
+\documentclass[letterpaper,titlepage]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Config
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Page layout, header, footer
+\usepackage{fullpage}
+%\usepackage{indentfirst}
+%\setlength{\parindent}{0pt}
+	
+% For graphics
+\usepackage{graphicx}
+\graphicspath{{./gfx/}}
+\usepackage{wrapfig}
+
+% For URLs
+\usepackage[colorlinks,
+            linkcolor=black,
+            filecolor=black,
+	            urlcolor=black]
+            {hyperref}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{25pt}
+\pagestyle{fancy}
+	
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{Software Design Description}
+\fancyfoot[L]{\today}
+\fancyfoot[C]{Section \thesection}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Signature Stuff
+\newcommand{\sigline}[1]{
+  \rule{\textwidth}{.5pt}\\
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l r }
+  #1 & Date\\[2.5cm]
+  \end{tabular*}
+}
+	
+% Shortcut commands
+\newcommand{\bullets}[1]{\begin{itemize} #1 \end{itemize}}
+\newcommand{\deflist}[1]{\begin{description} #1 \end{description}}
+	
+\begin{document}
+\pagenumbering{roman}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{Software Design Description}}
+\author{\textbf{Windmill Software }\\
+        Steven Cornella \\ Armon Entezari \\ Dustin Ingram \\ Aaron Rosenfeld \\ Michael Vadovszki
+	}
+\date{\today\\Revision 0}
+\maketitle
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{plain}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\input{introduction}
+
+\section{Static Design Structure Modeling}
+For a larger version, please see the included file ``class-diagram.pdf''.
+\begin{center}
+\includegraphics[scale=.7]{class-diagram.pdf}
+\end{center}
+
+\section{Dynamic Behavior Modeling}
+
+\subsection{Start New Game}
+\begin{center}
+\includegraphics[scale=.50]{StateDiagrams/StartNewGame.pdf}
+\end{center}
+
+\subsection{Wait for Opponent Connection}
+\begin{center}
+\includegraphics[scale=.50]{StateDiagrams/WaitForOpponentConnection.pdf}
+\end{center}
+
+\subsection{Connect to Opponent} \label{sec:connect}
+\begin{center}
+\includegraphics[scale=.50]{StateDiagrams/ConnectToOpponent.pdf}
+\end{center}
+
+\subsection{Move Piece} \label{sec:move-piece}
+\begin{center}
+\includegraphics[scale=.50]{StateDiagrams/MovePiece.pdf}
+\end{center}
+
+\subsection{Wait for Opponent Move}
+\begin{center}
+\includegraphics[scale=.50]{StateDiagrams/WaitForOpponentMove.pdf}
+\end{center}
+
+\subsection{Game End} \label{sec:game-end}
+\begin{center}
+\includegraphics[scale=.50]{StateDiagrams/GameEnd.pdf}
+\end{center}
+
+\subsection{Change Game Icons} \label{sec:icons}
+\begin{center}
+\includegraphics[scale=.50]{StateDiagrams/ChangeGameIcons.pdf}
+\end{center}
+
+\section{Requirement Traceability Table}
+
+\begin{center}
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Requirement} & \textbf{Component} \\ \hline
+    Handle special chess moves & \ref{sec:move-piece} \\ \hline
+    Modify piece icons & \ref{sec:icons} \\ \hline
+    Log moves in algebraic notation & \ref{sec:move-piece} \\ \hline
+    Notify when game has ended & \ref{sec:game-end} \\ \hline
+    Specify a specific IP/port for game-play & \ref{sec:connect} \\ \hline
+\end{tabular}
+\end{center}
+
+\end{document}
+

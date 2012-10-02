@@ -1,0 +1,26 @@
+\section{Overall Description}
+\subsection{Product Perspective}
+Chess has been one of the most widely known and competitive games since its creation centuries ago.  While the rules of
+the game haven't changed, the people who play chess and the places chess is played have.  To keep the game popular and
+convenient to play in this modern age, a digital successor to the original board game is required. 
+
+\subsection{System Interfaces}
+Windmill's chess software focuses on simplicity of design and ease of play.  Therefore there are no separate
+client/server interfaces; it utilizes one universal client program to automatically connect players.
+
+\subsection{User Interface}
+The Windmill client has a very simple interface leveraging Java’s Swing to provide a simple and enjoyable game of chess
+across a standard network.  The interface provides all the functionality needed to connect to another client and play a
+standard rules-compliant game of chess.
+
+\subsection{Hardware Interface}
+The chess client, because it’s running on Java and using standard libraries should run on any computer with an
+up-to-date version of Sun’s JVM, a mouse, keyboard, and network interface for playing against remote clients.
+
+\subsection{Product Functions}
+Windmill’s chess software will provide the interface, graphics, and logic required to play a standard game of chess over
+a network connection with another chess client. 
+
+\subsection{User Characteristics}
+The only knowledge required is the basic knowledge of how to play chess.  The simple and intuitive interface will allow
+users to jump right into a game without any difficulty.

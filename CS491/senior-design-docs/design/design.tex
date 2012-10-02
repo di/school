@@ -1,0 +1,1398 @@
+\documentclass[titlepage]{article}
+
+\usepackage{fullpage}    % Use the whole page
+\usepackage{fancyhdr}    % Nice headers/footers
+\usepackage{mdwlist}     % For itemize* and enumerate*
+\usepackage{graphicx}    % Importing graphics
+\usepackage{hyperref}    % Hyperlink references and URLs
+\usepackage[figure,table]{hypcap} % Hyperlink points to the top of figures
+
+% Tikz packages
+\usepackage[svgnames]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+%BEGIN IMAGE
+\usetikzlibrary{shapes,arrows,shadows,fit}
+%END IMAGE
+\usepackage{pgf-umlsd}
+
+% Just so we don't have to specify this twice
+\newcommand\mytitle{Software Design Specification}
+\newcommand\mydate{April 6, 2010}
+\newcommand\myversion{2}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={ServiceSniffer Software Design Specification v\myversion},
+    pdfauthor={Justin Courts; Philip Cristiano; Charles Rumford; Thomas Wambold}
+}
+
+% So we can number paragraphs too
+\setcounter{secnumdepth}{5}
+
+% For headers and footers
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{25pt}
+\pagestyle{fancy}
+	
+% Page style for the title page
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% Page style for every other page
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{ServiceSniffer}
+\fancyhead[C]{\mytitle}
+\fancyhead[R]{\mydate}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{\textbf{\mytitle}}
+\author{
+    Justin Courts \\\url{justin@servicesniffer.net}
+    \and Philip Cristiano \\\url{phil@servicesniffer.net}
+    \and Charles Rumford \\\url{charlesr@servicesniffer.net}
+    \and Thomas Wambold \\\url{tom@servicesniffer.net}
+}
+\date{\mydate\\Version \myversion}
+
+%%% Tikz stuff %%%
+% Style for UML Class with attributes and methods
+%BEGIN IMAGE
+\tikzstyle{umlclass} = [
+    rectangle, rectangle split, rectangle split parts=3,
+    % This makes a nice gradient
+    top color=white, bottom color=blue!30, draw=blue!50!black!100,
+    drop shadow, rounded corners,
+    node distance = 5cm, text width = 5cm]
+
+% Line styles
+\tikzstyle{hasa} = [draw, ->, >=open diamond]
+\tikzstyle{ownsa} = [draw, ->, >=diamond]
+\tikzstyle{isa} = [draw, ->, >=open triangle 45]
+
+\newcommand{\umlclass}[5][,]{
+    \node [umlclass,#1] (#2) {
+        \textbf{#3}
+        \nodepart{second}
+        \begin{description*}
+        #4
+        \end{description*}
+        \nodepart{third}
+        \begin{description*}
+        #5
+        \end{description*}
+    };
+}
+
+\newcommand{\umlattr}[3]{
+    \item[$#1$]\textbf{#2}: \textit{#3}
+}
+\newcommand{\umlmethod}[4]{
+    \item[$#1$]\textbf{#2}({#3}): \textit{#4}
+}
+\newcommand{\umlarg}[2]{\textit{#1} #2}
+
+\newcommand{\umlrelation}[6][-|]{
+    \path [#3] (#2) #1 (#4)
+        node [very near start, auto=right] {#5}
+        node [very near end, auto=right] {#6};
+}
+%END IMAGE
+%%% End tikz stuff %%%
+
+\begin{document}
+\pagenumbering{roman}
+
+%\begin{figure*}
+%    \vspace{-6em}
+%    \centering
+%    \includegraphics[width=0.6\textwidth]{../logo}
+%    \vspace{-4em}
+%\end{figure*}
+
+\maketitle
+
+\begin{abstract}
+The goal of the ServiceSniffer project is to automate the passive discovery,
+recognition, and consumption of semantic web services.  ServiceSniffer does not
+require any central registry of services but will examine network traffic
+patterns to identify specific services, how to invoke them, and report
+specific, user chosen information.  As well as running with known service
+definitions, the system should be able to (a) identify new services as unknown,
+and (b) analyze relevant network traffic to determine how to consume the
+service.  This application will be constructed of an extensible core framework
+upon which future modules can be developed and integrated.
+\end{abstract}
+
+\setcounter{tocdepth}{4}
+\tableofcontents
+\pagebreak
+\listoffigures
+\pagebreak
+\pagenumbering{arabic}
+
+%------------------------------------------------------------------------------
+
+%
+% What this document should do:
+%
+% The SDD shows how the software system will be structured to satisfy the
+% requirements identiﬁed in the software requirements speciﬁcation IEEE Std
+% 830-1998. It is a translation of requirements into a description of the
+% software structure, software components, interfaces, and data necessary for the
+% implementation phase. In essence, the SDD becomes a detailed blueprint for the
+% implementation activity. In a complete SDD, each requirement must be traceable
+% to one or more design entities.
+%
+
+%------------------------------------------------------------------------------
+
+\section{Introduction
+    \label{introduction}
+}
+%     6.1 Introduction 
+%         Each design description user may have a different view of what are
+%         considered the essential aspects of a software design. All other
+%         information is extraneous to that user. The proportion of useful
+%         information for a speciﬁc user will decrease with the size and
+%         complexity of a software project. The needed information then becomes
+%         difﬁcult or impractical to extract from the description and impossible
+%         to assimilate. Hence, a practical organization of the necessary design
+%         information is essential to its use. 
+% 
+%         This clause introduces the notion of design views to aid in organizing
+%         the design attribute information deﬁned in Clause 5. It does not
+%         supplement Clause 5 by providing additional design information nor does
+%         it prescribe the format or documentation practice for design views. 
+% 
+%         A recommended organization of design entities and their associated
+%         attributes are presented in this clause to facilitate the access of
+%         design information from various technical viewpoints. This recommended
+%         organization is ﬂexible and can be implemented through different media
+%         such as paper documentation, design languages, or database management
+%         systems with automated report generation, and query language access. A
+%         sample table of contents is given in Annex A to illustrate how an
+%         access structure to a design description may be prepared. 
+% 
+
+%------------------------------------------------------------------------------
+
+\subsection{Purpose
+    \label{purpose}
+}
+
+This design document defines the architecture of the ServiceSniffer program.
+ServiceSniffer is built modularly with the major chunks being data capture,
+data filtering and processing, central system kernel, and user interfaces.  The
+information presented here is intended for the development team and the
+external stakeholders, which are currently Dr. William Regli, Dr.  Dara Kusic,
+and Raytheon Company.
+
+%------------------------------------------------------------------------------
+
+\subsection{Scope
+    \label{scope}
+}
+
+The goal of the ServiceSniffer project is to automate the passive discovery,
+recognition, and consumption of semantic web services.  ServiceSniffer does not
+require any central registry of services (and, in fact, is designed to be a
+substitute for one) but will examine network traffic patterns to identify
+specific services, how to invoke them, and report specific, user chosen
+information.  As well as running with known service definitions, the system
+should be able to identify new services and analyze relevant network traffic to
+determine how to consume the service.  This application will be constructed of
+an extensible core framework upon which future modules can be developed and
+integrated.
+
+ServiceSniffer is split into 4 general pieces: the data input, data processing,
+system kernel, and user interface modules.  The data input module is
+responsible for collecting traffic off the network or using a Pcap file as a
+source instead of a live network.  The data processing module, which is
+constructed from various filters and processors, applies filters to the network
+traffic from the data input module and converts it into various and
+configurable reports and views depending on what the user wants to see.  Some
+examples of these reports will be described later.  The system kernel acts as a
+central broker for all other modules to talk to each other, as well as being
+responsible for the creation/deletion of filter and processor chains.  Lastly,
+ServiceSniffer has both a CLI and a GUI for viewing the various data returned
+by the data processors and filters.  These interfaces will allow users to
+interact with the data returned.  For example, a user could apply additional
+display filters, such as filtering by a specific destination IP.  Both
+interfaces will offer to users a report of what web services appear to be
+available on the network and supply a report - an ad-hoc registry of sorts -
+which users can use to consume the web services.  Users may specify additional
+types of filters or processors to generate different types of reports via an
+extension system.
+
+%------------------------------------------------------------------------------
+
+\subsection{Definitions, Acronyms, and Abbreviations%
+  \label{definitions}%
+}
+
+\begin{description}
+\item[Consumption of a Service]
+    To become a user/client of the web service
+
+\item[Filter]
+    A tool that returns a subset of its input, based on some parameters
+
+\item[JSON]
+    JavaScript Object Notation
+
+\item[libpcap]
+    Multiplatform packet capture library
+
+\item[PCAP]
+    Packet CAPture - an API for capturing and processing packets from live
+    network devices, and files
+
+\item[Processor]
+    A tool that transforms its input from one data type to another
+
+\item[Semantic Service]
+    A web service which defines a context for the meaning of the data which it
+    returns
+
+\item[Web Service]
+    A software system designed to support interoperable machine-to-machine
+    interaction over a network
+
+\item[WSDL]
+    Web Services Description Language - a format for describing web services
+\end{description}
+
+%------------------------------------------------------------------------------
+
+\subsection{References%
+  \label{references}%
+}
+
+These documents explain in-depth about the various technologies involved in
+this project.
+%
+\begin{itemize*}
+\item WSDL Specification: \url{http://www.w3.org/TR/wsdl20/}
+\item SOAP Specification: \url{http://www.w3.org/TR/soap/}
+\item libpcap Homepage: \url{http://www.tcpdump.org/}
+\item MVP-E Project (Team 10): \url{http://www.cs.drexel.edu/SeniorDesign/2010Material/Projects2010.html}
+\end{itemize*}
+
+%------------------------------------------------------------------------------
+
+\section{Design Views
+    \label{design-views}
+}
+%     6.2 Design views 
+%         Entity attribute information can be organized in several ways to reveal
+%         all of the essential aspects of a design. In so doing, the user is able
+%         to focus on design details from a different perspective or viewpoint. A
+%         design view is a subset of design entity attribute information that is
+%         speciﬁcally suited to the needs of a software project activity. 
+% 
+%         Each design view represents a separate concern about a software system.
+%         Together, these views provide a comprehensive description of the design
+%         in a concise and usable form that simpliﬁes information access and
+%         assimilation. 
+% 
+%         A recommended organization of the SDD into separate design views to
+%         facilitate information access and assimilation is given in Table 1.
+%         Each of these views, their use, and representation are discussed in
+%         detail. 
+% 
+%         (Table 1 - "Recommended design views" here)
+% 
+%         6.2.1 Decomposition description 
+%             6.2.1.1 Scope 
+%                 The decomposition description records the division of the
+%                 software system into design entities. It describes the way the
+%                 system has been structured and the purpose and function of each
+%                 entity. For each entity, it provides a reference to the
+%                 detailed description via the identiﬁcation attribute. 
+% 
+%                 The attribute descriptions for identiﬁcation, type, purpose,
+%                 function, and subordinates should be included in this design
+%                 view. This attribute information should be provided for all
+%                 design entities. 
+% 
+%             6.2.1.2 Use 
+%                 The decomposition description can be used by designers and
+%                 maintainers to identify the major design entities of the system
+%                 for purposes such as determining which entity is responsible
+%                 for performing speciﬁc functions and tracing requirements to
+%                 design entities. Design entities can be grouped into major
+%                 classes to assist in locating a particular type of information
+%                 and to assist in reviewing the decomposition for completeness.
+%                 For example, a module decomposition may exist separately from a
+%                 data decomposition. 
+% 
+%                 The information in the decomposition description can be used by
+%                 project management for planning, monitoring, and control of a
+%                 software project. They can identify each software component,
+%                 its purpose, and basic functionality. This design information
+%                 together with other project information can be used in
+%                 estimating cost, staff, and schedule for the development
+%                 effort. 
+% 
+%                 Conﬁguration management may use the information to establish
+%                 the organization, tracking, and change management of emerging
+%                 work products; see IEEE Std 828-1998. Metrics developers may
+%                 also use this information for initial complexity, sizing,
+%                 stafﬁng, and development time parameters. The software quality
+%                 assurance staff can use the decomposition description to
+%                 construct a requirements traceability matrix. 
+% 
+
+%------------------------------------------------------------------------------
+
+ServiceSniffer will be built modularly.  The modules being used are data
+capture, filter, kernel, and user interface.  Each module communicates to other
+modules using a defined interface.  Using a modular approach allows for
+individual modules to be replaced or extended as the user requires without
+altering other modules in the system, as each task is logically distinct from
+the others
+
+\subsection{Data Capture}
+
+The data capture module (defined in Section \ref{capture_classes}) handles the
+collection, storage, and reuse of network traffic.  Using libpcap, network
+traffic is collected from the network device and a first analysis is done to
+remove all non-service related traffic.  The remaining data will then be
+optionally stored and passed on to the kernel module, which will in turn hand
+it off to the filter/processor module.  If the data is also stored, it is saved
+in a PCap file in a locally accessible location specified by the user.  Lastly,
+the user can load a previously saved PCap file for analysis instead of
+collecting and analyzing live data.
+
+\subsection{Filters \& Processors}
+
+The filter and processor module (defined in Section \ref{processor_classes})
+receives the PCap-formatted packets from the data capture module and turns them
+into something useful to users.  While filters and processors are the same in
+terms of class interfaces, there is a logical difference between the two.
+Filters strictly reduce the number of items from their input returning a subset
+of its input based on some criteria and perform no translation of them into
+other forms of data (e.g.  filter out all non-SOAP packets), while processors
+analyze the input they receive to transform them into different forms (e.g.
+determine and report patterns in invocations of services).  Filters and
+processors can be linked together to form processing chains as the user
+requires.
+
+\subsection{Kernel}
+
+The kernel module (defined in Section \ref{kernel_classes}) acts as the central
+communication bus for all modules to interoperate.  It's also responsible for
+the handling of the filter module's processes and their inter-process
+communication (IPC).  As there will likely be a high volume of traffic, the
+data sent multiple times needs to be reduced to a minimum.  Using a central
+kernel and bus architecture makes this happen.
+
+\subsection{Interface}
+
+The last piece of the system is the user interface (UI) module (defined in
+Section \ref{interfaces}).  The UI module is, as expected, the part of the
+system that will be used most frequently by users.  There are two interfaces
+that will be developed for the first release: a command-line interface (CLI)
+and a graphical user interface (GUI).  The CLI will allow ServiceSniffer to be
+scripted, which adds functionality such as exporting the UDDI registry for
+systematic importing into another system.  The GUI allows a user to interact
+with the data being collected and analyzed, as well as control how filters and
+processors are used, and let the user run and export reports.
+
+%------------------------------------------------------------------------------
+
+\section{Architecture
+    \label{architecture}
+}
+
+ServiceSniffer adopts a process-based message passing architecture, with each
+module operating in its own operating system process.  This architecture allows
+us to easily take advantage of multi-core or multi-processor systems, without
+the synchronization issues involved with threading.  On UNIX based systems the
+cost of starting a process is low, so this is not an issue on modern machines.
+
+The various processes in our system communicate to each other using message
+passing over UNIX domain sockets.  UNIX domain sockets provide a fast and
+fairly high level way of sending data to different processes.
+
+This section defines the interfaces each module uses, and the APIs used to
+communicate with all of the modules in our system.
+
+%------------------------------------------------------------------------------
+
+\subsection{Communication Classes
+    \label{communication_classes}
+}
+
+\begin{figure}
+    \centering
+%BEGIN IMAGE
+    \begin{tikzpicture}
+        \umlclass[text width = 6cm,xshift=-2cm]{socketserver}{SocketServer}{
+            \umlattr{\#}{name}{String}
+            \umlattr{\#}{callback}{Callable(SocketMessage)}
+            \umlattr{-}{sockets}{list(socket)}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{
+                \umlarg{String}{input\_socket\_path}
+                \umlarg{Callable(SocketMessage)}{receive\_callback}
+            }{None}
+            \umlmethod{\#}{send\_message}{
+                \umlarg{SocketMessage}{message}
+            }{void}
+        }
+        \umlclass[text width = 6cm,right of=socketserver,xshift=2cm]{socketclient}{SocketClient}{
+            \umlattr{\#}{name}{String}
+            \umlattr{\#}{callback}{Callable(SocketMessage)}
+            \umlattr{-}{socket}{socket}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{
+                \umlarg{String}{input\_socket\_path}
+                \umlarg{Callable(SocketMessage)}{receive\_callback}
+            }{None}
+            \umlmethod{\#}{send\_message}{
+                \umlarg{SocketMessage}{message}
+            }{void}
+        }
+        \umlclass[below right of=socketserver]{socketmessage}{SocketMessage}{
+            \umlattr{\#}{data}{Dictionary}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{
+                    **kwargs        
+            }{void}
+            \umlmethod{+}{\_\_str\_\_}{}{String}
+        }
+        
+        \umlrelation[|-]{socketserver}{hasa}{socketmessage}{}{}
+        \umlrelation[|-]{socketclient}{hasa}{socketmessage}{}{}
+    \end{tikzpicture}
+%END IMAGE
+%HEVEA\imageflush
+    \caption{Class diagram for common classes across multiple modules}
+    \label{fig-commonclasses}
+\end{figure}
+
+The communication classes are the base for the interprocess communication
+system.  Figure~\ref{fig-commonclasses} shows the main classes that deal with
+communication, the \nameref{class-socket-server},
+\nameref{class-socket-client}, and \nameref{class-socket-message} classes.
+These classes will be reused for communication purposes between the other
+modules.
+
+%------------------------------------------------------------------------------
+
+\subsubsection{SocketServer
+    \label{class-socket-server}
+}
+
+The SocketServer is used by a producer of data to facilitate message passing to
+one or many consumers.  The SocketServer handles the creation of the UNIX
+domain socket, and listening for connections on that socket.  When the owner of
+the SocketServer wants to send a message (a \nameref{class-socket-client}), the
+instance handles distributing the message to everyone connected to it.  Also,
+it provides a callback-based method for receiving messages sent to it by a
+client.
+
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{name}: A string of the path to the socket file to create.
+        This must be a path the process running this has access to and is not
+        already taken by another socket.
+    \item \textbf{callback}: A callable object to be called when the server
+        receives a message from a client.  If None, messages from clients are
+        silently ignored.
+    \item \textbf{sockets}: A list of socket objects connected to all clients
+        currently listening for messages from this server.
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{\_\_init\_\_}: The constructor to this class.  A mandatory
+        string path is required to create the initial socket.  An optional
+        callback Callable can be given to be notified of message reception.
+    \item \textbf{send\_message}: This is what the owner of the SocketServer
+        uses to send a message.  Given a \nameref{class-socket-message} (or a
+        subclass), the message is serialized and sent over the socket to all
+        listening clients.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsubsection{SocketClient
+    \label{class-socket-client}
+}
+
+The SocketClient is used by consumers of data to facilitate connecting to a
+\nameref{class-socket-server} and sending and receiving messages from that
+producer of data.  It allows for a callback-based method of incoming message
+notification.
+
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{name}: A string of the path to the socket file to connect to.  This
+        must be a path that the process running this has access to, and that is
+        connected to a server.
+    \item \textbf{callback}: A callable object to be called when the client receives a
+        message from a server.
+    \item \textbf{socket}: The socket connected to the server.
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{\_\_init\_\_}: The constructor to this class.  A mandatory
+        string path is required to connect to the server socket.  A mandatory
+        callback Callable can be given to be notified of message reception.
+    \item \textbf{send\_message}: This is what the owner of the SocketClient
+        uses to send a message.  Given a \nameref{class-socket-message} (or a
+        subclass), the message is serialized and sent over the socket to the
+        connected server.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsubsection{SocketMessage
+    \label{class-socket-message}
+}
+
+SocketMessage is the base class for all messages going between sockets.  Each
+module can have an implementation of this SocketMessage in order to send
+different types of data.  The SocketMessage interface is a dictionary,
+providing easy access to the message contents.  When the message is sent, it is
+serialized and sent to the socket.
+
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{data}: A simple dictionary containing all the data in this
+        message in a key-value store.
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{\_\_init\_\_}: The initializer for the data.  This can accept
+        any keword arguments, which will be loaded into the message.
+    \item \textbf{\_\_str\_\_}: This will return the message as a serialized
+        string ready for transmission over a socket.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\clearpage
+
+\subsection{Socket Messaging Classes
+    \label{socket_messaging_classes}
+}
+
+\begin{figure}
+    \centering
+    \caption{Class diagram for socket messages}
+    \label{fig-socketmessages}
+%BEGIN IMAGE
+    \begin{tikzpicture}
+        \umlclass{socketmessage}{SocketMessage}{
+            \umlattr{\#}{data}{Dictionary}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{
+                    **kwargs        
+            }{void}
+            \umlmethod{+}{\_\_str\_\_}{}{String}
+        }
+        \umlclass[below right of=socketmessage,yshift=1cm]{interfacesocketmessage}{InterfaceSocketMessage}{
+            \umlattr{\#}{data}{Dictionary}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{
+                    **kwargs        
+            }{void}
+        }
+        \umlclass[below of=socketmessage,yshift=0.5cm]{protocolsocketmessage}{ProtocolSocketMessage}{
+            \umlattr{\#}{data}{Dictionary}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{
+                    **kwargs        
+            }{void}
+        }  
+        \umlclass[below left of=socketmessage,yshift=1cm]{invocationsocketmessage}{InvocationSocketMessage}{
+            \umlattr{\#}{data}{Dictionary}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{
+                    **kwargs        
+            }{void}
+        }      
+        \umlrelation[|-]{invocationsocketmessage}{isa}{socketmessage}{}{}
+        \umlrelation[|-]{interfacesocketmessage}{isa}{socketmessage}{}{}
+        \umlrelation[--]{protocolsocketmessage}{isa}{socketmessage}{}{}
+    \end{tikzpicture}
+%END IMAGE
+%HEVEA\imageflush
+\end{figure}
+
+The Socket Messaging Classes are specializations of the
+\nameref{class-socket-message} class used for input/output types of various
+processors and filters.  The objects themselves take only keyword arguments
+with a \_\_str\_\_ method for serialization.  Figure~\ref{fig-socketmessages}
+shows the relationship between these messages.
+
+%------------------------------------------------------------------------------
+
+\subsubsection{ProtocolSocketMessage}
+
+Class inheriting from a SocketMessage that contains meta data about a protocol
+invocation.
+
+%------------------------------------------------------------------------------
+
+\subsubsection{InvocationSocketMessage}
+
+Class inheriting from a SocketMessage that contains a full invocation of a protocol.
+
+%------------------------------------------------------------------------------
+
+\subsubsection{InterfaceSocketMessage}
+
+Class from a processor or filter that outputs only to the input socket of an
+interface module.
+
+%------------------------------------------------------------------------------
+
+\clearpage
+
+\subsection{Kernel Module Classes
+    \label{kernel_classes}
+}
+
+The Kernel Module is the core of the system.  It is in charge if spawning other
+modules and coordinating messaging between them.  It is made up of the
+\nameref{class-process-manager}, \nameref{class-history},
+\nameref{class-uddi-registry} classes.
+
+%------------------------------------------------------------------------------
+
+\begin{figure}
+    \centering
+%BEGIN IMAGE
+    \begin{tikzpicture}
+        % --  ProcessManager
+        \umlclass{ProcessManager}{ProcessManager}{
+            \umlattr{-}{processes}{list(Process)}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{}{void}
+            \umlmethod{+}{create\_process}{
+                String name, list(Process inputs), \{options\}
+            }{Process}
+            \umlmethod{+}{stop\_process}{Process proc}{None}
+            \umlmethod{+}{get\_running\_processes}{}{list(Process)}
+            \umlmethod{+}{register\_process}{String name, Process p}{}
+        }
+
+        % --  Process
+        \umlclass[below right of=ProcessManager,xshift=2cm,yshift=-1cm]{Process}{Process}{
+            \umlattr{-}{path}{String}
+            \umlattr{-}{out\_socket\_path}{String}
+            \umlattr{-}{input}{SocketMessage}
+            \umlattr{-}{output}{SocketMessage}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{
+                    path, list(SocketMessage input), list(SocketMessage output)
+            }{void}
+            \umlmethod{+}{get\_input}{}{list(SocketMessage)}
+            \umlmethod{+}{get\_output}{}{list(SocketMessage)}
+            \umlmethod{+}{create}{list(Process in), String output\_socket\_path, dict(options)}{Popen}
+        }
+        \umlrelation{ProcessManager}{hasa}{Process}{}{}
+    \end{tikzpicture}
+%END IMAGE
+%HEVEA\imageflush
+    \caption{Class diagram for Process Management}
+    \label{fig-kernel_process_mgmt}
+\end{figure}
+
+\subsubsection{ProcessManager
+    \label{class-process-manager}
+}
+
+The ProcessManager class is the main class in the Kernel module.  It is in
+charge of spawning other processes (\nameref{class-process}), setting their
+options, and connecting their inputs and outputs.
+Figure~\ref{fig-kernel_process_mgmt} shows its relation to the
+\nameref{class-process} class.
+
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{processes}: A list of \nameref{class-process} objects that
+        the ProcessManager is maintaining.
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{\_\_init\_\_}: Default constructor with no arguments.
+        Initializes all data structures.
+    \item \textbf{create\_process}: Given a name of a registered process, start
+        the \nameref{class-process}, set its inputs to read from the list of
+        input processes, and set the options specified.
+    \item \textbf{stop\_process}: Given an instance of an already running
+        \nameref{class-process}, stop the process and ensure its sockets are
+        cleaned up.
+    \item \textbf{get\_running\_processes}: Returns a list of
+        \nameref{class-process} that are running and being managed by the
+        ProcessManager.
+    \item \textbf{register\_process}: Given a string name, and a new
+        \nameref{class-process} instance, makes this known to the
+        ProcessManager, so that it can be started by name.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsubsection{Process
+    \label{class-process}
+}
+
+The Process class encapsulates the information about a single process available
+to be started.  It contains the path to the binary to launch when this process
+is started and has information on the \nameref{class-socket-message} subtypes
+that the process expects as input, and will provide as output.
+
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{path}: A string pointing to the filesystem path of the binary
+        to launch when an instance of this process is started.
+    \item \textbf{out\_socket\_path}: A string pointing to the filesystem path of the socket
+        this process will use to distribute its output.
+    \item \textbf{input}: A \nameref{class-socket-message} subclass specifying what
+        this process expects to receive as input.
+    \item \textbf{output}: A \nameref{class-socket-message} subclass specifying what
+        this process will produce as output.
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{\_\_init\_\_}: The constructor specifying initial values for
+        all of the attributes.
+    \item \textbf{get\_input}: Returns the types that this process expects as input.
+    \item \textbf{get\_output}: Returns the types that this process produces as output.
+    \item \textbf{create}: Given a list of processes to use as input, a path
+        for the output socket, and options, this spawns a new instance of the
+        process pointed to by the \textbf{path} attribute.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsubsection{History
+    \label{class-history}
+}
+
+\begin{figure}
+    \centering
+%BEGIN IMAGE
+    \begin{tikzpicture}
+        % --  History
+        \umlclass[text width = 7cm]{History}{History}{
+            \umlattr{-}{history}{list(SocketMessages)}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{}{void}
+            \umlmethod{+}{log\_message}{SocketMessage message}{None}
+            \umlmethod{+}{get\_all\_messages}{SocketMessage *type}{None}
+            \umlmethod{+}{dump}{File f}{}
+        }
+    \end{tikzpicture}
+%END IMAGE
+%HEVEA\imageflush
+    \caption{Class diagram for History.  Asterisk denotes an optional variable.}
+    \label{fig-kernel_history}
+\end{figure}
+
+The History class is used as a data cache for information received from other
+modules.  This is to reduce redundant processing in cases where a filter is
+applied and then removed.  Figure~\ref{fig-kernel_history} shows the attributes
+and methods of this class.
+
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{history}: A list of \nameref{class-socket-message} instances
+        of messages sent during system execution.  This serves as a local cache
+        of all PCap data previously sent during this execution cycle in case
+        new filter/processors are created that need to run against data already
+        processed.
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{\_\_init\_\_}: Default constructor that initializes data
+        structures.
+    \item \textbf{log\_message}: Takes a \nameref{class-socket-message} instance and
+        stores it in the cache.
+    \item \textbf{get\_all\_messages}: If the optional ``type'' field is None,
+        then return all \nameref{class-socket-message} instances in the cache.
+        If ``type'' is a valid \nameref{class-socket-message} instance, only
+        return items in the history list of that type.
+    \item \textbf{dump}: Given a File (or File-like object), dump all messages
+        cached to a file while leaving the history object unchanged.
+    \item \textbf{clear}: Remove all previously stored PCap data from the
+        history object.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\subsubsection{UDDIRegistry
+    \label{class-uddi-registry}
+}
+
+\begin{figure}
+    \centering
+%BEGIN IMAGE
+    \begin{tikzpicture}
+        % --  UDDI Registry
+        \umlclass{UDDIRegistry}{UDDIRegistry}{
+            \umlattr{-}{registry}{list(Service)}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{}{void}
+            \umlmethod{+}{register\_service}{Service service}{}
+            \umlmethod{+}{unregister\_service}{Service service}{}
+            \umlmethod{+}{get\_UDDI}{Service}{String definition}
+        }
+    \end{tikzpicture}
+%END IMAGE
+%HEVEA\imageflush
+    \caption{Class diagram for UDDI Registry.}
+    \label{fig-kernel_uddi_registry}
+\end{figure}
+
+The UDDIRegistry class provides an interface to an external UDDI registry
+system.  It facilitates registering and unregistering services from the
+registry.  Also, it provides a method of receiving the UDDI XML definitions
+from a registry given a service.  Figure~\ref{fig-kernel_uddi_registry} shows a
+diagram of the UDDIRegistry class structure.
+
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{registry}: A list of services in the registry.
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{\_\_init\_\_}: Default constructor that initializes data
+        structures.
+    \item \textbf{register\_service}: Given a service instance, add that
+        service to the registry.
+    \item \textbf{unregister\_service}: Given a service instance, remove that
+        service from the registry.  If the service is not in the registry,
+        silently ignore it.
+    \item \textbf{get\_UDDI}: Given a service instance, return the UDDI XML
+        definitions of that service from the registry.
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\clearpage
+
+\subsection{Capture Module Classes
+    \label{capture_classes}
+}
+
+\begin{figure}
+    \centering
+%BEGIN IMAGE
+    \begin{tikzpicture}
+        \umlclass{capturemodule}{CaptureModule}{
+            \umlattr{\#}{pcap}{libPcap}
+            \umlattr{\#}{output\_socket}{SocketServer}
+            \umlattr{-}{output\_file}{File}
+            \umlattr{-}{input\_file}{File}
+            \umlattr{-}{is\_loading\_from\_file}{Boolean}
+        }{
+            \umlmethod{+}{\_\_init\_\_}{
+                  \umlarg{ String }{output\_socket\_path},
+                  \umlarg{ String }{output\_filepath},
+                  \umlarg{ String }{input\_filepath},
+                  \umlarg{ Boolean }{load\_from\_file}
+            }{void}
+            \umlmethod{+}{get\_input\_file}{}{String}
+            \umlmethod{+}{get\_output\_file}{}{String}
+            \umlmethod{+}{is\_loading\_from\_file}{}{Boolean}
+        }
+        \node [umlclass, below of=capturemodule, yshift=-5mm] (socketserver) {\textbf{SocketServer}};
+        \umlrelation[--]{capturemodule}{hasa}{socketserver}{}{}
+    \end{tikzpicture}
+%END IMAGE
+%HEVEA\imageflush
+    \caption{Class diagram for capture module.  Note:
+        \nameref{class-socket-server}previously defined.}
+    \label{fig-capturemodule}
+\end{figure}
+
+The CaptureModule is responsible for reading packets from the network, or from
+a file, and sending them to the kernel for further processing.  The
+CaptureModule uses libpcap in order to accomplish this.
+Figure~\ref{fig-capturemodule} shows the interface to this module.  This module
+has a \nameref{class-socket-server} instance in order to communicate its
+output.
+
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{pcap}: An instance of the libpcap library.
+    \item \textbf{output}: An instance of \nameref{class-socket-server}.  Used
+        for sending output to clients listening for it.
+    \item \textbf{output\_file}: If not None, specifies a file to log all raw
+        packets captured.
+    \item \textbf{input\_file}: Specifies a file to read raw packets from, or a
+        live capture device.
+    \item \textbf{is\_loading\_from\_file}: Returns whether the String returned
+        by ``get\_output\_file'' is a filesystem path (True) or a device name
+        (False).
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{\_\_init\_\_}: Constructor function used to initialize
+        attributes.
+    \item \textbf{get\_input\_file}: Returns the String path to the current
+        input file or the name of the capture device being used.
+    \item \textbf{get\_output\_file}: Returns the String path of the packet
+        output file, if any.
+    \item \textbf{is\_loading\_from\_file}: Returns whether the String returned
+        by ``get\_output\_file'' is a filesystem path (True) or a device name
+        (False).
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\clearpage
+
+\subsection{Processor Module Classes
+    \label{processor_classes}
+}
+
+\begin{figure}
+    \centering
+%BEGIN IMAGE
+    \begin{tikzpicture}
+        \node [umlclass] (socketserver) {\textbf{SocketServer}};
+        \umlclass[above right of=socketserver]{processor}{Processor}{
+            \umlattr{\#}{socket}{SocketServer}
+        }{
+            \umlmethod{+}{run}{
+                \umlarg{void}{}
+            }{void}
+        }
+        \umlclass[below right of=processor,yshift=1cm]{servicelistprocessor}{ServicelistProcessor}{
+            \umlattr{\#}{socket}{SocketServer}
+        }{
+            \umlmethod{+}{run}{
+                \umlarg{void}{}
+            }{void}
+        }
+        \umlclass[below of=processor,xshift=4cm]{otherprocessor}{OtherProcessors}{
+            \umlattr{\#}{socket}{SocketServer}
+        }{
+            \umlmethod{+}{run}{
+                \umlarg{void}{}
+            }{void}
+        }
+        \umlrelation{processor}{hasa}{socketserver}{}{}
+        \umlrelation[|-]{servicelistprocessor}{isa}{processor}{}{}
+        \umlrelation[-|]{otherprocessor}{isa}{processor}{}{}
+    \end{tikzpicture}
+%END IMAGE
+%HEVEA\imageflush
+    \caption{Class diagrams for processor modules.   Note:
+        \nameref{class-socket-server} previously defined.}
+    \label{fig-processors}
+\end{figure}
+
+The processor modules are runnable objects with sockets that perform operations
+from socket messages.  See Figure~\ref{fig-processors} for the structure of
+this class.
+
+
+\subsubsection{Processor}
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{socket}: An instance of \nameref{class-socket-server} used to
+        communicate with the processor.
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{run}: Starts the processor with specified settings.
+\end{itemize}
+
+\paragraph{Attributes}
+\begin{itemize}
+    \item \textbf{pcap}: An instance of the libpcap library.
+    \item \textbf{output}: An instance of \nameref{class-socket-server}.  Used
+        for sending output to clients listening for it.
+    \item \textbf{output\_file}: If not None, specifies a file to log all raw
+        packets captured.
+    \item \textbf{input\_file}: Specifies a file to read raw packets from, or a
+        live capture device.
+    \item \textbf{is\_loading\_from\_file}: Returns whether the String returned
+        by ``get\_output\_file'' is a filesystem path (True) or a device name
+        (False).
+\end{itemize}
+
+\paragraph{Methods}
+\begin{itemize}
+    \item \textbf{\_\_init\_\_}: Constructor function used to initialize
+        attributes.
+    \item \textbf{get\_input\_file}: Returns the String path to the current
+        input file or the name of the capture device being used.
+    \item \textbf{get\_output\_file}: Returns the String path of the packet
+        output file, if any.
+    \item \textbf{is\_loading\_from\_file}: Returns whether the String returned
+        by ``get\_output\_file'' is a filesystem path (True) or a device name
+        (False).
+\end{itemize}
+
+
+%------------------------------------------------------------------------------
+% Its too late to write stuff for this, try again later... --Tom
+%\clearpage
+%
+%\subsection{User Interface Module Classes
+%    \label{ui_classes}
+%}
+
+
+%             6.2.1.3 Representation 
+%                 The literature on software engineering describes a number of
+%                 methods that provide consistent criteria for entity
+%                 decomposition (see Freeman and Wasserman, Tutorial on Software
+%                 Design Techniques ). These methods provide for designing
+%                 simple, independent entities and are based on such principles
+%                 as structured design and information hiding.  The primary
+%                 graphical technique used to describe system decomposition is a
+%                 hierarchical decomposition diagram. This diagram can be used
+%                 together with natural language descriptions of purpose and
+%                 function for each entity. 
+
+%\begin{figure}
+%    \centering
+%    \begin{tikzpicture}
+%        \umlclass{main}{Main}{
+%            \umlattr{+}{foo}{String}
+%            \umlattr{-}{bar}{Integer}
+%        }{
+%            \umlmethod{+}{DoFoo}{
+%                \umlarg{void}{}
+%            }{Integer}
+%            \umlmethod{-}{getThing}{
+%                \umlarg{String}{foo},
+%                \umlarg{Integer}{bar},
+%            }{void}
+%        }
+%        \umlclass[below left of=main]{other}{Other}{
+%            \umlattr{+}{foo}{String}
+%            \umlattr{-}{bar}{Integer}
+%        }{
+%            \umlmethod{+}{DoFoo}{
+%                \umlarg{void}{}
+%            }{Integer}
+%            \umlmethod{-}{getThing}{
+%                \umlarg{String}{foo},
+%                \umlarg{Integer}{bar},
+%            }{void}
+%        }
+%        \umlclass[below right of=main]{cool}{Cool}{
+%            \umlattr{+}{foo}{String}
+%            \umlattr{-}{bar}{Integer}
+%        }{
+%            \umlmethod{+}{DoFoo}{
+%                \umlarg{void}{}
+%            }{Integer}
+%            \umlmethod{-}{getThing}{
+%                \umlarg{String}{foo},
+%                \umlarg{Integer}{bar},
+%            }{void}
+%        }
+%        \umlrelation{main}{hasa}{other}{1..*}{1}
+%        \umlrelation{main}{ownsa}{cool}{1}{1}
+%        \umlrelation[--]{other}{isa}{cool}{}{}
+%    \end{tikzpicture}
+%    \caption{Test UML class diagram}
+%\end{figure}
+
+
+%\begin{figure}
+%  \centering
+%  \begin{sequencediagram}
+%  \tikzstyle{inststyle}+=[rounded corners=3.2mm, bottom color=cyan] %% hier werden weitere Optionen angegeben
+%    \newthread{ss}{simulationServer}
+%    \newinst{ctr}{simControlNode}
+%    \newinst{ps}{physicsServer}
+%    \newinst[1]{sense}{senseServer}
+%    
+%    \begin{call}{ss}{Initialize()}{sense}{}
+%    \end{call}
+%    \begin{sdloop}{Run Loop}
+%      \begin{call}{ss}{StartCycle()}{ctr}{}
+%        \begin{call}{ctr}{ActAgent()}{sense}{}
+%        \end{call}
+%      \end{call}
+%      \begin{call}{ss}{Update()}{ps}{}
+%        \begin{call}{ps}{PrePhysicsUpdate()}{sense}{state}
+%        \end{call}
+%        \begin{callself}{ps}{PhysicsUpdate()}{}
+%        \end{callself}
+%        \begin{call}{ps}{PostPhysicsUpdate()}{sense}{}
+%        \end{call}
+%      \end{call}
+%      \begin{call}{ss}{EndCycle()}{ctr}{}
+%        \begin{call}{ctr}{SenseAgent()}{sense}{}
+%        \end{call}
+%      \end{call}
+%    \end{sdloop}
+%  \end{sequencediagram}
+%
+%  \caption{UML sequence diagram demo. The used style-file is part of pgf-umlsd-0.2.tar.gz
+%Get it at http://code.google.com/p/pgf-umlsd/}
+%\end{figure}
+
+%------------------------------------------------------------------------------
+
+\clearpage
+
+\section{Dependencies
+    \label{Dependencies}
+}
+
+%         6.2.2 Dependency description 
+%             6.2.2.1 Scope 
+%                 The dependency description speciﬁes the relationships among
+%                 entities. It identiﬁes the dependent entities, describes their
+%                 coupling, and identiﬁes the required resources.  This design
+%                 view deﬁnes the strategies for interactions among design
+%                 entities and provides the information needed to easily perceive
+%                 how, why, where, and at what level system actions occur. It
+%                 speciﬁes the type of relationships that exist among the
+%                 entities such as shared information, prescribed order of
+%                 execution, or well-deﬁned parameter interfaces.  The attribute
+%                 descriptions for identiﬁcation, type, purpose, dependencies,
+%                 and resources should be included in this design view. This
+%                 attribute information should be provided for all design
+%                 entities. 
+% 
+%             6.2.2.2 Use 
+%                 The dependency description provides an overall picture of how
+%                 the system works in order to assess the impact of requirements
+%                 and design changes. It can help maintainers to isolate entities
+%                 causing system failures or resource bottlenecks. It can aid in
+%                 producing the system integration plan by identifying the
+%                 entities that are needed by other entities and that must be
+%                 developed ﬁrst. This description can also be used by
+%                 integration testing to aid in the production of integration
+%                 test cases. 
+% 
+%             6.2.2.3 Representation 
+%                 There are a number of methods that help minimize the
+%                 relationships among entities by maximizing the relationship
+%                 among elements in the same entity. These methods emphasize low
+%                 module coupling and high module cohesion (see Freeman and
+%                 Wasserman, Tutorial on Software Design Techniques). 
+% 
+%                 Formal speciﬁcation languages provide for the speciﬁcation of
+%                 system functions and data, their interrelationships, the inputs
+%                 and outputs, and other system aspects in a well-deﬁned
+%                 language. The relationship among design entities is also
+%                 represented by data ﬂow diagrams, structure charts, or
+%                 transaction diagrams. 
+% 
+
+%------------------------------------------------------------------------------
+
+While the system is highly modular, most of the modules require each other to
+run.  The only module that can run on its own is the capture module, which can
+be run alone to collect and save data from the network for later analysis.  The
+capture, filtering, and user interface modules all only communicate to (and
+therefore through) the system kernel module.  When running ServiceSniffer, if
+any modules other than just the capture module need to be used, the system
+kernel must also be used.  
+
+As the system kernel is the central control point for ServiceSniffer, it is
+needed to run the system. The kernel holds the system together passing
+information between all of the other modules with in the system. Spawning the
+processes that complete the work for the filters and processors, this module
+is required for all other modules to be able to run.
+
+The filter module is loosely coupled with the rest of the system. Filters and
+processors can be put into any length chains at any point. This allows a filter
+design to be used in multiple points with in the system. Also, with a
+standardized method of specifying what to filter on, the interface with filters
+of different types easier and more fluid.
+
+Data flows through the ServiceSniffer system through the capture module
+(regardless if it's live or previously saved data) to the system kernel.  The
+system kernel then passes this data off to the filter module, which performs
+its work and returns the new, processed data to the kernel.  The kernel then
+sends the information to the user interface module which presents it to the
+user.
+
+%------------------------------------------------------------------------------
+
+\clearpage
+
+\section{Interfaces
+    \label{interfaces}
+}
+%
+%\begin{figure}
+%    \includegraphics[width=1\textwidth]{../presentation/gfx/dataflow_base}
+%    \caption{Dataflow}
+%    \label{fig-dataflow}
+%\end{figure}
+
+%------------------------------------------------------------------------------
+
+The following interfaces facilitate all communication over sockets. The sockets
+are named pipes on a single system. This allows for the ability to provide a
+standard interface among all the modules.
+
+%------------------------------------------------------------------------------
+
+\subsection{Capture Module
+    \label{capture}
+}
+This is a one way communication from the capture module to the system kernel.
+Using libpcap, the capture module takes incoming packets, from either the
+network or a pcap file, and transform them into a data structure that in can
+be used by the kernel and other parts of the system. A pickled version of the
+packet will be sent over the socket to the kernel.
+
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=.5\textwidth]{gfx/input.png}
+%    \caption{Dataflow for the capture module}
+%    \label{fig-dataflow-input}
+%\end{figure}
+
+%------------------------------------------------------------------------------
+
+\subsection{Filter Module
+    \label{filter}
+}
+The filter module takes in a set of data and returns a subset of the input
+depending on provided criteria. Each data type will have its own filter module,
+but they will all share a common filtering language.
+
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=.5\textwidth]{gfx/filter.png}
+%    \caption{Dataflow for a generic filter}
+%    \label{fig-dataflow-filter}
+%\end{figure}
+
+%------------------------------------------------------------------------------
+
+\subsection{User Interface Module
+    \label{ui}
+}
+
+The user interface module will tie in with the system kernel through a two way
+socket channel. This will allow for the module to be able to queries the
+kernel, along with the kernel send information back to the module.
+Figures~\ref{fig-gui-main} and \ref{fig-gui-uddi} show mockups of a sample
+interface.
+
+%
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=.95\textwidth]{../presentation/gfx/gui-main}
+%    \caption{Mockup of the main screen}
+%%    \label{fig-gui-main}
+%\end{figure}
+%
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=.95\textwidth]{../presentation/gfx/gui-uddi}
+%    \caption{Mockup of the UDDI screen}
+%    \label{fig-gui-uddi}
+%\end{figure}
+
+
+%             6.2.3 Interface description 
+%                 6.2.3.1 Scope 
+%                     The entity interface description provides everything
+%                     designers, programmers, and testers need to know to
+%                     correctly use the functions provided by an entity. This
+%                     description includes the details of external and internal
+%                     interfaces not provided in the software requirements
+%                     speciﬁcation. 
+% 
+%                     This design view consists of a set of interface
+%                     speciﬁcations for each entity. The attribute descriptions
+%                     for identiﬁcation, function, and interfaces should be
+%                     included in this design view. This attribute information
+%                     should be provided for all design entities. 
+% 
+%                 6.2.3.2 Use 
+%                     The interface description serves as a binding contract
+%                     among designers, programmers, customers, and testers. It
+%                     provides them with an agreement needed before proceeding
+%                     with the detailed design of entities. In addition, the
+%                     interface description may be used by technical writers to
+%                     produce customer documentation or may be used directly by
+%                     customers. In the latter case, the interface description
+%                     could result in the production of a human interface view. 
+% 
+%                     Designers, programmers, and testers may need to use design
+%                     entities that they did not develop. These entities may be
+%                     reused from earlier projects, contracted from an external
+%                     source, or produced by other developers. The interface
+%                     description settles the agreement among designers,
+%                     programmers, and testers about how cooperating entities
+%                     will interact. Each entity interface description should
+%                     contain everything another designer or programmer needs to
+%                     know to develop software that interacts with that entity. A
+%                     clear description of entity interfaces is essential on a
+%                     multiperson development for smooth integration and ease of
+%                     maintenance. 
+% 
+%             6.2.3.3 Representation 
+%                 The interface description should provide the language for
+%                 communicating with each entity to include screen formats, valid
+%                 inputs, and resulting outputs. For those entities that are data
+%                 driven, a data dictionary should be used to describe the data
+%                 characteristics. Those entities that are highly visible to a
+%                 user and involve the details of how the customer should
+%                 perceive the system should include a functional model,
+%                 scenarios for use, detailed feature sets, and the interaction
+%                 language. 
+% 
+
+%------------------------------------------------------------------------------
+
+%\section{Detailed Design Description
+%    \label{detail}
+%}
+
+%         6.2.4 Detailed design description 
+%             6.2.4.1 Scope 
+%                 The detailed design description contains the internal details
+%                 of each design entity. These details include the attribute
+%                 descriptions for identiﬁcation, processing, and data. This
+%                 attribute information should be provided for all design
+%                 entities. 
+% 
+%             6.2.4.2 Use 
+%                 This description contains the details needed by programmers
+%                 prior to implementation. The detailed design description can
+%                 also be used to aid in producing unit test plans. 
+% 
+%             6.2.4.3 Representation 
+%                 There are many tools used to describe the details of design
+%                 entities. Program design languages can be used to describe
+%                 inputs, outputs, local data and the algorithm for an entity.
+%                 Other common techniques for describing design entity logic
+%                 include using metacode or structured English, or graphical
+%                 methods such as Nassi-Schneidermann charts or ﬂowcharts. 
+% 
+% 
+
+%------------------------------------------------------------------------------
+
+\end{document}

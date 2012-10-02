@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer2
+END
+ethernet.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer2/ethernet.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer2/__init__.py
+END
+mtp2.py
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer2/mtp2.py
+END
+arp.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer2/arp.py
+END

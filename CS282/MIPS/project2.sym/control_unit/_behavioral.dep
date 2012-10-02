@@ -1,0 +1,5 @@
+ieeevarstd_logic_1164ieee.sym/std_logic_1164/prim.var
+ieeesrcstd_logic_1164stdlogic.vhd
+.varcontrol_unit(behavioral)project2.sym/control_unit/_behavioral.var
+.srccontrol_unit(behavioral)control_unit.vhd
+.varcontrol_unitproject2.sym/control_unit/prim.var

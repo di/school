@@ -1,0 +1,54 @@
+# This is a sample makefile file for a possible Java solution
+# 
+# SETUP:
+#  you have written nfa.java, and it is used in graph.java to solve part 1
+#  of the assignment, and sim.java uses the nfa class to solve part 2 of the
+#  assignment.
+#
+
+JC=/usr/binjavac
+JVM=/usr/bin/java
+
+.PHONY : clean sim graph
+
+	# these next 3 targets are req'd for the assignment.  NOTE:  do NOT define
+	# the variable inFile.  *I* will define this in the environment, to point
+	# to the input file I will use
+
+sim : nfa.class sim.class
+	$(JVM) sim $(inFile)
+
+graph : nfa.class graph.class
+	$(JVM) graph $(inFile)
+
+clean :
+	-\rm *.class
+
+nfa.class : nfa.java
+	$(JC) nfa.java
+
+graph.class : graph.java
+	$(JC) graph.java
+
+sim.class : sim.java
+	$(JC) sim.java
+
+
+###  These targets are just to see your stuff run in a bare-bones
+# environment (such as we might grade in) when you submit via hwrun.
+# This is NOT required, for submission, nor for grading
+# You'll need to provide sample input, called sample.input in this example
+
+sampleInput=sample.input # something you submit, just to see it work.
+	# name it what you want
+
+.PHONY : run testgraph testsim
+
+run : testgraph testsim
+
+testgraph : nfa.class graph.class
+	$(JVM) graph $(sampleInput)
+
+testsim : nfa.class sim.class
+	$(JVM) sim $(sampleInput)
+

@@ -1,0 +1,14 @@
+\documentclass[letterpaper]{article}
+\title{Week 7 Response}
+\date{}
+\usepackage{setspace}
+\pdfpagewidth 8.5in
+\pdfpageheight 11in
+\begin{document}
+	\maketitle
+	%\thispagestyle{empty}
+	\onehalfspacing
+	\section{Gerald Early's \emph{Life with Daughters}:}
+		Blas
+
+   \end{document}

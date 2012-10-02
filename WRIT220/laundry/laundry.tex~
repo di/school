@@ -1,0 +1,18 @@
+\documentclass[letterpaper]{article}
+\title{The Laundry Room}
+\date{}
+\usepackage{setspace}
+\addtolength{\topmargin}{-36pt}
+\addtolength{\textheight}{36pt} 
+\begin{document}
+	\maketitle
+	\thispagestyle{empty}
+	%\doublespacing	
+	\onehalfspacing
+While adults awoke with cold in their bones, complaining of ice and shoveling, back problems and road conditions, children sprang from warm beds and into their boots, peering out from ice-glazed windows with glee at the sight of a white suburban tundra. On every street were houses and cars quietly hibernating, burrowed beneath the fresh snow, and in every yard, trees and bushes stood laden with weight. As far as could be seen, every piece of ground was untouched, building anticipation for the satisfying and eventual crack which resulted from a boot shattering a thin membrane of ice and puncturing the thick snow beneath.
+
+Once outside, snowmen were built, sledding hills were conquered, and snow angels left their mark. As was customary, snow wars were waged--all victorious--fueled by never ending ammunition that literally fell from the sky. The most majestic of conquests were those against fences, trees, and houses, the defenseless snowmen and, of course, one another. But regardless of the day’s achievements, a few hours of war will tire a child quickly. Tracks lead back to the house as soldiers reminisced of battles and planned the campaign for the following day. After entering through the cellar door, the cement floor of the cold, dark basement served to beat the snow from heavy boots. finally--an arrival at that warm, messy little place.
+
+Entering the first heated room of the house was welcomed with open arms and cold fingers. The perception of the dark warmth one feels from entering a building after staring into blindingly white snow for any length of time slowly dissipated as eyes adjusted to the light. Gloves were discarded to pick the caked snow from the laces of boots, until frustration and wet socks forced them to be removed while still tied. The youngest always finished first, driven by either inherent disorganization or eagerness for more warmth. While the elder carefully hung wet gloves, pants and socks up to dry, so that they might not be found on the floor later, as cold and wet as hours before, the youngest waited, searching for warm and fuzzy socks for both in the dryer or a nearby clothes-basket. Before long though, all had been thoroughly heated, dried, and abandoned, in favor of the promising smell of hot chocolate or some other warm treat, slowly drifting down from the kitchen upstairs.
+
+\end{document}

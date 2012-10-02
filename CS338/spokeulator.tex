@@ -1,0 +1,52 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{ifpdf}
+\usepackage[utf8]{inputenc}
+\usepackage[USenglish]{babel}
+\title{CS 338 - The Spokeulator}
+\author{Dustin Ingram}
+\date{\today}
+\ifpdf
+\pdfinfo {
+	/Author (Dustin Ingram)
+	/Title (CS 338 - The Spokeulator)
+	/Subject (CS 338 - The Spokeulator)
+	/Keywords ()
+	/CreationDate (D:20090210114723)
+}
+\fi
+\begin{document}
+	\maketitle
+	\begin{abstract}
+	The Spokeulator is a novel system designed to simplify the process of calculating the length of a custom-built bicycle wheel. The length of a wheel's spokes is dependent on numerous measurements of the components as well as the ``lacing'' pattern. The mathematical formulas used to determine said spoke length is likely beyond the knowledge of most amateur wheel builders, therefore the Spokeulaor comes in handy.
+	\end{abstract}
+	
+	\section{Project Description}
+  The Spokeulator (spoke + calculator) is an easy to use, intuitive application which assists the user in calculating the length of a series of spokes on a bicycle wheel.
+
+    \subsection{User Description}
+    The target user of the system can be split into two groups: the informed bicycle mechanic and the uninformed cycling enthusiast. Both users have a need for the system---the application seeks to abstract the complicated mathematical functions which determine the lacing pattern as well as the length of the wheel's spokes. The difference arises in the knowledge of the measurements required to perform the calculation. A bicycle mechanic likely has built wheels before and will be very familiar with the required measurements (and may have them memorized for each of the components he or she regularly uses). On the other hand, a novice user likely has never built a wheel before (or used the system) and may need additional information to lead them through the process.
+  
+    \subsection{System Description}
+    To accommodate it's users, the system will have both a two-fold input and output capability.
+    
+      \subsubsection{Input}
+      The system will accept input in two ways. First, it will directly accept the necessary measurements as typed in by the user. This will be useful for the experienced user, as it will make repetition of the process as quick as possible. The second input method will be list of pre-existing components and their measurements which the user may select from a pre-existing database.  This, along with a selection of lacing patterns, will allow the user to build their wheel simply by knowing the correct brands, models and configuration.
+      
+      \subsubsection{Output}
+      The system will also output it's results in two unique ways. First and foremost, it will display the value to be calculated---the spoke length, in millimetres. However, for the novice user, the system will also display a graphical representation of the wheel being built, including a to-scale representation of all components and the current lacing pattern.
+  
+  \section{Project Plan}
+  
+    \subsection{Week One: Prototyping}
+    The goal for the first week of development will be to sketch a basic interface design and receive evaluations and suggestions from other developers. During this phase, the visual representation of the input and output components will be formalized
+    
+    \subsection{Week Two: Developing the Data Structures}
+    During this week, the goal will be to formalize the underlying data structures required to complete the task at hand. Ideally, there should be a representation of the hub and the rim, to simplify the process of determining and displaying the spoke pattern. In addition, there will be a representation of the ``database'' behind the system which stores pre-existing measurements for different components. Finally, the mathematical functions which compute the spoke length will be created during this week.
+    
+    \subsection{Week Three: Developing the GUI}
+    In this week of development, the data structures and mathematical functions will be combined with a GUI to complete the application. The largest task for this week of development will be to develop the graphical representation of the wheel and it's components.
+    
+    \subsection{Week Four: Testing}
+	  During the final week, the application will be tested for bugs. Various types of input will be provided in an attempt to corrupt or break the underlying functions. In addition, the graphical representation will be pushed to it's limits in attempt to test it for bugs as well.
+\end{document}
+

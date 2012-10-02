@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/58/trunk/src/old/construct/formats/video
+END
+mpeg2.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/58/trunk/src/old/construct/formats/video/mpeg2.py
+END
+divx.py
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/58/trunk/src/old/construct/formats/video/divx.py
+END
+mpeg3.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/58/trunk/src/old/construct/formats/video/mpeg3.py
+END
+avi.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/58/trunk/src/old/construct/formats/video/avi.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/58/trunk/src/old/construct/formats/video/__init__.py
+END

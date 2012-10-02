@@ -1,0 +1,88 @@
+
+The goal of this project is to automate the passive discovery, recognition,
+and consumption of semantic web services.  ServiceSniffer does not require any
+central registry of services but will examine network traffic patterns to
+identify specific services, how to invoke them, and report specific, user
+chosen information.  As well as running with known service definitions, the
+system should be able to identify new services and analyze relevant network
+traffic to determine how to consume the service.  This application will be
+constructed of an extensible core framework upon which future modules can be
+developed and integrated.
+\\\\
+ServiceSniffer is split into 3 general pieces:  the data input, data
+processing, and user interface modules.  The data input module is responsible
+for collecting traffic off the network or using a Pcap file as a source instead
+of a live network.  The data processing module, which is constructed from
+various filters and processors (which will be described in more depth later),
+applies filters to the network traffic from the data input module and converts
+it into various and configurable reports and views depending on what the user
+wants to see.  Some examples of these reports will be described later.  Lastly,
+ServiceSniffer has both a CLI and a GUI for viewing the various data returned
+by the data processors and filters.  These interfaces will allow users to
+interact with the data returned, however the GUI will offer more functionality,
+such as additional display filters (e.g. viewing traffic with a specific
+destination IP).  Both interfaces will offer to users a report of what web
+services appear to be available on the network and supply a report - an ad-hoc
+registry of sorts - which users can use to consume the web service.
+\\\\
+Users of ServiceSniffer are chunked into 3 loose groups:  system/network
+administrators who wish to control all of the ServiceSniffer pieces (data
+input, data processing, and the user interface), developers who wish to or are
+tasked with developing custom data filters and/or processors so users can have
+new/custom reports, and UI users who only wish to analyze the data collected
+and processed by ServiceSniffer.  Some examples of uses follow:
+
+
+\subsection*{What web services travel over my network?}
+Network administrators, among other technical people, want to know what web
+services are being used on their network.  Some users may not report that
+they're using specific web services on a network when they are, which may cause
+conflicts with other services.  By being able to see all of the web service
+invocations on a network, an administrator can determine where the rogue web
+services are being used and better determine whether they offer something
+useful on the network.  
+
+
+\subsection*{How do I consume web services on a network that doesn't have a web
+             service registry?}
+Not all networks have a central registry of web services offered on the
+network, and most don't have a record of what web services from outside the
+network are consumed by users on the network.  More, many web services aren't
+clearly defined in WSDL or an equivalent format, so it's unclear how to consume
+the web service without a formal definition.  ServiceSniffer constructs an
+ad-hoc registry of web services is observes being consumed in a defined way.
+This registry can then be used to let users consume these previously undefined
+web services.
+
+
+\subsection*{Which services on my network are secure/insecure?}
+Some networks have a requirement that all services being used on them be
+encrypted as the network itself cannot be trusted.  ServiceSniffer is able to
+show which services being used on a network are secure (either fully encrypted
+traffic or encrypted data with cleartext headers) and which are insecure.  By
+looking at the specific traffic an administrator can learn what pieces of the
+network are vulnerable.
+
+
+\subsection*{Who uses a specific web service?}
+Is a web service actively being used?  Is there a pattern to who uses a
+specific web service, or a pattern to when it's used?  Web service developers,
+as well as network administrators, frequently want to know what users and/or
+servers are using specific web services and when.  This allows them to
+determine to whom a specific service is useful, who uses an unautherized web
+service, and other similar situations.
+
+
+\subsection*{What data is being sent during use of a specific web service?}
+In debugging web services, developers need to see what data is being sent to
+the web service during invocation and usage.  Instead of using a program like
+Wireshark to have to look at the packets of a web service invocation,
+developers can use ServiceSniffer to see where, if anywhere, the data actually
+sent differs from what should be sent.
+
+\subsection*{Is there a pattern to web service invocations?  Is anyone not
+             following that pattern?}
+Some web services are frequently used in discrete patterns.  Sometimes these
+patterns suggest a specific usage, even if the data sent is encrypted (but the
+headers are unencrypted).  For example, EXAMPLE HERE
+

@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/58/trunk/src/old/ipaddr
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/58/trunk/src/old/ipaddr/__init__.py
+END
+setup.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/58/trunk/src/old/ipaddr/setup.py
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/58/trunk/src/old/ipaddr/COPYING
+END
+ipaddr_test.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/58/trunk/src/old/ipaddr/ipaddr_test.py
+END
+ipaddr.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/58/trunk/src/old/ipaddr/ipaddr.py
+END
+MANIFEST.in
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/58/trunk/src/old/ipaddr/MANIFEST.in
+END
+OWNERS
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/58/trunk/src/old/ipaddr/OWNERS
+END
+test-2to3.sh
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/58/trunk/src/old/ipaddr/test-2to3.sh
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/58/trunk/src/old/ipaddr/README
+END

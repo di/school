@@ -1,0 +1,143 @@
+% Plane partition
+% Author: Jang Soo Kim
+\documentclass{minimal}
+\usepackage{tikz}
+%%%<
+\usepackage{verbatim}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{5pt}%
+%%%>
+
+\begin{comment}
+:Title: Plane partition
+
+Illustration of a `plane partition`_.
+
+.. _plane partition: http://mathworld.wolfram.com/PlanePartition.html
+
+\end{comment}
+% Three counters
+\newcounter{x}
+\newcounter{y}
+\newcounter{z}
+
+% The angles of x,y,z-axes
+\newcommand\xaxis{210}
+\newcommand\yaxis{-30}
+\newcommand\zaxis{90}
+\newcommand\cubeline{none}
+
+% The top side of a cube
+\newcommand\topside[3]{
+  \fill[fill=yellow, draw=\cubeline,shift={(\xaxis:#1)},shift={(\yaxis:#2)},
+  shift={(\zaxis:#3)}] (0,0) -- (30:1) -- (0,1) --(150:1)--(0,0);
+}
+
+% The left side of a cube
+\newcommand\leftside[3]{
+  \fill[fill=red, draw=\cubeline,shift={(\xaxis:#1)},shift={(\yaxis:#2)},
+  shift={(\zaxis:#3)}] (0,0) -- (0,-1) -- (210:1) --(150:1)--(0,0);
+}
+
+% The right side of a cube
+\newcommand\rightside[3]{
+  \fill[fill=blue, draw=\cubeline,shift={(\xaxis:#1)},shift={(\yaxis:#2)},
+  shift={(\zaxis:#3)}] (0,0) -- (30:1) -- (-30:1) --(0,-1)--(0,0);
+}
+
+% The cube 
+\newcommand\cube[3]{
+  \topside{#1}{#2}{#3} \leftside{#1}{#2}{#3} \rightside{#1}{#2}{#3}
+}
+
+% Definition of \planepartition
+% To draw the following plane partition, just write \planepartition{ {a, b, c}, {d,e} }.
+%  a b c
+%  d e
+\newcommand\planepartition[1]{
+ \setcounter{x}{-1}
+  \foreach \a in {#1} {
+    \addtocounter{x}{1}
+    \setcounter{y}{-1}
+    \foreach \b in \a {
+      \addtocounter{y}{1}
+      \setcounter{z}{-1}
+      \foreach \c in {1,...,\b} {
+        \addtocounter{z}{1}
+        \cube{\value{x}}{\value{y}}{\value{z}}
+      }
+    }
+  }
+}
+
+\begin{document} 
+
+\begin{tikzpicture}
+%\planepartition{{5,3,2,2},{4,2,2,1},{2,1},{1}}
+%E
+\cube{{-8}}{{8}}{{0}}
+\cube{{-8}}{{9}}{{0}}
+\cube{{-8}}{{10}}{{0}}
+\cube{{-8}}{{8}}{{1}}
+\cube{{-8}}{{8}}{{2}}
+\cube{{-8}}{{9}}{{2}}
+\cube{{-8}}{{10}}{{2}}
+\cube{{-8}}{{8}}{{3}}
+\cube{{-8}}{{8}}{{4}}
+\cube{{-8}}{{9}}{{4}}
+\cube{{-8}}{{10}}{{4}}
+
+%G
+\cube{{-6}}{{6}}{{0}}
+\cube{{-6}}{{7}}{{0}}
+\cube{{-6}}{{8}}{{0}}
+\cube{{-6}}{{6}}{{1}}
+\cube{{-6}}{{8}}{{1}}
+\cube{{-6}}{{6}}{{2}}
+\cube{{-6}}{{7}}{{2}}
+\cube{{-6}}{{8}}{{2}}
+\cube{{-6}}{{6}}{{3}}
+\cube{{-6}}{{6}}{{4}}
+\cube{{-6}}{{7}}{{4}}
+\cube{{-6}}{{8}}{{4}}
+
+
+%A
+\cube{{-4}}{{4}}{{0}}
+\cube{{-4}}{{4}}{{1}}
+\cube{{-4}}{{4}}{{2}}
+\cube{{-4}}{{5}}{{2}}
+\cube{{-4}}{{4}}{{3}}
+\cube{{-4}}{{4}}{{4}}
+\cube{{-4}}{{5}}{{4}}
+\cube{{-4}}{{6}}{{0}}
+\cube{{-4}}{{6}}{{1}}
+\cube{{-4}}{{6}}{{2}}
+\cube{{-4}}{{6}}{{3}}
+\cube{{-4}}{{6}}{{4}}
+
+%T
+\cube{{-2}}{{3}}{{0}}
+\cube{{-2}}{{3}}{{1}}
+\cube{{-2}}{{3}}{{2}}
+\cube{{-2}}{{3}}{{3}}
+\cube{{-2}}{{2}}{{4}}
+\cube{{-2}}{{3}}{{4}}
+\cube{{-2}}{{4}}{{4}}
+
+% S
+\cube{{0}}{{0}}{{0}}
+\cube{{0}}{{1}}{{0}}
+\cube{{0}}{{2}}{{0}}
+\cube{{0}}{{2}}{{1}}
+\cube{{0}}{{0}}{{2}}
+\cube{{0}}{{1}}{{2}}
+\cube{{0}}{{2}}{{2}}
+\cube{{0}}{{0}}{{3}}
+\cube{{0}}{{0}}{{4}}
+\cube{{0}}{{1}}{{4}}
+\cube{{0}}{{2}}{{4}}
+\end{tikzpicture}
+
+\end{document} 

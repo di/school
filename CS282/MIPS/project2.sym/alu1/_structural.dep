@@ -1,0 +1,5 @@
+ieeevarstd_logic_1164ieee.sym/std_logic_1164/prim.var
+ieeesrcstd_logic_1164stdlogic.vhd
+.varalu1(structural)project2.sym/alu1/_structural.var
+.srcalu1(structural)alu1s.vhd
+.varalu1project2.sym/alu1/prim.var

@@ -1,0 +1,59 @@
+%%
+%% morph.m
+%%
+%% Computational Photography Project 2
+%%
+%%
+%% Morphs two images 
+%%
+%% INPUT
+%%	1) im1		     - R x C x 3 matrix storing image 1
+%%	2) im2		     - R x C x 3 matrix storing image 2
+%%	3) im1pts	     - N x 2 matrix storing the correspondence points (x,y) in image1
+%%	4) im2pts	     - N x 2 matrix storing the correspondence points (x,y) in image2
+%%	5) warp_fraction     - [0, 1] parameter that controls the intermediate shape
+%%	6) dissolve_fraction - [0,1] parameter that controls the color dissolve
+%%
+%% OUTPUT
+%%	1) morphed_img		- Morphed image
+%%	 
+function [morphed_im] = morph(im1,im2,im1pts,im2pts,warp_fraction,dissolve_fraction)
+
+  %%
+  %% Get the location of the correspondence points in the intermediate shape
+  %%
+	% FILL IN intermediate_correspondences.m and use it here
+
+    intermediate_pts = intermediate_correspondences(im1pts, im2pts, warp_fraction);
+    intermediate_pts = intermediate_pts + [:,:,ones]
+
+  %%
+  %% Triangulate the intermediate correspondence points 
+  %% You may use matlab's delaunay
+  
+    triangles = delaunay(intermediate_pts(:,1), intermediate_pts(:,2),'');
+
+
+  %%
+  %% Warp the first and second images to the intermediate shape
+  %%
+	% FILL IN warp_image and use it here
+    
+    im1 = warp_image(im1,im1pts,intermediate_pts, triangles);
+    im2 = warp_image(im2,im2pts,intermediate_pts, triangles);
+
+
+  %%
+  %% Perform a cross-dissolve
+  %%
+	% FILL IN (this can be a one liner)
+
+    morphed_im = (1-dissolve_fraction).*im1 + dissolve_fraction.*im2;
+
+
+  %%
+  %% Convert the result to an integer matrix
+  %%
+    morphed_im = uint8(morphed_im);
+  
+    return

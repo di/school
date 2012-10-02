@@ -1,0 +1,20 @@
+\documentclass[letterpaper]{article}
+\title{Week 7 Response}
+\date{}
+\usepackage{setspace}
+\pdfpagewidth 8.5in
+\pdfpageheight 11in
+\begin{document}
+	\maketitle
+	%\thispagestyle{empty}
+	\onehalfspacing
+	\section{Katherine Anne Porter's \emph{The Future is Now}:}
+	I'm not sure if it was the intended purpose of the piece, but as a technologist, I found the following thought interesting. As a society constantly working towards improving what we have in the future (which, of course, has included weapons and other means of destruction of our own creations), we have not usually been able to out-destroy ourselves. As the author says, we have always been able to ``[build] a little more than he has hitherto been able or willing to destroy; [get] more children than he has been able to kill''. However, at some point, with the invention of nuclear weapons, we surpassed that limit--at the present moment, if so desired, our entire civilization could commit mass-suicide with ease. Although it was most certainly bound to happen eventually, it had not previously registered that I am living within that threshold.
+
+	\section{Mark Jarman's \emph{A Poem of Pure Enjoyment}:}
+	I'm confused about the tone of this piece: as a student who has not previously read Longfellow's poem, I don't understand what the author is trying to show. He says ``let us return to the century when it was still all right to read and enjoy what might be Longfellow's greatest work'', implying that it should (for some reason) no longer be read, but yet continues to publish and praise it. I understand that it is an absurd abstraction from what would actually be a Native American anthology, but I suppose I am missing some context.
+
+	\section{Gertrude Stein's \emph{What are Masterpieces and Why are There are So Few of Them}:}
+	This, at first, almost reads as an e.e.cummings poem: ``I talk a lot I like to talk and I talk even more than I may say I talk most of the time and I listen a fair amount too''. Stein seems to be rebelling against her notion that writing for an audience produces not your own identity, but what the audience wants to hear instead. Now I have a headache.
+
+   \end{document}

@@ -1,0 +1,52 @@
+The external representation of an NDFA is the following:
+
+Number of states
+Number of nonempty entries in the transition matrix
+Entries in the transition matrix.
+
+An entry in the transition matrix is the list (s,a,S), where
+s is a state, a is a symbol in the alphabet or EPSILON, and
+S is a set of states denoted by a list.  (0,a,(0,1)) and (0,EPSILON,(1))
+are example entries.  Here are some complete example:
+
+It is assumed that the start state is state 0 and that there is a single
+accepting state equal to the last state.
+
+Example 1
+
+4 
+4
+(0,a,(0,1)) 
+(0,b,(0))
+(1,b,(2))
+(2,b,(3))
+ 
+ 
+Example 2
+
+5
+6
+(0,a,(0))
+(0,b,(0))
+(0,EPSILON,(1))
+(1,a,(2))
+(2,b,(3))
+(3,b,(4))
+
+Example 3
+
+9
+9
+(0,EPSILON,(1,3,5))
+(1,a,(2))
+(3,b,(4))
+(2,EPSILON,(5))
+(4,EPSILON,(5))
+(5,a,(6))
+(5,EPSILON,(0))
+(6,b,(7))
+(7,b,(8))
+
+
+All three examples accept the same language.  Namely the language
+described by the regular expression (a|b)*abb.

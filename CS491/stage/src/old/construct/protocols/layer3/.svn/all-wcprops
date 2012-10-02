@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3
+END
+dhcpv4.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3/dhcpv4.py
+END
+dhcpv6.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3/dhcpv6.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3/__init__.py
+END
+ipx.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3/ipx.py
+END
+ipv4.py
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3/ipv4.py
+END
+icmpv4.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3/icmpv4.py
+END
+mtp3.py
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3/mtp3.py
+END
+icmpv6.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3/icmpv6.py
+END
+ipv6.py
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/layer3/ipv6.py
+END

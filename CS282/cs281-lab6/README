@@ -1,0 +1,48 @@
+Dustin Ingram (dsi23)
+CS280 - Systems Architecture I - Lab 1
+
+--------------------------------------------------------------------------------
+
+= About =
+
+The goals of this lab were to:
+ * Create a structural & behavioral model of a 1-bit ALU
+ * Modify that ALU to support subtraction
+ * Modify that ALU to support overflow
+ * Chain 32 1-bit ALUs together to form a 32-bit ALU
+ * Create a testbench
+
+= Files Included =
+
+The files included to satisfy the lab requirements are as follows:
+ * alu1b-s.vhd - 1-bit behaviorial, w/ subtraction
+ * alu1s-s.vhd - 1-bit structural, w/ subtraction
+ * alu1b-so.vhd - 1-bit behavioral, w/ subtraction & overflow detection
+ * alu1s-so.vhd - 1-bit structural, w/ subtraction & overflow detection
+ * alu32s.vhd - 32-bit structural ALU
+ * alu32-testbench.vhd - testbench file
+ * xor_2.vhd - XOR component, which I felt was necessary
+ * README - this file
+ + all the files which were originally included
+
+= Environment =
+
+Using the Linux version of Symphony (Symphony EDA Sonata 3.1)
+
+= Running =
+
+Compile in Symphony.
+
+= Development & Testing =
+
+I fully understood how the 1-bit and 32-bit ALUs should work, but my experience
+with VHDL is a little lacking. Therefore, my code is structurally there, I just
+have a bug or two that I wasn't able to work out before the deadline.
+
+Testing is done using the testbench, which tries all possible combinations.
+
+= Problems & Thoughts =
+
+Again, the hardest part here was me getting used to the VHDL syntax. I'm 
+planning on absorbing a recommended book on the subject over Thanksgiving, so
+I'll be up to speed for the next lab.

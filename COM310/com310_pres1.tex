@@ -1,0 +1,150 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{beamerthemeshadow}
+\begin{document}
+  \title{How to Simply Encrypt and Decrypt a Message} 
+  \author{Dustin Ingram, Hahna Kane, Jacob Lukas}
+  \date{\today} 
+
+  \frame{\titlepage} 
+
+  \section{Introduction}
+  	\frame{
+      \frametitle{Intended Audience} 
+      \begin{itemize}
+				\item Someone with little to no background in cryptography
+				\item Someone interested in solving puzzles 
+			\end{itemize}
+    }
+  	
+  	\frame{
+      \frametitle{A Need for Cryptography} 
+      \begin{itemize}
+				\item Concealing information is prevalent throughout history
+				\item Historical and modern applications in government, military, and personal domains
+				\item Sensitive, personal, electronic data is exchanged daily: ATMs, Internet commerce, computer passwords, etc.
+			\end{itemize}
+    }
+    \frame{
+      \frametitle{Defining Cryptography} 
+      Cryptography is:
+      \begin{itemize}
+				\item The science of designing systems to study and secure communication over non-secure channels
+				\item The process of creating, analyzing and deciphering ciphers
+			\end{itemize}
+			A cipher is:
+			\begin{itemize}
+				\item A concealed message or collection of data
+				\item Also known as a ``code'' or ``cryptogram''
+			\end{itemize}
+    }
+    \frame{
+      \frametitle{Conventions of Cryptography} 
+			Before messages can be encrypted and decrypted, the following conventions need to be understood:
+			\begin{enumerate}
+				\item \textit{plaintext} will be presented as italicized, lowercase letters and CIPHERTEXT will be presented as all capital letters.
+				\item The letters of the alphabet are assigned numbers as follows
+				\begin{center}
+					\scalebox{0.7}{%
+					\begin{tabular}{ | c | c | c | c | c | c | c | c | c | c | c | c | c | }
+						\hline
+						a & b & c & d & e & f & g & h & i & j & k & l & m\\ \hline
+						0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12\\ \hline
+						\hline
+						n & o & p & q & r & s & t & u & v & w & x & y & z\\ \hline
+						13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25\\ \hline
+					\end{tabular}
+					}
+				\end{center}				
+				\item Spaces and punctuation are omitted. 
+			\end{enumerate}
+		}			
+	\section{A Simple Cipher} 			
+		\frame{
+			\frametitle{A Simple Cipher}
+			\begin{itemize}
+				\item A cipher encrypts every string of characters by some algorithm
+				\item	Modern ciphers require the use of a computer and are usually computationally impossible to break
+				\item However, some ciphers are simple enough to execute by hand
+			\end{itemize}
+		}
+		\frame{
+			\frametitle{Caesar Cipher}
+			The Caesar Cipher is a ``shifted'' cipher, first recorded to be used by Julius Caesar to protect messages of military significance.
+			In general, shifted ciphers require a key \textit{$\kappa$} with $0\leq \textit{$\kappa$} \leq 25$. For encryption,
+			\begin{equation}
+			x \mapsto x+\kappa
+			\end{equation}
+
+			Similarly, decryption is
+			\begin{equation}
+			x \mapsto x-\kappa
+			\end{equation}
+			Traditionally, when using the Caesar cipher, $\kappa=3$.
+		}
+		\frame{
+			\frametitle{The Caesar Cipher}
+			Suppose Alice wanted to send the plaintext
+			\begin{center}
+			\textit{technical communication rocks}
+			\end{center}
+			to Bob, but she wanted to hide the message from Eve. Alice simply shifts each letter by three places\\
+			\begin{center}
+				\includegraphics [width=2in]{CCImg.png}
+			\end{center}
+			The resulting ciphertext becomes
+			\begin{center}
+				WHFKQLFDOFRPPXQLFDWLRQURFNV
+			\end{center}
+		}
+	\section{Cryptanalysis}
+		\frame{
+			\frametitle{Cryptanalysis of the Caesar Cipher}
+			\begin{itemize}
+				\item Cryptanalysis is the process of attacking or breaking into a system to figure out what was communicated
+				\item In the previous example, there are four possible scenarios in which Eve could decipher Alice's message without a key
+				\begin{enumerate}
+					\item Eve discovers Alice's encryption machine
+					\item Eve discovers Bob's decryption machine
+					\item Eve knows at least one letter of the plaintext and the letter it maps to in the ciphertext
+					\item Eve only knows the ciphertext
+				\end{enumerate}
+			\end{itemize}
+		}
+		\frame{
+			\frametitle{Cryptanalysis of the Caesar Cipher}
+			\begin{itemize}
+				\item Best strategy: perform an exhaustive search\\
+				\begin{center}				
+				\scalebox{0.7}{%
+					\begin{tabular}{ | c || c | }
+						\hline
+						$\kappa$ & Plaintext\\ \hline
+						\hline
+						0 & WHFKQLFDOFRPPXQLFDWLRQURFNV \\ \hline
+						1 & \textit{vgejpkecneqoowpkecvkqptqemu} \\ \hline
+						2 & \textit{ufdiojdbmdpnnvojdbujpospdlt} \\ \hline
+						3 & \textit{technicalcommunicationrocks} \\ \hline
+						4 & \textit{sdbgmhbzkbnlltmhbzshnmqnbjr} \\ \hline
+						5 & \textit{rcaflgayjamkkslgayrgmlpmaiq} \\ \hline
+						\ldots & \textit{\ldots} \\ \hline
+					\end{tabular}
+				}
+				\end{center}
+				\item Next best alternative: examine the frequency count of the letters
+			\end{itemize}
+		}
+	\section{Conclusion}
+		\frame{
+ 			\frametitle{Conclusion}
+			\begin{itemize}
+				\item Learned the history and significance of ciphers
+				\item Learned how to encrypt and decrypt a message using a Caesar cipher
+				\item Learned how to attack a Caesar cipher message in four different ways
+			\end{itemize}
+			\begin{center}
+			Questions?
+			\end{center}
+		}	
+\end{document}

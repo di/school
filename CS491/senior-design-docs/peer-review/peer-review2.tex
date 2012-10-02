@@ -1,0 +1,184 @@
+\documentclass{article}
+
+\usepackage{fullpage}   % Use the whole page
+\usepackage{fancyhdr}   % Nice headers/footers
+\usepackage{mdwlist}    % For itemize* and enumerate*
+\usepackage{hyperref}   % Hyperlink references and URLs
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={Peer Review for Team 2},
+    pdfauthor={Justin Courts; Philip Cristiano; Charles Rumford; Thomas Wambold}
+}
+
+% So we can number paragraphs too
+\setcounter{secnumdepth}{1}
+
+% For headers and footers
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{25pt}
+\pagestyle{fancy}
+	
+% Page style for the title page
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% Just so we don't have to specify this twice
+\newcommand\mytitle{Peer Review for Team 2}
+\newcommand\mydate{February 23, 2010}
+
+% Page style for every other page
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{ServiceSniffer}
+\fancyhead[C]{\mytitle}
+\fancyhead[R]{\mydate}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{\textbf{\mytitle} \\ {\large Reviewed by Team 11}}
+\author{
+    Justin Courts \\\url{justin@servicesniffer.net}
+    \and Philip Cristiano \\\url{phil@servicesniffer.net}
+    \and Charles Rumford \\\url{charlesr@servicesniffer.net}
+    \and Thomas Wambold \\\url{tom@servicesniffer.net}
+}
+\date{\mydate}
+
+\begin{document}
+\maketitle
+
+%------------------------------------------------------------------------------
+
+\section{Design Document}
+
+Overall it's fairly vague about the details of implementation.  This seems too
+high level with too much hand-waving for a design document.  A programmer
+reading this would be making too many design and business decisions that should
+really be defined in this document.
+
+Mention something about client/server.  Missing a lot of images, built wrong?
+No UML?  It would be nice to have unique formatting for function names to make
+it more readable.
+
+\begin{itemize}
+    \item 1 -- AndroidClientHighLevel.png doesn't load (just a placeholder for it)
+    \item Note:  Add captions to the images for 1.1 and 1.2 and consider repositioning them -- they're kinda hung out to dry 
+    \begin{itemize}
+        \item 1.3 -- AndroidClientLogin.png doesn't load (just a placeholder for it)
+        \item ``This token can then be stored or not depending upon user choices.'':  How?  If explained in this document, reference it.  If not, explain how.
+        \begin{itemize}
+            \item 1.3.1 -- What defines a valid username/password?
+            \item 1.3.2 -- What's the secure channel?
+            \item What are invalid characters?
+            \item How are you generating these hashes?  Your own implementation, or through a library?
+            \item Since you don't define your database/datastore, where is the User Controller looking for a User?  Do you ensure a unique username?  
+            \item Define what the token is that's passed back 
+            \item What's the failed code?
+            \item If failed, what happens on the client side?
+            \item 1.3.3 -- Where is the Store Credentials checkbox?
+            \item How is the file encrypted/decrypted?  Where is it stored?
+            \item 1.3.4 -- Could define the error message, but fine otherwise
+        \end{itemize}
+        \item 1.4 -- AndroidClientStreaming.png doesn't load (just a placeholder for it)
+        \begin{itemize}
+            \item 1.4.1 -- affect -> affects
+            \item What database?  The database definition needs to be defined or referenced
+            \item Are there real-time streams?  What happens if they're paused?
+            \item How can the server verify that a stream isn't currently paused?  And which streams matter - certain not *any* stream in the entire system?
+            \item 1.4.2 -- Pretty good.  Speakerphone?  Default earpiece behavior?  Able to mute mic?  Default mic behavior?  Default volume setting?
+        \end{itemize}
+        Note:  Page 9 is blank
+    \end{itemize}
+    \item 2.1.1 through 2.1.3 -- How each of these pieces works needs to be explained in this document.  When they are, link to them.
+    \item 2.2 -- high-level-webserver.png doesn't load (just a placeholder for it)
+    \item 2.3 -- high-level-protocols.png doesn't load (just a placeholder for it)
+    \item SQL has many implementations and version differences in those implementations.  Which are you allowing?
+    \item 2.4
+    \begin{itemize}
+        \item 2.4.1 -- Signup.png doesn't load (just a placeholder for it)
+        \item How is the email sent?  Using what program, header info, etc?
+        \begin{itemize}
+            \item 2.4.1.1 -- What are valid username characters?  
+            \item What's a properly formed email address?  Following the RFC?  Do you have your own criteria (e.g. has to be from redcross.org)?
+            \item 2.4.1.2 -- What database?  What fields are you checking against?
+            \item 2.4.1.3 -- Reference the specs.
+            \item How do you do this hashing?  Are you rolling your own or using someone else's?
+            \item 2.4.1.4 -- How is the email sent?  Using what program, header info, etc?
+        \end{itemize}
+        \item 2.4.2 -- Do you not check that the token is correct?
+        \begin{itemize}
+            \item 2.4.2.1 -- Define what a valid username and password are
+            \item 2.4.2.2 -- Explain this ``sanitization''
+            \item Explain this ``transformation''
+        \end{itemize}
+        \item 2.4.3 -- Fine
+        \begin{itemize}
+            \item 2.4.3.1 -- What version of the Google Maps API are you working against?
+            \item Common query format for the API?
+            \item Any restriction on the location information, like field lengths, bad characters, etc.?
+            \item Will there be a ``No results returned'' message?
+            \item 2.4.3.2 -- Fine, though the format of the date picker widgets could be defined (Calendar?  What's the default date on the calendar?  etc.)
+            \item 2.4.3.4 -- Capitalize, quote, or otherwise emphasize ``return only live slices''
+            \item 2.4.3.5 -- Define the sanitization process.  What's the goal?  What's the process?
+        \end{itemize}
+        \item 2.4.4 -- Fine
+        \begin{itemize}
+            \item 2.4.4.3 -- What if there are no slices?  Empty screen or a message?
+            \item 2.4.4.4 -- What if there are no slices?  Empty screen or a message?
+            \item 2.4.4.5 -- Does it log the user out first?  If not, what happens if there's an invalid login?  Does the user stay logged in on the first account, or is he signed out?
+            \item 2.4.4.6 -- Does it log the user out first?  If not, what happens when the user is done signing up a new account?
+        \end{itemize}
+        2.4.5 -- Fine
+        \begin{itemize}
+            \item 2.4.5.2 -- Request?  Can it be denied?  If so, or if it otherwise fails, what happens?
+            \item What *is* adoption?
+            \item 2.4.5.3 -- What happens if the request is denied or fails?
+            \item I assume that tags can't be duplicates.  If this is true, how do you resolve this?
+            \item If it's a tag, why not call it ``Retag''?
+            \item 2.4.5.4 -- Any confirmation message?
+            \item Clean up the formatting - looks sloppy
+            \item In the backend, what happens if any of these steps fail?  For example, what if creating one of the last new files fails - do you rollback, or do you allow these new files to continue existing side-by-side with the original?
+            \item 2.4.5.5 -- ``and four others that have been selected from the list'' - selected by whom?
+            \item How do you do the GPS coordinate polling?  Updating?
+            \item 2.4.5.6 -- ``small delta'' - like?
+            \item ``See Error Handling'' - link to it
+            \item 2.4.5.7 -- The TeX (I assume) rendering is failing - ``$>$'' is being rendered as an upside-down question mark, and ``$<$'' as an upside-down exclamation point
+            \item Better format this section - it looks sloppy (some uncapitalized; eye doesn't know where something begins and something ends and what things are associated)
+            \item 2.4.5.8 -- Where should the errors go on the page?  
+            \item What should the error actually read?
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+%------------------------------------------------------------------------------
+
+\section{Integration Test Plan}
+
+If statements shouldn't be in the post conditions, make it another precondition
+and two tests to cover the choices.  Definitely more tests for 3.1, it only has
+one test, at least some more fluff.
+
+Other notes:
+\begin{itemize*}
+    \item Need to make sure that you have define words and such
+    \item Module Graph
+    \begin{itemize*}
+        \item not clear on the labels and what they go to
+        \item doesn't the streaming server handle video to the device
+        \item some of the connections between the modules don't make sense.
+    \end{itemize*}
+    \item each test should only have one action and shouldn't have ambigous
+    post conditions.
+    \item What is the difference between streaming and recording? why when i
+    stop recording, the streaming stops.
+\end{itemize*}
+
+    
+
+\end{document}

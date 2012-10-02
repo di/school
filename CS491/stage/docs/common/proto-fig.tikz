@@ -1,0 +1,64 @@
+\begin{tikzpicture} [scale=.4]
+    \path[fill=yellow!10,rounded corners, draw=black!50, dashed]
+                (-3,10) rectangle (10,-3);
+    \draw (-3,10) node[anchor=north west, draw=none]{1.};
+    
+    \draw[very thick,dashed] (0,0) circle (2.2);
+    \draw[very thick,dashed] (3,2) circle (2.2);
+    \draw[very thick,dashed] (7,7) circle (2.2);
+    \draw[very thick,dashed] (6,1) circle (2.2);
+    \draw[very thick,dashed] (1,6) circle (2.2);
+    
+    \node[diamond, draw, fill=green!20] (a) at (0,0) {A};
+    \node[diamond, draw, fill=green!20] (b) at (3,2) {B};
+    \node[diamond, draw, fill=green!20] (c) at (7,7) {C};
+    \node[diamond, draw, fill=green!20] (d) at (6,1) {D};
+    \node[diamond, draw, fill=green!20] (e) at (1,6) {E};
+    
+    %%two
+    \path[fill=yellow!30,rounded corners, draw=black!50, dashed]
+                (10,10) rectangle (23,-3);
+    \draw (10,10) node[anchor=north west, draw=none]{2.};
+    
+    \draw[very thick,dashed] (14,2) circle (2.2);
+    \draw[very thick,dashed] (16,4) circle (2.2);
+    \draw[very thick,dashed] (20,7) circle (2.2);
+    \draw[very thick,dashed] (19,1) circle (2.2);
+    \draw[very thick,dashed] (14,6) circle (2.2);
+    
+    \node[diamond, draw, fill=red!20] (a2) at (14,2) {A};
+    \node[diamond, draw, fill=red!20] (b2) at (16,4) {B};
+    \node[diamond, draw, fill=green!20] (c2) at (20,7) {C};
+    \node[diamond, draw, fill=green!20] (d2) at (19,1) {D};
+    \node[diamond, draw, fill=red!20] (e2) at (14,6) {E};
+    
+    \path[-, very thick] (b2) edge (a2);
+    \path[-, very thick] (b2) edge (e2);
+   
+    %%three
+    \path[fill=yellow!50,rounded corners, draw=black!50, dashed]
+                (23,10) rectangle (36,-3);
+    \draw (23,10) node[anchor=north west, draw=none]{3.};
+
+    \draw[very thick,dashed] (27,2) circle (2.2);
+    \draw[very thick,dashed] (29,4) circle (2.2);
+    \draw[very thick,dashed] (33,4) circle (2.2);
+    \draw[very thick,dashed] (31,2) circle (2.2);
+    \draw[very thick,dashed] (27,6) circle (2.2);
+    
+    \node[diamond, draw, fill=red!20] (a3) at (27,2) {A};
+    \node[diamond, draw, fill=red!20] (b3) at (29,4) {B};
+    \node[diamond, draw, fill=red!20] (c3) at (33,4) {C};
+    \node[diamond, draw, fill=red!20] (d3) at (31,2) {D};
+    \node[diamond, draw, fill=red!20] (e3) at (27,6) {E};
+    
+    \path[-, very thick] (b3) edge (a3);
+    \path[-, very thick] (b3) edge (e3);
+    \path[-, very thick] (b3) edge (d3);
+    \path[-, very thick] (d3) edge (c3);
+   
+    %\begin{scope}[very thick,dashed]
+    %\draw (0,0) circle (.5cm);
+    %\draw (0,0) circle (1cm);
+    %\end{scope} \draw[thin] (0,0) circle (1.5cm);
+ \end{tikzpicture}

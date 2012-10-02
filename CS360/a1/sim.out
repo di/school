@@ -1,0 +1,13 @@
+#!/usr/bin/python
+#
+# sim.out - another mock-up, just so the makefile is happy
+#
+
+from sys import argv
+
+print "\nYou want %s to read these files:" % argv[0]
+argv.pop( 0 )	# get rid of the scriptname
+for f in argv :
+	print "\t" + f
+
+print "\n"

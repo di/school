@@ -1,0 +1,632 @@
+/*
+ * Dustin Ingram
+ * dustin@drexel.edu
+ * CS338:GUI, Assignment #1
+ */
+
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+public class SongLoggerGui {
+
+	private JFrame frame;
+	private JSplitPane splitPane;
+	private JTabbedPane tabbedPane;
+	private JPanel leftPaneTop;
+	private JPanel leftPaneBottom;
+	private JPanel leftPane;
+	private JPanel rightPane;
+	private	JPanel rockPanel;
+	private	JPanel jazzPanel;
+	private	JPanel classicalPanel;
+	private JList songListComponent;
+	private JScrollPane songListScrollPane;
+		
+	private Dimension maximumSize = new Dimension(600,25);
+	
+	private InputManager inputManager = new InputManager();
+	
+	public SongLoggerGui() {		
+		
+		songListComponent = new JList();
+		songListComponent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		songListComponent.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				if(!arg0.getValueIsAdjusting()) {
+					if(songListComponent.getSelectedIndex() >= 0) {
+						Song tmpSong = inputManager.getSongList().getSongList().get(songListComponent.getSelectedIndex());						
+						tabbedPane.setSelectedIndex(tmpSong.genre);
+						inputManager.setCurrentSong(tmpSong);		
+						
+						JPanel currentPanel = (JPanel) tabbedPane.getComponent(inputManager.getGenre());
+						for(Component i:currentPanel.getComponents()){
+							if(i.getName() != null)
+							{
+								if (i.getName().equals("artistField")) {
+									((JTextField) i).setText(inputManager.currentSong.artistField);
+								}
+								if (i.getName().equals("songtitleField")) {
+									((JTextField) i).setText(inputManager.currentSong.songtitleField);
+								}
+								if (i.getName().equals("albumtitleField")) {
+									((JTextField) i).setText(inputManager.currentSong.albumtitleField);
+								}
+								if (i.getName().equals("tracknumberField")) {
+									((JTextField) i).setText(inputManager.currentSong.tracknumberField);
+								}
+								if (i.getName().equals("lengthField")) {
+									((JTextField) i).setText(inputManager.currentSong.lengthField);
+								}
+								if (inputManager.getGenre() != 0 && i.getName().equals("recordingyearField")) {
+									((JTextField) i).setText(inputManager.currentSong.recordingyearField);
+								}
+								if (inputManager.getGenre() != 0 && inputManager.getGenre() != 1 && i.getName().equals("composerField")) {
+									((JTextField) i).setText(inputManager.currentSong.composerField);
+								}
+								if (inputManager.getGenre() != 0 && inputManager.getGenre() != 1 && i.getName().equals("compositionyearField")) {
+									((JTextField) i).setText(inputManager.currentSong.compositionyearField);
+								}
+							}
+						}
+					}
+				}				
+			}			
+		});
+		
+		songListScrollPane = new JScrollPane(songListComponent);
+		songListScrollPane.setPreferredSize(new Dimension(240, 380));
+				
+		leftPaneTop = new JPanel();
+		leftPaneTop.setBorder(BorderFactory.createTitledBorder("Song List:"));
+		leftPaneTop.add(songListScrollPane);		
+		
+		JButton addButton = new JButton("Add");
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				inputManager.add();
+				songListComponent.setListData(inputManager.getListData());
+				songListScrollPane.revalidate();
+				songListScrollPane.repaint();
+			} 
+		} );
+
+		JButton changeButton = new JButton("Change");
+		changeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedIndex = songListComponent.getSelectedIndex();
+				if (selectedIndex >= 0)
+				{
+					inputManager.remove(selectedIndex);
+					songListComponent.setListData(inputManager.getListData());
+				}
+				inputManager.add();
+				songListComponent.setListData(inputManager.getListData());
+				songListScrollPane.revalidate();
+				songListScrollPane.repaint();
+			} 
+		} );
+		
+		JButton removeButton = new JButton("Remove");
+		removeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedIndex = songListComponent.getSelectedIndex();
+				if (selectedIndex >= 0)
+				{
+					inputManager.remove(selectedIndex);
+					songListComponent.setListData(inputManager.getListData());
+				}
+			} 
+		} );
+		
+		leftPaneBottom = new JPanel();
+		leftPaneBottom.setBorder(BorderFactory.createTitledBorder("Actions:"));
+		leftPaneBottom.setMaximumSize(new Dimension(600, 600));
+		leftPaneBottom.add(addButton);
+		leftPaneBottom.add(changeButton);
+		leftPaneBottom.add(removeButton);
+		
+		leftPane = new JPanel();
+		leftPane.add(leftPaneTop);
+		leftPane.add(leftPaneBottom);
+		leftPane.setLayout(new BoxLayout(leftPane, BoxLayout.Y_AXIS));
+		
+		createRockPanel();
+		createJazzPanel();
+		createClassicalPanel();	
+				
+		tabbedPane = new JTabbedPane();
+		tabbedPane.addTab( "Rock", rockPanel );
+		tabbedPane.addTab( "Jazz", jazzPanel );
+		tabbedPane.addTab( "Classical", classicalPanel );
+		
+		tabbedPane.addChangeListener(new ChangeListener() {
+	      	public void stateChanged(ChangeEvent e) {
+				inputManager.clear();
+				inputManager.setGenre(((JTabbedPane) e.getSource()).getSelectedIndex());
+			}
+	    });
+		
+		rightPane = new JPanel();
+		rightPane.setLayout(new BoxLayout(rightPane, BoxLayout.Y_AXIS));
+		rightPane.setBorder(BorderFactory.createTitledBorder("Song Information"));
+		rightPane.add(tabbedPane);
+		
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane, rightPane);
+		splitPane.setOneTouchExpandable(true);
+		splitPane.setDividerLocation(260);
+		
+		frame = new JFrame( "SongLogger.java" );
+		frame.setSize( 600, 500 );
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		frame.getContentPane().add( splitPane );
+		frame.setVisible(true);
+		
+	}
+
+	private void createRockPanel() {
+
+		rockPanel = new JPanel();
+		rockPanel.setLayout(new BoxLayout(rockPanel, BoxLayout.Y_AXIS));
+		rockPanel.setBorder(new EmptyBorder(20,20,20,20));
+		
+		JLabel artistLabel = new JLabel("Artist:");
+		rockPanel.add(artistLabel);
+		
+		final JTextField artistField = new JTextField();
+		artistField.setMaximumSize(maximumSize);
+		artistField.setName("artistField");
+		artistField.getDocument().addDocumentListener(new DocumentListener() {
+
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setArtistField(artistField.getText());
+			}
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setArtistField(artistField.getText());				
+			}
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setArtistField(artistField.getText());				
+			}			
+		}
+		);
+		rockPanel.add(artistField);
+		
+		rockPanel.add(Box.createVerticalStrut(10));
+		
+		JLabel songtitleLabel = new JLabel("Song Title:");
+		rockPanel.add(songtitleLabel);
+		
+		final JTextField songtitleField = new JTextField();
+		songtitleField.setMaximumSize(maximumSize);
+		songtitleField.setName("songtitleField");
+		songtitleField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setSongtitleField(songtitleField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setSongtitleField(songtitleField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setSongtitleField(songtitleField.getText());				
+			}			
+		}
+		);
+		rockPanel.add(songtitleField);
+		
+		rockPanel.add(Box.createVerticalStrut(10));
+
+		JLabel albumtitleLabel = new JLabel("Album Title:");
+		rockPanel.add(albumtitleLabel);
+		
+		final JTextField albumtitleField = new JTextField();
+		albumtitleField.setMaximumSize(maximumSize);
+		albumtitleField.setName("albumtitleField");
+		albumtitleField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setAlbumtitleField(albumtitleField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setAlbumtitleField(albumtitleField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setAlbumtitleField(albumtitleField.getText());				
+			}			
+		}
+		);
+		rockPanel.add(albumtitleField);
+		
+		rockPanel.add(Box.createVerticalStrut(10));
+
+		JLabel tracknumberLabel = new JLabel("Track Number:");
+		rockPanel.add(tracknumberLabel);
+		
+		final JTextField tracknumberField = new JTextField();
+		tracknumberField.setMaximumSize(maximumSize);
+		tracknumberField.setName("tracknumberField");
+		tracknumberField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setTracknumberField(tracknumberField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setTracknumberField(tracknumberField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setTracknumberField(tracknumberField.getText());				
+			}			
+		}
+		);
+		rockPanel.add(tracknumberField);
+		
+		rockPanel.add(Box.createVerticalStrut(10));
+
+		JLabel lengthLabel = new JLabel("Length (time):");
+		rockPanel.add(lengthLabel);
+		
+		final JTextField lengthField = new JTextField();
+		lengthField.setMaximumSize(maximumSize);
+		lengthField.setName("lengthField");
+		lengthField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setLengthField(lengthField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setLengthField(lengthField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setLengthField(lengthField.getText());				
+			}			
+		}
+		);
+		rockPanel.add(lengthField);
+
+	}
+	
+	private void createJazzPanel() {		
+
+		jazzPanel = new JPanel();
+		jazzPanel.setLayout(new BoxLayout(jazzPanel, BoxLayout.Y_AXIS));
+		jazzPanel.setBorder(new EmptyBorder(20,20,20,20));
+		
+		JLabel artistLabel = new JLabel("Artist:");
+		jazzPanel.add(artistLabel);
+		
+		final JTextField artistField = new JTextField();
+		artistField.setMaximumSize(maximumSize);
+		artistField.setName("artistField");
+		artistField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setArtistField(artistField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setArtistField(artistField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setArtistField(artistField.getText());				
+			}			
+		}
+		);
+		jazzPanel.add(artistField);
+		
+		jazzPanel.add(Box.createVerticalStrut(10));
+		
+		JLabel songtitleLabel = new JLabel("Song Title:");
+		jazzPanel.add(songtitleLabel);
+		
+		final JTextField songtitleField = new JTextField();
+		songtitleField.setMaximumSize(maximumSize);
+		songtitleField.setName("songtitleField");
+		songtitleField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setSongtitleField(songtitleField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setSongtitleField(songtitleField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setSongtitleField(songtitleField.getText());				
+			}			
+		}
+		);
+		jazzPanel.add(songtitleField);
+		
+		jazzPanel.add(Box.createVerticalStrut(10));
+
+		JLabel albumtitleLabel = new JLabel("Album Title:");
+		jazzPanel.add(albumtitleLabel);
+		
+		final JTextField albumtitleField = new JTextField();
+		albumtitleField.setMaximumSize(maximumSize);
+		albumtitleField.setName("albumtitleField");
+		albumtitleField.getDocument().addDocumentListener(new DocumentListener() {
+		
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setAlbumtitleField(albumtitleField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setAlbumtitleField(albumtitleField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setAlbumtitleField(albumtitleField.getText());				
+			}			
+		}
+		);
+		jazzPanel.add(albumtitleField);
+		
+		jazzPanel.add(Box.createVerticalStrut(10));
+
+		JLabel tracknumberLabel = new JLabel("Track Number:");
+		jazzPanel.add(tracknumberLabel);
+		
+		final JTextField tracknumberField = new JTextField();
+		tracknumberField.setMaximumSize(maximumSize);
+		tracknumberField.setName("tracknumberField");
+		tracknumberField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setTracknumberField(tracknumberField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setTracknumberField(tracknumberField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setTracknumberField(tracknumberField.getText());				
+			}			
+		}
+		);
+		jazzPanel.add(tracknumberField);
+		
+		jazzPanel.add(Box.createVerticalStrut(10));
+
+		JLabel lengthLabel = new JLabel("Length (time):");
+		jazzPanel.add(lengthLabel);
+		
+		final JTextField lengthField = new JTextField();
+		lengthField.setMaximumSize(maximumSize);
+		lengthField.setName("lengthField");
+		lengthField.getDocument().addDocumentListener(new DocumentListener() {
+
+		
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setLengthField(lengthField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setLengthField(lengthField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setLengthField(lengthField.getText());				
+			}			
+		}
+		);
+		jazzPanel.add(lengthField);	
+		
+		jazzPanel.add(Box.createVerticalStrut(10));
+		
+		JLabel recordingyearLabel = new JLabel("Recording Year (optional):");
+		jazzPanel.add(recordingyearLabel);
+		
+		final JTextField recordingyearField = new JTextField();
+		recordingyearField.setMaximumSize(maximumSize);
+		recordingyearField.setName("recordingyearField");
+		recordingyearField.getDocument().addDocumentListener(new DocumentListener() {
+
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setRecordingyearField(recordingyearField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setRecordingyearField(recordingyearField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setRecordingyearField(recordingyearField.getText());				
+			}			
+		}
+		);
+		jazzPanel.add(recordingyearField);	
+	}
+	
+	private void createClassicalPanel() {
+		
+		classicalPanel = new JPanel();
+		classicalPanel.setLayout(new BoxLayout(classicalPanel, BoxLayout.Y_AXIS));
+		classicalPanel.setBorder(new EmptyBorder(20,20,20,20));
+		
+		JLabel artistLabel = new JLabel("Artist:");
+		classicalPanel.add(artistLabel);
+		
+		final JTextField artistField = new JTextField();
+		artistField.setMaximumSize(maximumSize);
+		artistField.setName("artistField");
+		artistField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setArtistField(artistField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setArtistField(artistField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setArtistField(artistField.getText());				
+			}			
+		}
+		);
+		classicalPanel.add(artistField);
+		
+		classicalPanel.add(Box.createVerticalStrut(10));
+		
+		JLabel songtitleLabel = new JLabel("Song Title:");
+		classicalPanel.add(songtitleLabel);
+		
+		final JTextField songtitleField = new JTextField();
+		songtitleField.setMaximumSize(maximumSize);
+		songtitleField.setName("songtitleField");
+		songtitleField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setSongtitleField(songtitleField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setSongtitleField(songtitleField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setSongtitleField(songtitleField.getText());				
+			}			
+		}
+		);
+		classicalPanel.add(songtitleField);
+		
+		classicalPanel.add(Box.createVerticalStrut(10));
+
+		JLabel albumtitleLabel = new JLabel("Album Title:");
+		classicalPanel.add(albumtitleLabel);
+		
+		final JTextField albumtitleField = new JTextField();
+		albumtitleField.setMaximumSize(maximumSize);
+		albumtitleField.setName("albumtitleField");
+		albumtitleField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setAlbumtitleField(albumtitleField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setAlbumtitleField(albumtitleField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setAlbumtitleField(albumtitleField.getText());				
+			}			
+		}
+		);
+		classicalPanel.add(albumtitleField);
+		
+		classicalPanel.add(Box.createVerticalStrut(10));
+
+		JLabel tracknumberLabel = new JLabel("Track Number:");
+		classicalPanel.add(tracknumberLabel);
+		
+		final JTextField tracknumberField = new JTextField();
+		tracknumberField.setMaximumSize(maximumSize);
+		tracknumberField.setName("tracknumberField");
+		tracknumberField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setTracknumberField(tracknumberField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setTracknumberField(tracknumberField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setTracknumberField(tracknumberField.getText());				
+			}			
+		}
+		);
+		classicalPanel.add(tracknumberField);
+		
+		classicalPanel.add(Box.createVerticalStrut(10));
+
+		JLabel lengthLabel = new JLabel("Length (time):");
+		classicalPanel.add(lengthLabel);
+		
+		final JTextField lengthField = new JTextField();
+		lengthField.setMaximumSize(maximumSize);
+		lengthField.setName("lengthField");
+		lengthField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setLengthField(lengthField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setLengthField(lengthField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setLengthField(lengthField.getText());				
+			}			
+		}
+		);
+		classicalPanel.add(lengthField);	
+		
+		classicalPanel.add(Box.createVerticalStrut(10));
+		
+		JLabel recordingyearLabel = new JLabel("Recording Year (optional):");
+		classicalPanel.add(recordingyearLabel);
+		
+		final JTextField recordingyearField = new JTextField();
+		recordingyearField.setMaximumSize(maximumSize);
+		recordingyearField.setName("recordingyearField");
+		recordingyearField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setRecordingyearField(recordingyearField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setRecordingyearField(recordingyearField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setRecordingyearField(recordingyearField.getText());				
+			}			
+		}
+		);
+		classicalPanel.add(recordingyearField);	
+		
+		classicalPanel.add(Box.createVerticalStrut(10));
+
+		JLabel composerLabel = new JLabel("Composer:");
+		classicalPanel.add(composerLabel);
+		
+		final JTextField composerField = new JTextField();
+		composerField.setMaximumSize(maximumSize);
+		composerField.setName("composerField");
+		composerField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setComposerField(composerField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setComposerField(composerField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setComposerField(composerField.getText());				
+			}			
+		}
+		);
+		classicalPanel.add(composerField);
+		
+		classicalPanel.add(Box.createVerticalStrut(10));
+
+		JLabel compositionyearLabel = new JLabel("Composition Year (optional):");
+		classicalPanel.add(compositionyearLabel);
+		
+		final JTextField compositionyearField = new JTextField();
+		compositionyearField.setMaximumSize(maximumSize);
+		compositionyearField.setName("compositionyearField");
+		compositionyearField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			public void changedUpdate(DocumentEvent e) {
+				inputManager.setCompositionyearField(compositionyearField.getText());
+			}			
+			public void insertUpdate(DocumentEvent e) {
+				inputManager.setCompositionyearField(compositionyearField.getText());				
+			}			
+			public void removeUpdate(DocumentEvent e) {
+				inputManager.setCompositionyearField(compositionyearField.getText());				
+			}			
+		}
+		);
+		classicalPanel.add(compositionyearField);	
+		
+	}
+
+}

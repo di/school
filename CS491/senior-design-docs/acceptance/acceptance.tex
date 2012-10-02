@@ -1,0 +1,423 @@
+\documentclass[titlepage]{article}
+
+\usepackage{fullpage}   % Use the whole page
+\usepackage{fancyhdr}   % Nice headers/footers
+\usepackage{graphicx}   % Importing graphics
+\usepackage{mdwlist}    % For itemize* and enumerate*
+\usepackage{hyperref}   % Hyperlink references and URLs
+\usepackage{vhistory}   % Version History
+\usepackage{tabularx}
+%\usepackage{todonotes}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={ServiceSniffer Acceptance Test Plan},
+    pdfauthor={Justin Courts; Philip Cristiano; Charles Rumford; Thomas Wambold}
+}
+
+% So we can number paragraphs too
+\setcounter{secnumdepth}{5}
+
+% For headers and footers
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{25pt}
+\pagestyle{fancy}
+	
+% Page style for the title page
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% Just so we don't have to specify this twice
+\newcommand\mytitle{Acceptance Testing}
+\newcommand\mydate{December 1, 2009}
+
+% Page style for every other page
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{ServiceSniffer}
+\fancyhead[C]{\mytitle}
+\fancyhead[R]{\mydate}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{\textbf{\mytitle}}
+\author{
+    Justin Courts \\\url{justin@servicesniffer.net}
+    \and Philip Cristiano \\\url{phil@servicesniffer.net}
+    \and Charles Rumford \\\url{charlesr@servicesniffer.net}
+    \and Thomas Wambold \\\url{tom@servicesniffer.net}
+}
+\date{\mydate}
+
+%\newcommand{\testentry}[4]{
+%    \begin{itemize*}
+%        \item \textbf{Name:} #1
+%        \item \textbf{Pre-Condition:} #2
+%        \item \textbf{Action:} #3
+%        \item \textbf{Post-Condition:} #4
+%    \end{itemize*}
+%}
+
+%\newcommand{\testentry}[4]{
+%    \begin{center}
+%    \begin{tabularx}{0.75\textwidth}{| l | X |}
+%        \hline
+%        \bf Name & #1 \\\hline
+%        \bf Pre-Condition & #2 \\\hline
+%        \bf Action & #3 \\\hline
+%        \bf Post-Condition & #4 \\\hline
+%    \end{tabularx}
+%    \end{center}
+%}
+
+\newcommand{\testentry}[4]{
+    \subsubsection{#1}
+    \begin{itemize}
+        \item \textbf{Pre-Condition:} #2
+        \item \textbf{Action:} #3
+        \item \textbf{Post-Condition:} #4
+    \end{itemize}
+    \vspace{0.5em}
+}
+
+\begin{document}
+\pagenumbering{roman}
+
+% Logo
+\begin{figure}
+    \vspace{-6em}
+    \centering
+%    \includegraphics[width=0.6\textwidth]{../logo}
+    \vspace{-4em}
+\end{figure}
+
+\maketitle
+
+\begin{abstract}
+The goal of this project is to automate the passive discovery, recognition,
+and consumption of semantic web services.  ServiceSniffer does not require any
+central registry of services but will examine network traffic patterns to
+identify specific services, how to invoke them, and report specific, user
+chosen information.  As well as running with known service definitions, the
+system should be able to (a) identify new services as unknown, and (b) analyze
+relevant network traffic to determine how to consume the service.  This
+application will be constructed of an extensible core framework upon which
+future modules can be developed and integrated.
+\end{abstract}
+
+\pagebreak
+
+\begin{versionhistory}
+\vhEntry{1.0}{01-12-2009}{All}{Initial release document}
+\vhEntry{2.0}{12-01-2009}{All}{Updated with examples of usage}
+\vhEntry{3.0}{16-02-2009}{All}{Final document}
+\end{versionhistory}
+
+\pagebreak
+
+\setcounter{tocdepth}{4}
+\tableofcontents
+\pagebreak
+\pagenumbering{arabic}
+
+% ACCEPTANCE TEST PLAN DOCUMENT
+
+%The acceptance test plan describes the tests that will be executed when you
+%have delivered the finished product. If your product passes this test it will
+%be considered a success, otherwise a failure.
+%
+%A simple litmus test may be applied to your Acceptance Test Plan document to
+%determine if it is complete. Imagine you are the person/group contracting out
+%your project to a third party. The tests listed in the document must be
+%complete enough to encompass every requirement of your system. If a system
+%passes all of these tests, they you as the contracting agent will be required
+%to pay in full for the project. Therefore, if an explicit or implicit
+%requirement is not tested, it is possible for you to receive a incomplete
+%project.
+%
+%The team administrator submits the acceptance test plan in PDF format via
+%WebCT.
+
+%\testentry{Foobar}
+%    {The foo is barred.}
+%    {We perform bazzing.}
+%    {It works.}
+
+\section{Introduction}
+
+\subsection{Objective}
+    This document includes the acceptance test plan for ServiceSniffer.  It
+    defines the test cases for the modules of the system:  Data Capture,
+    Processors and Filters, the System Kernel, and Interfaces.  The acceptance
+    test plan for this system is based on the project requirements set forth in
+    the Software Requirements Specification document.
+
+\subsection{References}
+    For the project requirements for the ServiceSniffer project, please see the
+    Software Requirements Specification document for this project.  The most
+    recent version of this document is available at
+    \url{http://www.servicesniffer.net}
+
+\section{Tests}
+
+\subsection{Data Capture}
+
+The Data Capture section of the system is comprised of the data capturing
+interface (from a file, file handles, or the network card) and an output of a
+PCAP stream.  There is also the option of saving the PCAP stream to a file.
+
+\testentry{Valid Input File}{
+    The program is not running.
+}{
+    The user starts the program, and supplies an existing input file, that they
+    have permissions to read, and that is in the PCAP format.
+}{
+    The program is started, and loads the input file.
+}
+
+\testentry{Invalid Input File}{
+    The program is not running.
+}{
+    The user supplies an input file, which does not exist, or the user does not
+    have permission to read, or is not in PCAP format.
+}{
+    An error message is displayed, and the program is not started.
+}
+
+\testentry{Valid Interface}{
+    The program is not running.
+}{
+    The user supplies a network interface, which exists, and the user has
+    permission to capture from it.
+}{
+    The program is started, and reads from the network device.
+}
+
+\testentry{Invalid Network Interface}{
+    The program is not running.
+}{
+    The user supplies a network interface, which does not exist, or the user
+    does not have permission to capture from it.
+}{
+    An error message is displayed, and the program is not started.
+}
+
+\testentry{Valid Output File Location}{
+    The program is not running.
+}{
+    The user starts the program and supplies a file name in a location where
+    the user has write permissions and the file can be written to by the user.
+}{
+    The program is started, and it outputs data connections of service
+    invocations to the file in PCAP format.
+}
+
+\testentry{Invalid Output File Location}{
+    The program is not running.
+}{
+    The user starts the program and supplies a file name in a location where
+    the user does not have write permissions, or a file which otherwise the
+    user cannot write to.
+}{
+    An error message is displayed, and the program is not started.
+}
+
+\testentry{Output File Consistency}{
+    The program is running.
+}{
+    The program is closed abruptly for any reason.
+}{
+    The output file is a valid PCAP file.
+}
+
+\subsection{Processors/Filters}
+
+The Processors/Filters section of the system is comprised of the data filters,
+which reduce the incoming information to subsets, and data processors, which
+take filtered or unfiltered data and create meaningful data structures (such as
+lists and graphs) for the user to later consume in the Display section.
+\\
+A precondition for all processors and filters is that the program is running,
+and that it has valid input.
+
+\testentry{Secured Connections}{
+    The program is running and has valid input.
+}{
+    An encrypted connection is passed into a processor.
+}{
+    The connection is marked as encrypted, and unable to determine if it is a
+    web service, and will be reported to the user.
+}
+
+\testentry{Unsecured Connections - Web Service}{
+    The program is running and has valid input.
+}{
+    An unencrypted connection is passed into a processor, and it is a web
+    service.
+}{
+    If the web service has not been seen before, it is added to a list
+    containing: server name, server IP address, type of service (SOAP, etc.),
+    service definition (WSDL if possible).
+
+    The invocation of the web service is added to a list containing: client IP
+    address, timestamp of the invocation, and the data sent to the service.
+}
+
+\testentry{Unencrypted Connections - Non-web Service}{
+    The program is running and has valid input.
+}{
+    An unencrypted connection is passed into a processor, and it is not a web
+    service.
+}{
+    The program ignores the connection.
+}
+    
+\testentry{Secured Web Service}{
+    The program is running and has valid input.
+}{
+    An unencrypted connection is passed into a processor, and it contains an
+    encrypted web service payload.
+}{
+    The web service is added to a list of web services, it is marked as secured,
+    and is reported to the user.
+}
+
+\testentry{Popular Web Services}{
+    The program is running and has valid input.
+}{
+    A web service is invoked more frequently than others, given a user defined
+    threshold.
+}{
+    The web service is marked as ``popular.''
+}
+
+\testentry{Unpopular Web Services}{
+    The program is running and has valid input.
+}{
+    A web service is invoked less frequently than others, given a user defined
+    threshold.
+}{
+    The web service is marked as ``unpopular.''
+}
+
+\testentry{Useful Web Service Combinations}{
+    The program is running and has valid input.
+}{
+    A number of web service invocations occur in a noticeable pattern.
+}{
+    The combination is noted in a list and presented to the user.
+}
+
+\testentry{Abnormal Web Service Combinations}{
+    The program is running and has valid input.
+}{
+    A set of web service invocations occur which deviates from known patterns.
+}{
+    The combination is noted in a list and presented to the user.
+}
+
+\testentry{Service Source IP Filter}{
+    The program is running and has valid input.
+}{
+    A user filters based on source IP.
+}{
+    A service list subset containing only web services from this source IP is
+    returned.
+}
+
+\testentry{Service Destination IP Filter}{
+    The program is running and has valid input.
+}{
+    A user filters based on destination IP.
+}{
+    A service invocation list subset containing only invocations from a
+    particular IP address is returned.
+}
+
+\testentry{Service Filter}{
+    The program is running and has valid input.
+}{
+    A user filters based on a specific web service.
+}{
+    The web service invocation list containing invocations of a specific web
+    service.
+}
+
+\subsection{Interfaces}
+
+The Interfaces section of this system is where the user can specify what data
+she wishes to see.  The filters and processors from the previous section create
+the data that is given to the display layer, and the display is capable of
+further filtering this data as outlined below.
+\\
+All displays (GUI, CLI) should conform to these tests.
+
+\testentry{Selecting a processor}{
+    The program is running, and is displaying an interface.
+}{
+    The user selects a processor to display.
+}{
+    The processor output is displayed.
+}
+
+\testentry{Selecting a display filter}{
+    The program is running, displaying an interface, and displaying processor
+    output.
+}{
+    The user selects a display filter to activate.
+}{
+    The processor output is filtered, and the results are displayed.
+}
+
+\testentry{Deselecting a display filter}{
+    The program is running, displaying an interface, and displaying processor
+    output.
+}{
+    The user selects an activated display filter to deactivate.
+}{
+    The processor output is displayed without using the deactivated filter.
+}
+
+\testentry{Selecting Multiple display filters}{
+    The program is running, displaying an interface, displaying processor output,
+    and already has an activated filter.
+}{
+    The user selects another filter to activate.
+}{
+    The filtered processor output is further filtered in the order the filters
+    were applied, and displayed.
+}
+
+\testentry{Deselecting Multiple display filters}{
+    The program is running, displaying an interface, displaying processor output,
+    and already has an activated filter.
+}{
+    The user selects another filter to deactivate.
+}{
+    The processor output is displayed without using the deactivated filter.
+}
+
+%\paragraph{Valid input}
+%        -X      : open a data stream from the network card directly
+%        -X      : listen to a data stream coming in from stdin in Pcap format
+%        -X file : open ``file'' which is in Pcap format
+%        -X file : save in Pcap format to `file'
+%
+%
+%    Pre:    App not running
+%    Action: Starting app with {data stream} or {file} with an optional 
+%    Post:   App starts running without requiring root access and saving to 
+%
+%    Pre:    App not running
+%    Action: Starting app with invalid input
+%    Post:   App does not start && App returns usage information
+%    
+%    Pre:    
+
+
+\end{document}

@@ -1,0 +1,59 @@
+/*
+ * Dustin Ingram
+ * dustin@drexel.edu
+ * CS338:GUI, Assignment #1
+ */
+
+import java.util.*;
+
+class ShapeList
+{
+	private ArrayList<Shape> shapeList;
+	
+	public ShapeList() {
+		shapeList = new ArrayList<Shape>();
+	}
+
+	public ArrayList<Shape> getSongList() {
+		return shapeList;
+	}
+	
+	public Vector<String> getListData() {
+		Vector<String> listData = new Vector<String>();
+		for(int i=0; i<shapeList.size(); i++){
+			String elementString = "<html>";
+			switch(shapeList.get(i).type) {
+			case(0): 
+				elementString += "<b>Square</b>: center (" +
+					shapeList.get(i).p1X + "," + shapeList.get(i).p1Y + ")," +
+					"size " + shapeList.get(i).p2X;
+			case(1): elementString += "<b>Rectangle</b>: ";
+			case(2): elementString += "<b>Circle</b>: ";
+			case(3): elementString += "<b>Oval</b>: ";
+			case(4): elementString += "<b>Line</b>: ";
+			}
+						elementString += "</html>";
+			listData.addElement(elementString);
+		}
+		return listData;
+	}
+
+	public void add(Shape addSong) {
+		Shape tmpSong = new Shape();
+		tmpSong.genre = addSong.genre;
+		tmpSong.artistField = addSong.artistField;
+		tmpSong.songtitleField = addSong.songtitleField;
+		tmpSong.albumtitleField = addSong.albumtitleField;
+		tmpSong.tracknumberField = addSong.tracknumberField;
+		tmpSong.lengthField = addSong.lengthField;
+		tmpSong.recordingyearField = addSong.recordingyearField;
+		tmpSong.composerField = addSong.composerField;
+		tmpSong.compositionyearField = addSong.compositionyearField;
+		
+		shapeList.add(tmpSong);			
+	}
+
+	public void remove(int selectedIndex) {
+		shapeList.remove(selectedIndex);
+	}		
+}

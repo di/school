@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/148/trunk/src/tests
+END
+ConnectionSetupTests.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/148/trunk/src/tests/ConnectionSetupTests.java
+END
+StateUpdateTests.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/148/trunk/src/tests/StateUpdateTests.java
+END
+PieceTests.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/148/trunk/src/tests/PieceTests.java
+END
+GameTests.java
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/148/trunk/src/tests/GameTests.java
+END

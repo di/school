@@ -1,0 +1,132 @@
+\RequirePackage{fix-cm}
+\documentclass[11pt]{article}
+
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage[active,pdftex,tightpage]{preview}
+\usepackage{scalefnt}
+\PreviewEnvironment{tikzpicture}
+\usepgfmodule{shapes}
+\usepgfmodule{plot}
+\usetikzlibrary{decorations}
+\usetikzlibrary{arrows}
+\usetikzlibrary{snakes}
+
+\newcommand{\logo}{
+	\pgfsetlinewidth{3pt}
+
+	% Background
+	\color{cyan!70!black}
+	\pgfpathmoveto{\pgfpointxy{-5}{2}}
+	\pgfpathlineto{\pgfpointxy{-5}{11}}
+	\pgfpathlineto{\pgfpointxy{-2}{11.9}}	
+	\pgfpathlineto{\pgfpointxy{2}{11.9}}	
+	\pgfpathlineto{\pgfpointxy{5}{11}}
+	\pgfpathlineto{\pgfpointxy{5}{2}}
+	\pgfpathclose 
+	\pgfusepath{fill,stroke} 
+
+	% Base
+	\color{green!70!black}
+	\pgfsetstrokecolor{black}
+	\pgfpathmoveto{\pgfpointxy{-2}{1.5}}
+	\pgfpathcurveto{\pgfpointxy{-2}{1.5}}{\pgfpointxy{-6}{1.5}}{\pgfpointxy{-6}{2.5}}
+	\pgfpathlineto{\pgfpointxy{-6}{4}}
+	\pgfpathlineto{\pgfpointxy{6}{4}}
+	\pgfpathlineto{\pgfpointxy{6}{2.5}}
+	\pgfpathcurveto{\pgfpointxy{6}{1.5}}{\pgfpointxy{2}{1.5}}{\pgfpointxy{2}{1.5}}
+	\pgfpathclose 
+	\pgfusepath{fill,stroke} 
+	
+	% Curtains
+	\color{red!70!black}
+	\pgfsetstrokecolor{black}
+	
+	% Left
+	\pgfpathmoveto{\pgfpointxy{-6}{11}}
+	\pgfpathlineto{\pgfpointxy{-6}{2.5}}
+	\pgfpathcurveto{\pgfpointxy{-6}{2.2}}{\pgfpointxy{-3.5}{2.2}}{\pgfpointxy{-3.5}{2.5}}
+	\pgfpathcurveto{\pgfpointxy{-3.5}{3}}{\pgfpointxy{-3.5}{4}}{\pgfpointxy{-4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{-2.5}{7}}{\pgfpointxy{-4}{11}}{\pgfpointxy{-3}{11.5}}
+	\pgfpathcurveto{\pgfpointxy{-4}{11}}{\pgfpointxy{-2.5}{7}}{\pgfpointxy{-4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{-2.5}{7}}{\pgfpointxy{-6}{11}}{\pgfpointxy{-3}{11.5}}
+	\pgfpathcurveto{\pgfpointxy{-6}{11}}{\pgfpointxy{-2.5}{7}}{\pgfpointxy{-4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{-2.5}{7}}{\pgfpointxy{-8}{11}}{\pgfpointxy{-3}{11.5}}
+	\pgfpathcurveto{\pgfpointxy{-8}{11}}{\pgfpointxy{-2.5}{7}}{\pgfpointxy{-4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{-2.5}{7}}{\pgfpointxy{-2.5}{11}}{\pgfpointxy{-3}{11.5}}
+	\pgfusepath{fill,stroke}
+
+	% Right
+	\pgfsetlinewidth{3pt}
+	\pgfpathmoveto{\pgfpointxy{6}{11}}
+	\pgfpathlineto{\pgfpointxy{6}{2.5}}
+	\pgfpathcurveto{\pgfpointxy{6}{2.2}}{\pgfpointxy{3.5}{2.2}}{\pgfpointxy{3.5}{2.5}}
+	\pgfpathcurveto{\pgfpointxy{3.5}{3}}{\pgfpointxy{3.5}{4}}{\pgfpointxy{4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{2.5}{7}}{\pgfpointxy{4}{11}}{\pgfpointxy{3}{11.5}}
+	\pgfpathcurveto{\pgfpointxy{4}{11}}{\pgfpointxy{2.5}{7}}{\pgfpointxy{4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{2.5}{7}}{\pgfpointxy{6}{11}}{\pgfpointxy{3}{11.5}}
+	\pgfpathcurveto{\pgfpointxy{6}{11}}{\pgfpointxy{2.5}{7}}{\pgfpointxy{4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{2.5}{7}}{\pgfpointxy{8}{11}}{\pgfpointxy{3}{11.5}}
+	\pgfpathcurveto{\pgfpointxy{8}{11}}{\pgfpointxy{2.5}{7}}{\pgfpointxy{4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{2.5}{7}}{\pgfpointxy{2.5}{11}}{\pgfpointxy{3}{11.5}}
+	\pgfusepath{fill,stroke}
+
+	% Top
+    %     Top-left
+	\pgfpathmoveto{\pgfpointxy{-2}{12}}
+	\pgfpathcurveto{\pgfpointxy{-2}{12}}{\pgfpointxy{-6}{12}}{\pgfpointxy{-6}{11}}
+	\pgfpathcurveto{\pgfpointxy{-5}{9}}{\pgfpointxy{-2}{11}}{\pgfpointxy{-2}{11.85}}
+	\pgfpathcurveto{\pgfpointxy{-2}{11.5}}{\pgfpointxy{-4.5}{9.5}}{\pgfpointxy{-6}{11}}
+	\pgfpathcurveto{\pgfpointxy{-4.5}{9.5}}{\pgfpointxy{-2}{11.5}}{\pgfpointxy{-2}{11.85}}
+	\pgfpathcurveto{\pgfpointxy{-2}{12}}{\pgfpointxy{-3.5}{10.4}}{\pgfpointxy{-6}{11}}
+	\pgfpathcurveto{\pgfpointxy{-3.5}{10.4}}{\pgfpointxy{-2}{12}}{\pgfpointxy{-2}{11.85}}
+
+	%    Top-middle
+	\pgfpathcurveto{\pgfpointxy{-1}{10.5}}{\pgfpointxy{1}{10.5}}{\pgfpointxy{2}{11.85}}
+	\pgfpathcurveto{\pgfpointxy{1}{10.5}}{\pgfpointxy{-1}{10.5}}{\pgfpointxy{-2}{11.85}}	
+	\pgfpathcurveto{\pgfpointxy{-1}{11}}{\pgfpointxy{1}{11}}{\pgfpointxy{2}{11.85}}
+	\pgfpathcurveto{\pgfpointxy{1}{11}}{\pgfpointxy{-1}{11}}{\pgfpointxy{-2}{11.85}}	
+	\pgfpathcurveto{\pgfpointxy{-1}{10}}{\pgfpointxy{1}{10}}{\pgfpointxy{2}{11.85}}
+	
+	%    Top-right
+	\pgfpathcurveto{\pgfpointxy{2}{11.5}}{\pgfpointxy{4.5}{9.5}}{\pgfpointxy{6}{11}}
+	\pgfpathcurveto{\pgfpointxy{4.5}{9.5}}{\pgfpointxy{2}{11.5}}{\pgfpointxy{2}{11.85}}
+	\pgfpathcurveto{\pgfpointxy{2}{12}}{\pgfpointxy{3.5}{10.4}}{\pgfpointxy{6}{11}}
+	\pgfpathcurveto{\pgfpointxy{3.5}{10.4}}{\pgfpointxy{2}{12}}{\pgfpointxy{2}{11.85}}
+	\pgfpathcurveto{\pgfpointxy{2}{11}}{\pgfpointxy{5}{9}}{\pgfpointxy{6}{11}}
+	\pgfpathcurveto{\pgfpointxy{6}{12}}{\pgfpointxy{2}{12}}{\pgfpointxy{2}{12}}
+	\pgfpathclose 
+	\pgfusepath{fill,stroke} 
+
+	% Rope
+	%     Rope-right
+	\pgfsetstrokecolor{black}
+	\pgfpathmoveto{\pgfpointxy{-4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{-4.5}{5}}{\pgfpointxy{-6}{5}}{\pgfpointxy{-6}{5.5}}
+	\pgfusepath{stroke}	
+	%     Rope-left
+	\pgfsetstrokecolor{black}
+	\pgfpathmoveto{\pgfpointxy{4.5}{5}}
+	\pgfpathcurveto{\pgfpointxy{4.5}{5}}{\pgfpointxy{6}{5}}{\pgfpointxy{6}{5.5}}
+	\pgfusepath{stroke}
+	
+	\node[color=black] at (0,0) {{\scalefont{10.0}STAGE}};
+
+	%% Just kinda a pretty path...
+	%% \pgfpathmoveto{\pgfpointxy{-2}{1.5}}
+	%% \pgfpathcurveto{\pgfpointxy{-2}{1.5}}{\pgfpointxy{-6}{1.5}}{\pgfpointxy{-6}{2.5}}
+	%% \pgfpathcurveto{\pgfpointxy{-5}{4.5}}{\pgfpointxy{-2}{2.5}}{\pgfpointxy{-2}{3.35}}
+	%% \pgfpathcurveto{\pgfpointxy{-1}{3.5}}{\pgfpointxy{1}{3.5}}{\pgfpointxy{2}{3.35}}
+	%% \pgfpathcurveto{\pgfpointxy{2}{2.5}}{\pgfpointxy{5}{4.5}}{\pgfpointxy{6}{2.5}}
+	%% \pgfpathcurveto{\pgfpointxy{6}{1.5}}{\pgfpointxy{2}{1.5}}{\pgfpointxy{2}{1.5}}
+	%% \pgfpathclose 
+}
+
+\begin{document}
+\begin{center}
+\begin{tikzpicture}[]
+	\logo
+\end{tikzpicture}
+\end{center}
+\end{document}
+

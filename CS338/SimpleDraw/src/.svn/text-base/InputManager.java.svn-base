@@ -1,0 +1,50 @@
+/*
+ * Dustin Ingram
+ * dustin@drexel.edu
+ * CS338:GUI, Assignment #1
+ */
+
+import java.util.Vector;
+
+public class InputManager {
+	
+	ShapeList shapeList;
+	Shape currentShape;
+	
+	public InputManager() {
+		shapeList = new ShapeList();
+		currentShape = new Shape();
+	}
+	
+
+	public void add() {
+		if(currentShape.isComplete()) {
+			shapeList.add(currentShape);	
+		}
+	}
+
+	public void change() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void remove(int selectedIndex) {
+		shapeList.remove(selectedIndex);
+		
+	}
+	
+	public ShapeList getSongList()
+	{
+		return shapeList;
+	}
+
+	public Vector getListData() {
+		return shapeList.getListData();
+	}
+
+
+	public void clear() {
+		currentShape = new Shape();
+	}
+
+}

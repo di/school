@@ -1,0 +1,5 @@
+ieeevarstd_logic_1164ieee.sym/std_logic_1164/prim.var
+ieeesrcstd_logic_1164stdlogic.vhd
+.varxor_2(behavioral)lab6.sym/xor_2/_behavioral.var
+.srcxor_2(behavioral)xor_2.vhd
+.varxor_2lab6.sym/xor_2/prim.var

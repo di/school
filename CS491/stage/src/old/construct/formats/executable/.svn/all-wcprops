@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/58/trunk/src/old/construct/formats/executable
+END
+pe32.py
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/58/trunk/src/old/construct/formats/executable/pe32.py
+END
+elf32.py
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/58/trunk/src/old/construct/formats/executable/elf32.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/58/trunk/src/old/construct/formats/executable/__init__.py
+END

@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application
+END
+ftp.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/ftp.py
+END
+telnet.py
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/telnet.py
+END
+xdr.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/xdr.py
+END
+tftp.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/tftp.py
+END
+snmp.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/snmp.py
+END
+irc.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/irc.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/__init__.py
+END
+http.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/http.py
+END
+pop3.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/pop3.py
+END
+xwindows.py
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/xwindows.py
+END
+netbios.py
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/netbios.py
+END
+smtp.py
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/smtp.py
+END
+dns.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/58/trunk/src/old/construct/protocols/application/dns.py
+END

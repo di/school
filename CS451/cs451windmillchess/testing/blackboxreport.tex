@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{longtable}
+
+\setlength\oddsidemargin{0in}
+\setlength\evensidemargin{0in}
+\begin{document}
+
+\section{Connection Setup Dialog}
+\begin{center}
+\begin{longtable}{|c|c|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+Class & ID & Description & Expected Results & Actual Results \\ \hline
+DT  & 0 & Blank IP address & ``Invalid IP and/or Port Number'' error & ``Invalid IP and/or Port Number'' error \\ \hline
+DT  & 1 & Blank port value & ``Invalid IP and/or Port Number'' error & ``Invalid IP and/or Port Number'' error \\ \hline
+BVA & 2 & Port value 65536 & ``Invalid IP and/or Port Number'' error & ``Invalid IP and/or Port Number'' error \\ \hline
+BVA & 4 & Port value 65535 & Attempt to connect or wait & Attempt to connect or wait \\ \hline
+BVA & 5 & Port value 65534 & Attempt to connect or wait & Attempt to connect or wait \\ \hline
+BVA & 6 & Port value 254 & ``Invalid IP and/or Port Number'' error & ``Invalid IP and/or Port Number'' error \\ \hline
+BVA & 7 & Port value 255 & Attempt to connect or wait & Attempt to connect or wait \\ \hline
+BVA & 8 & Port value 256 & Attempt to connect or wait & Attempt to connect or wait \\ \hline
+\end{longtable}
+\end{center}
+
+\section{Chess Board}
+\begin{center}
+\begin{longtable}{|c|c|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+Class & ID & Description & Expected Results & Actual Results \\ \hline
+ECP & 9 & Click and drag a piece of the opposite color & Piece does not move & Piece does not move \\ \hline
+ECP & 10 & Click and drag a piece of the allowed color to a disallowed position & Piece snaps back to original position
+& Piece snaps back to original position. \\ \hline
+ECP & 11 & Click and drag a piece of the allowed color to an unoccupied allowed position & Piece snaps to new position & Piece
+snaps to new position \\ \hline
+ECP & 12 & Click and drag a piece of the allowed color to a position occupied by a piece of the same color & Piece snaps
+to back to original position & Piece back to original position \\ \hline
+ECP & 13 & Click and drag a piece of the allowed color to an a position occupied by a piece of the opposite color &
+Piece snaps to new position and captures other piece & Piece snaps to new position and captures other piece\\ \hline
+ECP & 14 & Click and drag a piece of the allowed color when it is the opponents turn & Piece does not move & Piece does
+not move \\ \hline
+DT  & 15 & Drag a piece off of the board & Piece snaps back to original position & Piece snaps back to original position \\ \hline
+\end{longtable}
+\end{center}
+
+\section{History Pane}
+\begin{center}
+\begin{longtable}{|c|c|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+Class & ID & Description & Expected Results & Actual Results \\ \hline
+ECP & 16 & Move the rightmost white pawn forward two spaces, then move the black pawn in the same file up two positions.
+& History pane shows ``h4 h5'' & History pane shows ``h4 h5''. \\ \hline
+ECP & 17 & Move the rightmost white pawn forward two spaces, then move the black pawn in the file one to the left up two
+positions.  Capture the black pawn with the white.  Move the rightmost black pawn up one position. & History pane shows
+``h4 g5 hxg5 h6'' & History pane shows ``h4 g5 hxg5 h6'' \\ \hline
+\end{longtable}
+\end{center}
+
+\end{document}

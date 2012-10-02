@@ -1,0 +1,30 @@
+Dustin Ingram (dsi23)
+Assignment 4
+
+= range.scm =
+This program outputs a list of integers specified from the input of a start integer, step integer, and end integer. It first checks if the start integer is larger than the end integer, if so it returns an empty list.
+
+If the parameters are correct, it creates a new list consisting of the start integer and a recursively defined "cdr" of the final list. The recursive call takes the same parameters as the initial call, with the exception of incrementing the first term by the amount of the step (second term)
+
+Then, when the step steps beyond the first term, the empty list is returned as previously mentioned, satisfying the last pair.
+
+This program works.
+
+= seq.scm =
+This progoram, is nearly identical to the previous program. The same error checking occurs to make sure the range can exist.
+
+The only difference here is the inclusion of the function to be executed in two places: the car before the recursive call, and the updated first parameter in the recursive call.
+
+This program works.
+
+= iter.scm =
+I had a little trouble defining the lambda function within this program. The program has a list of values of the iterator, as well as a temporary value to hold the car'd value. However, I can't quite work the rest out so that every time the declared function is called it is updated.
+
+This program does not work.
+
+= lookup.scm =
+This prgoram has two funtions, a recursive function that returns the binding whose name equals the given name, and a recursive function which treturns the binding with the specified name in an environment.
+
+I wasn't really sure exactly how the program should be called, as there was no example given, so I could only assume the state of the association lists from what makes most sense to me.
+
+This program works.

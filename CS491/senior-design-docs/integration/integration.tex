@@ -1,0 +1,551 @@
+\documentclass[titlepage]{article}
+
+\usepackage[table]{xcolor}
+\usepackage{fullpage}   % Use the whole page
+\usepackage{fancyhdr}   % Nice headers/footers
+\usepackage{graphicx}   % Importing graphics
+\usepackage{mdwlist}    % For itemize* and enumerate*
+\usepackage{hyperref}   % Hyperlink references and URLs
+\usepackage{vhistory}   % Version History
+\hypersetup{colorlinks=true}
+\usepackage{tabularx}
+\usepackage{todonotes}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={ServiceSniffer Integration Test Plan},
+    pdfauthor={Justin Courts; Philip Cristiano; Charles Rumford; Thomas Wambold}
+}
+
+% So we can number paragraphs too
+\setcounter{secnumdepth}{5}
+
+% For headers and footers
+\setlength{\headheight}{15pt}
+\setlength{\headsep}{25pt}
+\pagestyle{fancy}
+	
+% Page style for the title page
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+
+% Just so we don't have to specify this twice
+\newcommand\mytitle{Integration Test Plan}
+\newcommand\mydate{April 6, 2010}
+
+% Page style for every other page
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{ServiceSniffer}
+\fancyhead[C]{\mytitle}
+\fancyhead[R]{\mydate}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{\textbf{\mytitle}}
+\author{
+    Justin Courts \\\url{justin@servicesniffer.net}
+    \and Philip Cristiano \\\url{phil@servicesniffer.net}
+    \and Charles Rumford \\\url{charlesr@servicesniffer.net}
+    \and Thomas Wambold \\\url{tom@servicesniffer.net}
+}
+\date{\mydate}
+
+\newcommand{\testentry}[4]{
+    \subsubsection{#1}
+    \begin{center}
+    \begin{tabular}{| l p{0.7\textwidth}|}
+        \hline
+        \bf Pre-Condition & #2 \\
+        \bf Action & #3 \\
+        \bf Post-Condition & #4 \\\hline
+    \end{tabular}
+    \end{center}
+}
+
+\begin{document}
+\pagenumbering{roman}
+
+% Logo
+\begin{figure}
+    \vspace{-6em}
+    \centering
+    \includegraphics[width=0.6\textwidth]{../logo}
+    \vspace{-4em}
+\end{figure}
+
+\maketitle
+
+\begin{abstract}
+The goal of this project is to automate the passive discovery, recognition,
+and consumption of semantic web services.  ServiceSniffer does not require any
+central registry of services but will examine network traffic patterns to
+identify specific services, how to invoke them, and report specific, user
+chosen information.  As well as running with known service definitions, the
+system should be able to (a) identify new services as unknown, and (b) analyze
+relevant network traffic to determine how to consume the service.  This
+application will be constructed of an extensible core framework upon which
+future modules can be developed and integrated.
+\end{abstract}
+
+\pagebreak
+
+\begin{versionhistory}
+\vhEntry{1.0}{02-09-2010}{All}{Initial release document}
+\vhEntry{2.0}{04-06-2010}{All}{Final release document}
+\end{versionhistory}
+
+\pagebreak
+
+\setcounter{tocdepth}{4}
+\tableofcontents
+\pagebreak
+\pagenumbering{arabic}
+
+\rowcolors{1}{lightgray}{white}
+
+\section{Introduction}
+
+%------------------------------------------------------------------------------
+
+\subsection{Purpose}
+This document lays out the integration test plan for ServiceSniffer.  It
+defines the test cases for the interaction between the four modules of the
+system: Data Capture, Filters \& Processors, Kernel, and User Interface.  The
+integration test plan for this system is based on the project requirements set
+forth in the Software Requirements Specification document while taking into
+consideration the system architecture as laid out in the Software Design
+Specification.
+
+%------------------------------------------------------------------------------
+
+\subsection{Definitions, Acronyms, and Abbreviations%
+  \label{definitions}%
+}
+
+\begin{description}
+\item[Consumption of a Service]
+    To become a user/client of the web service.
+
+\item[Filter]
+    A tool that returns a subset of its input, based on some parameters.
+
+\item[JSON]
+    JavaScript Object Notation.
+
+\item[libpcap]
+    Multiplatform packet capture library.
+
+\item[PCAP]
+    Packet CAPture.  An API for capturing and processing packets from live
+    network devices, and files.
+
+\item[Processor]
+    A tool that transforms its input from one data type to another.
+
+\item[Semantic Service]
+    A web service which defines a context for the meaning of the data which it
+    returns.
+
+\item[Web Service]
+    A software system designed to support interoperable machine-to-machine
+    interaction over a network.
+
+\item[WSDL]
+    Web Services Description Language.  A format for describing web services.
+\end{description}
+
+%------------------------------------------------------------------------------
+
+\subsection{References%
+  \label{references}%
+}
+    For the project requirements for the ServiceSniffer project, please see the
+    Software Requirements Specification and Software Design Specification
+    documents for this project.  The most recent versions of these documents
+    are available at \url{http://www.servicesniffer.net}.  Other information
+    can be found at these locations:
+
+\begin{itemize*}
+    \item WSDL Specification: \url{http://www.w3.org/TR/wsdl20/}
+    \item SOAP Specification: \url{http://www.w3.org/TR/soap/}
+    \item libpcap Homepage: \url{http://www.tcpdump.org/}
+    \item MVP-E Project (Team 10): \url{http://www.cs.drexel.edu/SeniorDesign/2010Material/Projects2010.html}
+\end{itemize*}
+
+%------------------------------------------------------------------------------
+
+\section{Data Capture}
+The data capture module brings in the raw data that is later processed. The
+data can go do either a file or the system kernel. These interfaces must be
+tested to make sure that data is correctly written to file or handed off to the
+system kernel.
+
+%------------------------------------------------------------------------------
+
+\subsection{File}
+
+\testentry{Live Capture Web Service Data}
+    {The capture process is running in live capture mode.}
+    {A web service request is made over the network interface.}
+    {The process will capture the web service data.}
+     
+\testentry{Offline Capture of Web Service Data}
+    {A PCAP file exists with web service data.}
+    {The capture process is started in offline mode with the filename.}
+    {The process will capture the web service data.}
+
+\testentry{Valid File}
+    {The program is not running.}
+    {The user starts the program and supplies an existing file that they have
+        permissions to read and that is in the PCAP format.}
+    {The program is started and loads the input file.}
+
+\testentry{Invalid File}
+    {The program is not running.}
+    {The user supplies a file, which does not exist, the user does not have
+        permission to read, or is not in PCAP format.}
+    {An error message is displayed, and the program is not started.}
+
+\testentry{Valid Interface}
+    {The program is not running.}
+    {The user supplies a network interface, which exists and the user has
+        permission to capture from it.}
+    {The program is started, and reads from the network device.}
+
+\testentry{Invalid Interface}
+    {The program is not running.}
+    {The user supplies a network interface, which does not exist or the user
+        does not have permission to capture from it.}
+    {An error message is displayed, and the program is not started.}
+
+\testentry{Valid Output File Location}
+    {The program is not running.}
+    {The user starts the program and supplies a file name in a location where
+        the user has write permissions.}
+    {The program is started, and it outputs data connections of service
+        invocations to the file in PCAP format.}
+
+\testentry{Invalid Output File Location}
+    {The program is not running.}
+    {The user starts the program and supplies a file name in a location where
+        the user does not have write permissions.}
+    {An error message is displayed, and the program is not started.}
+
+\testentry{Output File Consistency}
+    {The program is running.}
+    {The program is closed abruptly.}
+    {The output file is a valid PCAP file.}
+
+%------------------------------------------------------------------------------
+
+\subsection{Kernel}
+
+\testentry{UNIX Socket}
+    {The data capture module is functioning correctly.}
+    {The data capture module sends data over the socket to the kernel.}
+    {The kernel receives the message over an established UNIX domain socket.}
+
+\testentry{Message Container}
+    {The data capture module is functioning correctly.}
+    {The data capture module sends data over the socket to the kernel.}
+    {The data is formatted in a JSON container.}
+
+\testentry{PCAP Data}
+    {The data capture module is functioning correctly.}
+    {The data capture module sends data over the socket to the kernel.}
+    {The data in the JSON container is of PCAP format.}
+
+\testentry{Web Service Data Only}
+    {The data capture module is functioning correctly.}
+    {The data capture module sends data over the socket to the kernel.}
+    {The data only contains web service data.}
+
+%------------------------------------------------------------------------------
+
+\section{Filters \& Processors}
+The filters and processors module is the heart of the processing of the data
+into a user-friendly format.  Filters and processors are created by the kernel
+and communicate with either the kernel or other filters/processors.
+Filters and processors can be chained together through their input and output
+sockets, allowing for unlimited possibilities when processing data.  All filter
+and processor chains must be acyclical and have their final output socket be
+the kernel.
+
+%------------------------------------------------------------------------------
+
+\subsection{Other Filters \& Processors}
+
+\testentry{UNIX Socket}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The filter \& processor module sends data over the socket to another filter or processor.}
+    {The processor or filter receives the data over a UNIX domain socket.}
+
+\testentry{Message Container}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The filter \& processor module sends data over the socket to another filter or processor.}
+    {The received data is in a JSON container.}
+
+\testentry{Message Format}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The filter \& processor module sends data over the socket to another filter or processor.}
+    {The JSON container contains the message type, name, and data.}
+
+\testentry{Chaining}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {A acyclic chain of filters or processors are running.}
+    {The output of the final filter or processor is returned to the kernel.}
+
+\testentry{Processor Can Use Sockets}
+    {Starting the processor with command line arguments including the path to a
+        UNIX file socket.}
+    {An initialization message is sent to the processor.}
+    {The processor will read the socket and respond after initialization} 
+
+\testentry{Secured Connections}
+    {The program is running and has valid input.}
+    {An encrypted connection is passed into a processor.}
+    {The connection is marked as encrypted, and unable to determine if it is a
+        web service, and will be reported to the user.}
+
+\testentry{Unsecured Connections - Web Service}
+    {The program is running and has valid input.}
+    {An unencrypted connection is passed into a processor, and it is a web
+        service.}
+    {If the web service has not been seen before, it is added to a list
+        containing: server name, server IP address, type of service (SOAP,
+        etc.), service definition (WSDL if possible).  The invocation of the
+        web service is added to a list containing: client IP address, timestamp
+        of the invocation, and the data sent to the service.}
+
+\testentry{Unencrypted Connections - Non-web Service}
+    {The program is running and has valid input.}
+    {An unencrypted connection is passed into a processor, and it is not a web
+        service.}
+    {The program ignores the connection.}
+
+\testentry{Secured Web Service}
+    {The program is running and has valid input.}
+    {An unencrypted connection is passed into a processor, and it contains an
+        encrypted web service payload.}
+    {The web service is added to a list of web services, it is marked as
+        secured, and is reported to the user.}
+
+\testentry{Popular Web Services}
+    {The program is running and has valid input.}
+    {A web service is invoked more frequently than others, given a user defined
+        threshold.}
+    {The web service is marked as ``popular.''}
+
+\testentry{Unpopular Web Services}
+    {The program is running and has valid input.}
+    {A web service is invoked less frequently than others, given a user defined
+        threshold.}
+    {The web service is marked as ``unpopular.''}
+
+\testentry{Useful Web Service Combinations}
+    {The program is running and has valid input.}
+    {A number of web service invocations occur in a noticeable pattern.}
+    {The combination is noted in a list and presented to the user.}
+
+\testentry{Abnormal Web Service Combinations}
+    {The program is running and has valid input.}
+    {A set of web service invocations occur which deviates from known
+        patterns.}
+    {The combination is noted in a list and presented to the user.}
+
+\testentry{Service Source IP Filter}
+    {The program is running and has valid input.}
+    {A user filters based on source IP.}
+    {A service list subset containing only web services from this source IP is
+        returned.}
+ 
+\testentry{Service Destination IP Filter}
+    {The program is running and has valid input.}
+    {A user filters based on destination IP.}
+    {A service invocation list subset containing only invocations from a
+        particular IP address is returned.}
+
+\testentry{Service Filter}
+    {The program is running and has valid input.}
+    {A user filters based on a specific web service.}
+    {The web service invocation list containing invocations of a specific web
+        service.}
+
+%------------------------------------------------------------------------------
+
+\subsection{Kernel}
+
+\testentry{UNIX Socket}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The filter \& processor module sends data over the socket to the kernel.}
+    {The data is sent over a UNIX domain socket.}
+
+\testentry{Message Container}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The filter \& processor module sends data over the socket to the kernel.}
+    {The data is formatted in a JSON container.}
+
+\testentry{Message Format}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The filter \& processor module sends data over the socket to the kernel.}
+    {The JSON container contains the message type, name, and data.}
+
+%------------------------------------------------------------------------------
+
+\section{Kernel}
+
+The kernel is the central part of the system with many different interfaces to
+other parts of the system. Being the central part of the system, the kernel
+knows what is going on through out the system and be able to reliably
+communicate with all of them.
+
+
+%------------------------------------------------------------------------------
+
+\subsection{Capture}
+
+\testentry{Process Initiation}
+    {The kernel is functioning correctly.}
+    {The capture module process is started with configuration parameters.}
+    {The capture module is functioning properly.}
+
+%------------------------------------------------------------------------------
+
+\subsection{Filters \& Processors}
+
+\testentry{Process Initiation}
+    {The kernel is functioning correctly.}
+    {A filter or processor process is started with configuration parameters.}
+    {The filter or processor is functioning properly.}
+
+\testentry{UNIX Socket}
+    {The data capture \& kernel modules are functioning correctly.}
+    {The kernel module sends data over the socket to the filters or processors.}
+    {The data is sent over a UNIX domain socket.}
+
+\testentry{Message Container}
+    {The data capture \& kernel modules are functioning correctly.}
+    {The kernel module sends data over the socket to the filters or processors.}
+    {The data is formatted in a JSON container.}
+
+\testentry{PCAP Data}
+    {The data capture \& kernel modules are functioning correctly.}
+    {The kernel module sends data over the socket to the filters or processors.}
+    {The data in the JSON container is of PCAP format.}
+
+\testentry{Starting Filters \& Processors}
+    {The data capture \& kernel modules are functioning correctly.}
+    {The kernel starts a new filter or processor process, giving it an input and output socket.}
+    {The filter or processor reads from its input socket and outputs to its output socket.}
+
+\testentry{Stopping Filters \& Processors}
+    {The data capture \& kernel modules are functioning correctly.}
+    {The kernel stops a previously running filter or processor process.}
+    % TODO: Do something different
+    {The filter or processor's resources are reclaimed.}
+
+%------------------------------------------------------------------------------
+
+\subsection{User Interfaces}
+
+\testentry{Process Initiation}
+    {The kernel is functioning correctly.}
+    {The user interface process is started with configuration parameters.}
+    {The user interface module is functioning properly.}
+
+\testentry{UNIX Socket}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The kernel module sends data over the socket to the user interface.}
+    {The data is sent over a UNIX domain socket.}
+
+\testentry{Message Container}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The kernel module sends data over the socket to the user interface.}
+    {The data is formatted in a JSON container.}
+
+%------------------------------------------------------------------------------
+
+\section{User Interfaces}
+
+The user interfaces are the user-facing modules of the system.  The user interfaces only
+communicate with the system kernel in order to set up new filters or processors
+and to receive their outputs.  The user interfaces then are responsible for
+displaying the output to the user.
+
+%------------------------------------------------------------------------------
+
+\subsection{Kernel}
+
+\testentry{UNIX Socket}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The user interface module sends data over the socket to the kernel.}
+    {The data is sent over a UNIX domain socket.}
+
+\testentry{Message Container}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The user interface module sends data over the socket to the kernel.}
+    {The data is formatted in a JSON container.}
+
+\testentry{Message Format}
+    {The data capture, kernel, and filter \& processor modules are functioning correctly.}
+    {The user interface module sends data over the socket to the kernel.}
+    {The JSON container contains the message type, name, and data.}
+
+\testentry{Starting Filters \& Processors}
+    {The data capture, kernel, and filter \& processor, and user interface modules
+        are functioning correctly.}
+    {The user interface sends a command to the kernel to start a particular filter
+        or processor with a particular input socket.}
+    {The filter or processor is started with the correct input socket, and the
+        output socket set to the kernel.}
+
+\testentry{Stopping Filters \& Processors}
+    {The data capture, kernel, and filter \& processor, and user interface modules
+        are functioning correctly.}
+    {The user interface sends a command to the kernel to stop a particular filter
+        or processor.}
+    {The filter or processor is stopped.}
+
+\testentry{System Shutdown}
+    {The data capture, kernel, and filter \& processor, and user interface modules
+        are functioning correctly.}
+    {The user interface sends a command to the kernel shut down the whole system}
+    {The system exits.}
+    
+\testentry{Selecting a processor}
+    {The program is running, and is displaying an user interface.}
+    {The user selects a processor to display.}
+    {The processor output is displayed.}
+
+\testentry{Selecting a display filter}
+    {The program is running, displaying an user interface, and displaying processor
+        output.}
+    {The user selects a display filter to activate.}
+    {The processor output is filtered, and the results are displayed.}
+
+\testentry{Deselecting a display filter}
+    {The program is running, displaying an user interface, and displaying processor
+        output.}
+    {The user selects an activated display filter to deactivate.}
+    {The processor output is displayed without using the deactivated filter.}
+
+\testentry{Selecting Multiple display filters}
+    {The program is running, displaying an user interface, displaying processor
+        output, and already has an activated filter.}
+    {The user selects another filter to activate.}
+    {The filtered processor output is further filtered in the order the filters
+        were applied, and displayed.}
+
+\testentry{Deselecting Multiple display filters}
+    {The program is running, displaying an user interface, displaying processor
+        output, and already has an activated filter.}
+    {The user selects another filter to deactivate.}
+    {The processor output is displayed without using the deactivated filter.}
+
+\end{document}

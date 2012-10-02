@@ -1,0 +1,18 @@
+DHRYSTONE 2.1 BENCHMARK REPORTING FORM
+MANUFACTURER: AMD
+MODEL: AMD Opteron
+PROCESSOR: Processor 244
+CLOCK RATE: 1809.271
+OS: Ubuntu
+OS VERSION: 8.04.1
+COMPILER: gcc
+COMPILER VERSION: 4.2.4-1ubuntu3
+COMPILER OPTIONS: none
+NOREG: Leave this blank.
+REG:   Leave this blank.
+NOTES: none
+DATE: Jan 13 2009
+SUBMITTER: Dustin Ingram
+CODESIZE (in bytes):
+MAILTO: Do not mail this -- submit it with your homework as a separate file.
+
