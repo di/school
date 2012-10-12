@@ -1,0 +1,77 @@
+\documentclass{article}
+
+\title{CS 510: Assignment 1\\Fall 2012}
+
+\author{Dustin Ingram}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Written}
+
+\subsection{Question 1}
+
+Does a finite state space always lead to a finite search tree?  How about a
+finite state space that is a tree? Can you precisely state what types of state
+spaces always lead to finite search trees?
+
+\subsection{Question 2}
+
+Consider ``iterative lengthening search,'' an iterative analog to uniform cost
+search.  The idea is to use increasing limits on path cost.  If a node is
+generated whose path cost exceeds the current limit, it is immediately
+discarded.  For each new iteration, the limit is set to the lowest path cost of
+any node discarded in the previous iteration.  Is this algorithm optimal for
+general path costs?  In other words, is it guaranteed to always produce the
+solution with the lowest possible path cost?  Provide a formal proof either of
+optimality or the contrary.
+
+\subsection{Question 3}
+
+The average branching factor of an 8-puzzle (without a check for cycles) is the
+average number of possible moves for each of the nine valid positions:
+
+$$ (1*4 + 4*3 + 4*2)/9 = 2.\overline{6} $$ 
+
+\subsection{Question 4}
+
+\emph{Extra Credit: What is the average number of ``slides'' required to solve
+an 8-puzzle?}
+
+\section{Programming}
+
+\subsection{Efficiency Comparison}
+
+\section{README} 
+
+\begin{verbatim}
+
+(let ((puzzle (random-puzzle))) (print-puzzle puzzle) (solve-8puzzle 'BFS
+puzzle))
+
+\end{verbatim}
+
+\begin{verbatim}
+
+(let ((puzzle (random-puzzle))) (print-puzzle puzzle) (solve-8puzzle 'DFS
+puzzle))
+
+\end{verbatim}
+
+\begin{verbatim}
+
+(let ((puzzle (random-puzzle))) (print-puzzle puzzle) (solve-8puzzle 'A*
+puzzle))
+
+\end{verbatim}
+
+\begin{verbatim}
+
+(timeit 100)
+
+\end{verbatim}
+
+\end{document}
