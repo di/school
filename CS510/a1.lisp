@@ -1,7 +1,5 @@
 ;; 8-puzzle
 ;; Dustin Ingram
-(load "8puzzle.lisp")
-
 (defun solved? (puzzle)
     (equalp puzzle #2a((1 2 3)(4 5 6)(7 8 9))))
 
@@ -37,8 +35,6 @@
   (let ((puzzles '()))
     (loop while (< (length puzzles) n) do
       (push (random-puzzle) puzzles))
-    (loop for cmd in '(BFS DFS A*) do
+    (loop for cmd in '(BFS A*) do
       (print cmd)
-      (time 
-        (loop for puzzle in puzzles do
-          (solve-8puzzle cmd puzzle))))))
+      (time (loop for puzzle in puzzles do (solve-8puzzle cmd puzzle))))))

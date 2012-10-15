@@ -1,5 +1,7 @@
 \documentclass{article}
 
+\usepackage{url}
+
 \title{CS 510: Assignment 1\\Fall 2012}
 
 \author{Dustin Ingram}
@@ -14,20 +16,21 @@
 
 \subsection{Question 1}
 
-Does a finite state space always lead to a finite search tree?  How about a
-finite state space that is a tree? Can you precisely state what types of state
-spaces always lead to finite search trees?
+A finite space may produce an infinite search tree if duplicate states are not
+rejected, thus forming loops in the search tree.
+
+If the state space is a tree (implying no loops, thus it is finite) than the
+search space is also guaranteed to be finite.
+
+Any acyclic state space will produce a finite search tree.
 
 \subsection{Question 2}
 
-Consider ``iterative lengthening search,'' an iterative analog to uniform cost
-search.  The idea is to use increasing limits on path cost.  If a node is
-generated whose path cost exceeds the current limit, it is immediately
-discarded.  For each new iteration, the limit is set to the lowest path cost of
-any node discarded in the previous iteration.  Is this algorithm optimal for
-general path costs?  In other words, is it guaranteed to always produce the
-solution with the lowest possible path cost?  Provide a formal proof either of
-optimality or the contrary.
+The ``iterative lengthening search'' algorithm is guaranteed to always produce
+the solution with the lowest possible path cost simply because it only considers
+nodes in order of their past cost -- it will never overlook a lower-cost path as
+long as the length is large enough to include the length of the path of the
+optimal solution. 
 
 \subsection{Question 3}
 
@@ -38,39 +41,123 @@ $$ (1*4 + 4*3 + 4*2)/9 = 2.\overline{6} $$
 
 \subsection{Question 4}
 
-\emph{Extra Credit: What is the average number of ``slides'' required to solve
-an 8-puzzle?}
+The easiest way to find this is by finding and counting the number of instances
+which are $n$ moves from the solved state. This can be done by performing a
+breadth-first search from the solved state, counting the number of
+non-duplicated states at each level of the tree.
+
+For the standard solved state (empty space in a corner), the root of the tree
+(which requires 0 moves to reach the solved state) produces two states (which
+require 1 move to reach the solved state), and so on.
+
+Since the total number of states is:
+$$ (9!/2) = 181440 $$
+computing and counting each of these states in the tree is not computationally
+trivial.  Luckily this is a known integer sequence\footnote{``Number of
+configurations of the sliding block 8-puzzle that require a minimum of n moves
+to be reached, starting with the empty square in one of the corners'', from
+\emph{The Online Encyclopedia of Integer Sequences},
+\url{http://oeis.org/A089473}}:
+\\\\
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{moves} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & \dots & 30 & 31 \\
+\hline
+\textbf{instances} & 1 & 2 & 4 & 8 & 16 & 20 & 39 & 62 & 116 & 152 & \dots & 221 & 2 \\
+\hline
+\end{tabular}
+\\\\
+
+The resulting average is
+$$\frac{\displaystyle\sum\limits_{i=0}^{31} instances_{i}*i}{9!/2} = 21.97$$
 
 \section{Programming}
 
+I implemented breadth-first, depth-first, and A* search algorithms. For A*, I
+used the Manhattan distance as my heuristic.
+
 \subsection{Efficiency Comparison}
+I timed solving 1000 instances of the 8-puzzle problem with the BFS and A*
+algorithms. I did not time DFS -- it was so slow that it was not worth my time
+to wait for a reasonable number of trials to finish, and thus can be assumed to
+be several magnitudes worse than BFS or A*.
+
+The A* algorithm with Manhattan distance clearly out-performs BFS. I think I
+could have improved the performance of A* even more as well; for example, I am
+sorting the queue after every \texttt{insert}, rather then prior to every
+\texttt{pop} (this was done to make the code simpler and more clear).
+
+\subsubsection{BFS} 
+\begin{verbatim}
+Real time: 479.07156 sec.
+Run time: 478.6979 sec.
+Space: 23729296912 Bytes
+GC: 16217, GC time: 85.64534 sec.
+\end{verbatim}
+
+\subsubsection{A*} 
+\begin{verbatim}
+Real time: 7.05169 sec.
+Run time: 7.04844 sec.
+Space: 124866648 Bytes
+GC: 97, GC time: 0.264021 sec.
+\end{verbatim}
 
 \section{README} 
 
+Running my implementation is identical to the example commands. First, load the
+provided implementation:
+
 \begin{verbatim}
 
-(let ((puzzle (random-puzzle))) (print-puzzle puzzle) (solve-8puzzle 'BFS
-puzzle))
+(load "8puzzle.lisp")
 
 \end{verbatim}
 
+Then load my implementation (assumed to be in the same directory):
+
 \begin{verbatim}
 
-(let ((puzzle (random-puzzle))) (print-puzzle puzzle) (solve-8puzzle 'DFS
-puzzle))
+(load "a1.lisp")
 
 \end{verbatim}
 
+Then solve a random puzzle, either via BFS;
+
 \begin{verbatim}
 
-(let ((puzzle (random-puzzle))) (print-puzzle puzzle) (solve-8puzzle 'A*
-puzzle))
+(let ((puzzle (random-puzzle))) 
+  (print-puzzle puzzle)
+  (solve-8puzzle 'BFS puzzle))
 
 \end{verbatim}
 
+via DFS;
+
 \begin{verbatim}
 
-(timeit 100)
+(let ((puzzle (random-puzzle)))
+  (print-puzzle puzzle)
+  (solve-8puzzle 'DFS puzzle))
+
+\end{verbatim}
+
+or using A* and the Manhattan distance heuristic:
+
+\begin{verbatim}
+
+(let ((puzzle (random-puzzle)))
+  (print-puzzle puzzle) 
+  (solve-8puzzle 'A* puzzle))
+
+\end{verbatim}
+
+To time the search algorithms, use the \texttt{timeit} function and provide the
+number of instances to solve, e.g.:
+
+\begin{verbatim}
+
+(timeit 1000)
 
 \end{verbatim}
 
