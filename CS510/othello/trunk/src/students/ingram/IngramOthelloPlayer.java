@@ -180,7 +180,27 @@ public class IngramOthelloPlayer extends OthelloPlayer {
     }
     
     private int positionHeuristic(GameState state){
-        int ret = positions[square.getRow()][square.getCol()];
+    	int [][] p = positions.clone();
+        if (state.getSquare(0, 0) != Player.EMPTY) {
+        	p[1][1] = 0;
+        	p[1][0] = 0;
+        	p[0][1] = 0;
+        }
+        if (state.getSquare(0, 7) != Player.EMPTY) {
+        	p[0][6] = 0;
+        	p[1][6] = 0;
+        	p[1][7] = 0;
+        }
+        if (state.getSquare(7, 0) != Player.EMPTY) {
+        	p[6][0] = 0;
+        	p[6][1] = 0;
+        	p[1][7] = 0;
+        }
+        if (state.getSquare(7, 7) != Player.EMPTY) {
+        	p[6][7] = 0;
+        	p[7][6] = 0;
+        	p[6][6] = 0;
+        }
         //log("Position heuristic:" + ret);
         return ret;
     }
