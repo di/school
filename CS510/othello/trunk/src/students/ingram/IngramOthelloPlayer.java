@@ -67,7 +67,7 @@ public class IngramOthelloPlayer extends OthelloPlayer {
         { 0, 0, 0, 0, 0, 0, 0, 0 },
     };
 
-    private int[][] positions = {
+    private static int[][] positions = {
         { 500, -150, 30, 10, 10, 30, -150, 500 },
         { -150, -250, 0, 0, 0, 0, -250, -150 },
         { 30, 0, 1, 2, 2, 1, 0, 30 },
@@ -97,11 +97,15 @@ public class IngramOthelloPlayer extends OthelloPlayer {
         }
 
         this.registerCurrentBestMove(square);
-
+        
         if (deadline != null)
             log("I have " + this.getMillisUntilDeadline() + "ms remaining until the deadline.");
         */
-        Square square = alphabeta(new Node(currentState, null, null), 5, new Node(-10000), new Node(10000), them).getParentMove();
+        Node node = alphabeta(new Node(currentState, null, null), 7, new Node(Integer.MAX_VALUE), new Node(Integer.MIN_VALUE), me);
+        Square square = node.getParentMove();
+        System.out.println("me:" + currentState.getScore(me) + " them: " + currentState.getScore(them));
+        System.out.println(node.getState());
+        System.out.println(node.getValue());
 
         log("Example player is moving to " + square + "...");
         if (square == null) {
@@ -112,7 +116,6 @@ public class IngramOthelloPlayer extends OthelloPlayer {
             }
         }
         return square;
-
     }
     
     
@@ -124,8 +127,8 @@ public class IngramOthelloPlayer extends OthelloPlayer {
         if (player == me) {
             for (Square move : node.getState().getValidMoves()){
                 Node child = new Node(node.getState().applyMove(move), move, node.getParentMove(move));
-                alpha = max(alpha, alphabeta(child, depth-1, alpha, beta, them));
-                if(beta.getValue() <= alpha.getValue()){
+                alpha = min(alpha, alphabeta(child, depth-1, alpha, beta, them));
+                if(beta.getValue() >= alpha.getValue()){
                     break;
                 }
             }
@@ -133,19 +136,13 @@ public class IngramOthelloPlayer extends OthelloPlayer {
         } else {
             for (Square move : node.getState().getValidMoves()){
                 Node child = new Node(node.getState().applyMove(move), move, node.getParentMove());
-                beta = min(beta, alphabeta(child, depth-1, alpha, beta, me));
-                if (beta.getValue() <= alpha.getValue()) {
+                beta = max(beta, alphabeta(child, depth-1, alpha, beta, me));
+                if (beta.getValue() >= alpha.getValue()) {
                     break;
                 }
             }
             return beta;
         }
-    }
-
-    private Player not(Player player) {
-        if (player == me)
-            return them;
-        return me;
     }
 
     private Node max(Node a, Node b) {
@@ -163,6 +160,7 @@ public class IngramOthelloPlayer extends OthelloPlayer {
     // Move should be applied BEFORE passing
     Integer h(GameState state, Square square) {
         int ret = discHeuristic(state) + 100*movesHeuristic(state) + positionHeuristic(state);
+
         //log("Heuristic for: " + square + "is: " + ret);
         return ret;
     }
@@ -174,41 +172,127 @@ public class IngramOthelloPlayer extends OthelloPlayer {
     }
 
     private int movesHeuristic(GameState state) {
-        int ret = state.getValidMoves(me).size();
+        int ret = state.getValidMoves(me).size() - state.getValidMoves(them).size();
         //log("Moves heuristic:" + ret);
         return ret;
     }
     
-    private int positionHeuristic(GameState state){
-    	int [][] p = positions.clone();
-        if (state.getSquare(0, 0) != Player.EMPTY) {
-        	p[1][1] = 0;
-        	p[1][0] = 0;
-        	p[0][1] = 0;
+    public int positionHeuristic(GameState state){
+    	int [][] bonus = {
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 }
+    	};
+    	int ret = 0;
+    	/*
+    	Player currentCorner = state.getSquare(0, 0);
+        if (currentCorner != Player.EMPTY) {
+        	bonus[1][1] = bonus[1][1]-positions[1][1];
+        	bonus[1][0] = bonus[1][0]-positions[1][0];
+        	bonus[0][1] = bonus[0][1]-positions[0][1];
+        	
+        	for (int i = 0; i < 7; i++) {
+        	    if (state.getSquare(0, i) == currentCorner){
+        	        bonus[0][i] += 30;
+        	    } else {
+        	        break;
+        	    }
+        	}
+            for (int i = 0; i < 7; i++) {
+                if (state.getSquare(i, 0) == currentCorner){
+                    bonus[i][0] += 30;
+                } else {
+                    break;
+                }
+            }
         }
-        if (state.getSquare(0, 7) != Player.EMPTY) {
-        	p[0][6] = 0;
-        	p[1][6] = 0;
-        	p[1][7] = 0;
+        currentCorner = state.getSquare(0, 7);
+        if (currentCorner != Player.EMPTY) {
+            bonus[0][6] = bonus[0][6]-positions[0][6];
+            bonus[1][6] = bonus[1][6]-positions[1][6];
+            bonus[1][7] = bonus[1][7]-positions[1][7];
+
+            for (int i = 6; i >= 0; i--) {
+                if (state.getSquare(0, i) == currentCorner){
+                    bonus[0][i] += 30;
+                } else {
+                    break;
+                }
+            }
+            for (int i = 0; i < 7; i++) {
+                if (state.getSquare(i, 7) == currentCorner){
+                    bonus[i][7] += 30;
+                } else {
+                    break;
+                }
+            }
         }
+        currentCorner = state.getSquare(7, 0);
         if (state.getSquare(7, 0) != Player.EMPTY) {
-        	p[6][0] = 0;
-        	p[6][1] = 0;
-        	p[1][7] = 0;
+            bonus[6][0] = bonus[6][0]-positions[6][0];
+            bonus[6][1] = bonus[6][1]-positions[6][1];
+            bonus[7][1] = bonus[7][1]-positions[7][1];
+            for (int i = 0; i < 7; i++) {
+                if (state.getSquare(7, i) == currentCorner){
+                    bonus[7][i] += 30;
+                } else {
+                    break;
+                }
+            }
+            for (int i = 6; i >= 0; i--) {
+                if (state.getSquare(i, 0) == currentCorner){
+                    bonus[i][0] += 30;
+                } else {
+                    break;
+                }
+            }
         }
-        if (state.getSquare(7, 7) != Player.EMPTY) {
-        	p[6][7] = 0;
-        	p[7][6] = 0;
-        	p[6][6] = 0;
+        currentCorner = state.getSquare(7, 7);
+        if (currentCorner != Player.EMPTY) {
+            bonus[6][7] = bonus[6][7]-positions[6][7];
+            bonus[7][6] = bonus[7][6]-positions[7][6];
+            bonus[6][6] = bonus[6][6]-positions[6][6];
+            for (int i = 6; i >= 0; i--) {
+                if (state.getSquare(7, i) == currentCorner){
+                    bonus[7][i] += 30;
+                } else {
+                    break;
+                }
+            }
+            for (int i = 6; i >= 0; i--) {
+                if (state.getSquare(i, 7) == currentCorner){
+                    bonus[i][7] += 30;
+                } else {
+                    break;
+                }
+            }
         }
-        //log("Position heuristic:" + ret);
+        */
+        for (int r = 0; r <= 7; r++){
+            for (int c = 0; c <= 7; c++){
+                if(state.getSquare(r, c) == me){
+                    ret += positions[r][c] + bonus[r][c];
+                } else if (state.getSquare(r, c) == them) {
+                    ret -= (positions[r][c] + bonus[r][c]);
+                }
+            }
+        }
+        /*
+        System.out.println("Position heuristic:" + ret);
+        System.out.println(state);
+        */
         return ret;
     }
 
     private void init(GameState currentState) {
         if (!initialized) {
             me = currentState.getCurrentPlayer();
-            them = currentState.getOpponent(currentState.getOpponent(me));
+            them = currentState.getOpponent(me);
             initialized = true;
         }
     }
