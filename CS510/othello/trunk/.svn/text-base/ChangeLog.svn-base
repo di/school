@@ -1,0 +1,62 @@
+Othello Game for Introductory Artificial Intelligence Classes
+
+version 2.2
+	New Features:
+	* Implemented a custom Java Security Manager to prevent agents
+	  from doing sneaky things like file I/O or spawning helper
+	  threads.
+	
+	Bug Fixes:
+	* Fixed a potential (but not observed) bug in the game engine
+	  that could cause a weird state, possibly inducing zombie threads,
+	  if an agent throws an uncaught exception in getMove(...).
+	  
+	API Changes:
+	* None.
+
+version 2.1
+	New Features:
+	* Agents can now incrementally set their best move so that
+	  if they miss their deadline that is the move that will be chosen.
+	
+	Bug Fixes:
+	* Fixed a bug that allowed zombie threads to stick around if an
+	  agent missed its deadline.
+
+    API Changes:
+    * Nothing other than the addition of the new API calls for the
+      incremental best move setting.  An example of this new API was
+      added to the ExampleOthelloPlayer.
+
+version 2.0
+	New Features:
+	* An Eclipse project for the code was created.
+
+    Bug Fixes:
+    * Removed an unncessary inner loop in the successor
+      function.
+	* Fixed a number of compiler warnings.
+
+    API Changes:
+    * None, yet...
+
+version 1.1
+	New Features:
+	* Infinite deadlines now allowed as command line option
+	  (and it is the default)
+	
+	Bug Fixes:
+	* Fixed hashing bug in GameState
+	
+	API Changes:
+	* None, yet...
+	
+version 1.0
+	New Features:
+	* This is the first official release; everything's new!
+
+	Bug Fixes:
+	* None, yet...
+
+	API Changes:
+	* None, yet...

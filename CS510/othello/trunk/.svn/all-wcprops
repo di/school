@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/othello/!svn/ver/14/trunk
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/othello/!svn/ver/2/trunk/.classpath
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/othello/!svn/ver/2/trunk/.project
+END
+AUTHORS
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/othello/!svn/ver/1/trunk/AUTHORS
+END
+INSTALL
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/othello/!svn/ver/1/trunk/INSTALL
+END
+othello
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/othello/!svn/ver/1/trunk/othello
+END
+ChangeLog
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/othello/!svn/ver/11/trunk/ChangeLog
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/othello/!svn/ver/1/trunk/COPYING
+END
+NEWS
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/othello/!svn/ver/11/trunk/NEWS
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/othello/!svn/ver/1/trunk/Makefile
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/othello/!svn/ver/4/trunk/README
+END

@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/othello/!svn/ver/14/trunk/src/edu/drexel/cs/ai/othello
+END
+Logger.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/Logger.java
+END
+UserInterface.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/UserInterface.java
+END
+Square.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/Square.java
+END
+ConsoleUserInterface.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/ConsoleUserInterface.java
+END
+OthelloPlayer.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/othello/!svn/ver/11/trunk/src/edu/drexel/cs/ai/othello/OthelloPlayer.java
+END
+RandomOthelloPlayer.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/RandomOthelloPlayer.java
+END
+ClassCreator.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/ClassCreator.java
+END
+Othello.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/othello/!svn/ver/13/trunk/src/edu/drexel/cs/ai/othello/Othello.java
+END
+OthelloPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/OthelloPanel.java
+END
+GameState.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/othello/!svn/ver/9/trunk/src/edu/drexel/cs/ai/othello/GameState.java
+END
+GraphicalUserInterface.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/othello/!svn/ver/14/trunk/src/edu/drexel/cs/ai/othello/GraphicalUserInterface.java
+END
+HumanOthelloPlayer.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/HumanOthelloPlayer.java
+END
+InvalidMoveException.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/InvalidMoveException.java
+END
+SpringUtilities.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/othello/!svn/ver/2/trunk/src/edu/drexel/cs/ai/othello/SpringUtilities.java
+END

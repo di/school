@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use
+END
+HumanOthelloPlayer.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/HumanOthelloPlayer.html
+END
+Logger.html
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/Logger.html
+END
+ConsoleUserInterface.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/ConsoleUserInterface.html
+END
+OthelloPlayer.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/OthelloPlayer.html
+END
+RandomOthelloPlayer.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/RandomOthelloPlayer.html
+END
+OthelloPanel.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/othello/!svn/ver/1/trunk/doc/edu/drexel/cs/ai/othello/class-use/OthelloPanel.html
+END
+GameState.GameStatus.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/GameState.GameStatus.html
+END
+GameState.Direction.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/othello/!svn/ver/1/trunk/doc/edu/drexel/cs/ai/othello/class-use/GameState.Direction.html
+END
+InvalidMoveException.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/InvalidMoveException.html
+END
+UserInterface.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/UserInterface.html
+END
+Square.html
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/Square.html
+END
+GameState.Player.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/GameState.Player.html
+END
+Othello.html
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/Othello.html
+END
+GraphicalUserInterface.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/GraphicalUserInterface.html
+END
+GameState.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/othello/!svn/ver/11/trunk/doc/edu/drexel/cs/ai/othello/class-use/GameState.html
+END
