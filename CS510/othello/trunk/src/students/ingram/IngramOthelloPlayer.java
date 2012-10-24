@@ -1,5 +1,6 @@
 package students.ingram;
 
+import java.util.AbstractSet;
 import java.util.Date;
 
 import edu.drexel.cs.ai.othello.GameState;
@@ -7,55 +8,42 @@ import edu.drexel.cs.ai.othello.GameState.Player;
 import edu.drexel.cs.ai.othello.OthelloPlayer;
 import edu.drexel.cs.ai.othello.Square;
 
-class Node {
-    private GameState state;
-    private Square move;
-    private Square parentMove;
+class State {
+    public GameState state;
+    public Square parentMove;
     private int value;
+    public int depth;
     
-    public Node(GameState state, Square move, Square parentMove) {
+    public State(GameState state, Square parentMove, int depth, int value) {
         this.state = state;
-        this.move = move;
         this.parentMove = parentMove;
-    }
-    
-    public Node(int value) {
+        this.depth = depth;
         this.value = value;
     }
     
-    public Square getMove() {
-        return this.move;
-    }
-    
-    public GameState getState() {
-        return this.state;
+    public State(int value) {
+        this.value = value;
     }
     
     public int getValue() {
         return this.value;
     }
     
-    public void setValue(int value) {
-        this.value = value;
+    public boolean terminal() {
+        return (this.depth == 0 || this.actions().size() == 0);
     }
-    
-    public Square getParentMove() {
-        return this.parentMove;
-    }
-    
-    public Square getParentMove(Square move) {
-        if (this.parentMove == null)
-            this.parentMove = move;
-        return this.parentMove;
+
+    public AbstractSet<Square> actions() {
+        return this.state.getValidMoves();
     }
 }
 
-
 public class IngramOthelloPlayer extends OthelloPlayer {
-
     private Player me;
     private Player them;
     private boolean initialized = false;
+    boolean endgame = false;
+    private int MAX_DEPTH = 7;
     private int[][] pre16positions =  {
         { 0, 0, 0, 0, 0, 0, 0, 0 },
         { 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -66,7 +54,7 @@ public class IngramOthelloPlayer extends OthelloPlayer {
         { 0, 0, 0, 0, 0, 0, 0, 0 },
         { 0, 0, 0, 0, 0, 0, 0, 0 },
     };
-
+    
     private static int[][] positions = {
         { 500, -150, 30, 10, 10, 30, -150, 500 },
         { -150, -250, 0, 0, 0, 0, -250, -150 },
@@ -83,90 +71,103 @@ public class IngramOthelloPlayer extends OthelloPlayer {
     }
 
     public Square getMove(GameState currentState, Date deadline) {
-        init(currentState);
-        /*
-        Square square = currentState.getValidMoves().toArray(new Square[0])[0];
-
-        int maxH = -10000;
-        for (Square validSquare : currentState.getValidMoves()) {
-            int curH = h(currentState, validSquare);
-            if (curH > maxH) {
-                maxH = curH;
-                square = validSquare;
-            }
+        if (!initialized) {
+            me = currentState.getCurrentPlayer();
+            them = currentState.getOpponent(me);
+            initialized = true;
         }
-
+        
+        if (!endgame && currentState.getScore(me) + currentState.getScore(them) >= 46){
+            System.out.println("Entering Endgame");
+            endgame  = true;
+        }
+            
+        /*
         this.registerCurrentBestMove(square);
         
         if (deadline != null)
             log("I have " + this.getMillisUntilDeadline() + "ms remaining until the deadline.");
         */
-        Node node = alphabeta(new Node(currentState, null, null), 7, new Node(Integer.MAX_VALUE), new Node(Integer.MIN_VALUE), me);
-        Square square = node.getParentMove();
-        System.out.println("me:" + currentState.getScore(me) + " them: " + currentState.getScore(them));
-        System.out.println(node.getState());
-        System.out.println(node.getValue());
-
-        log("Example player is moving to " + square + "...");
-        if (square == null) {
-            try {
-                Thread.sleep(30000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return square;
-    }
-    
-    
-    private Node alphabeta(Node node, int depth, Node alpha, Node beta, Player player) {
-        if (depth == 0 || node.getState().getValidMoves().size() == 0) {// || node is a terminal node
-            node.setValue(h(node.getState(), node.getMove()));
-            return node;
-        }
-        if (player == me) {
-            for (Square move : node.getState().getValidMoves()){
-                Node child = new Node(node.getState().applyMove(move), move, node.getParentMove(move));
-                alpha = min(alpha, alphabeta(child, depth-1, alpha, beta, them));
-                if(beta.getValue() >= alpha.getValue()){
-                    break;
-                }
-            }
-            return alpha;
+        if (!endgame) {
+            State node = alphabeta(new State(currentState, null, MAX_DEPTH, 0));
+            return node.parentMove;
         } else {
-            for (Square move : node.getState().getValidMoves()){
-                Node child = new Node(node.getState().applyMove(move), move, node.getParentMove());
-                beta = max(beta, alphabeta(child, depth-1, alpha, beta, me));
-                if (beta.getValue() >= alpha.getValue()) {
-                    break;
-                }
-            }
-            return beta;
+            State node = endgameSolver(currentState);
+            return null;
         }
     }
+    
+    private State endgameSolver(GameState currentState) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-    private Node max(Node a, Node b) {
+    private State alphabeta(State state) {
+        return maxValue(state, new State(Integer.MIN_VALUE), new State(Integer.MAX_VALUE));
+    }
+    
+    private State maxValue(State state, State alpha, State beta) {
+        if(state.terminal()){
+            return state;
+        }
+        State v  = new State(Integer.MIN_VALUE);
+        for (Square move : state.actions()){
+            v = max(v, minValue(result(state, move), alpha, beta));
+            if (v.getValue() >= beta.getValue()) {
+                return v;
+            }
+            alpha = max(alpha, v);
+        }
+        return v;
+    }
+    
+    private State minValue(State state, State alpha, State beta) {
+        if(state.terminal()){
+            return state;
+        }
+        State v  = new State(Integer.MAX_VALUE);
+        for (Square move : state.actions()){
+            v = min(v, maxValue(result(state, move), alpha, beta));
+            if (v.getValue() <= alpha.getValue()) {
+                return v;
+            }
+            beta = min(beta, v);
+        }
+        return v;
+    }
+
+    private State max(State a, State b) {
         if(a.getValue() > b.getValue())
             return a;
         return b;
     }
 
-    private Node min(Node a, Node b) {
+    private State min(State a, State b) {
         if(a.getValue() < b.getValue())
             return a;
         return b;
     }
-
+    
+    public State result(State state, Square move) {
+        GameState newState = state.state.applyMove(move);
+        if (state.parentMove == null) {
+            return new State(newState, move, state.depth-1, h(newState));
+        } else {
+            return new State(newState, state.parentMove, state.depth-1, h(newState));
+        }
+    }
+    
     // Move should be applied BEFORE passing
-    Integer h(GameState state, Square square) {
-        int ret = discHeuristic(state) + 100*movesHeuristic(state) + positionHeuristic(state);
-
-        //log("Heuristic for: " + square + "is: " + ret);
-        return ret;
+    int h(GameState state) {
+        if (!endgame) {
+            return discHeuristic(state) + 100*movesHeuristic(state) + positionHeuristic(state);
+        } else {
+            return discHeuristic(state);
+        }
     }
 
     private int discHeuristic(GameState state) {
-        int ret = state.getScore(state.getCurrentPlayer());
+        int ret = state.getScore(me);
         //log("Disc heuristic:" + ret);
         return ret;
     }
@@ -178,7 +179,7 @@ public class IngramOthelloPlayer extends OthelloPlayer {
     }
     
     public int positionHeuristic(GameState state){
-    	int [][] bonus = {
+        int [][] bonus = {
             { 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -187,22 +188,22 @@ public class IngramOthelloPlayer extends OthelloPlayer {
             { 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0 }
-    	};
-    	int ret = 0;
-    	/*
-    	Player currentCorner = state.getSquare(0, 0);
+        };
+        int ret = 0;
+        
+        Player currentCorner = state.getSquare(0, 0);
         if (currentCorner != Player.EMPTY) {
-        	bonus[1][1] = bonus[1][1]-positions[1][1];
-        	bonus[1][0] = bonus[1][0]-positions[1][0];
-        	bonus[0][1] = bonus[0][1]-positions[0][1];
-        	
-        	for (int i = 0; i < 7; i++) {
-        	    if (state.getSquare(0, i) == currentCorner){
-        	        bonus[0][i] += 30;
-        	    } else {
-        	        break;
-        	    }
-        	}
+            bonus[1][1] = bonus[1][1]-positions[1][1];
+            bonus[1][0] = bonus[1][0]-positions[1][0];
+            bonus[0][1] = bonus[0][1]-positions[0][1];
+            
+            for (int i = 0; i < 7; i++) {
+                if (state.getSquare(0, i) == currentCorner){
+                    bonus[0][i] += 30;
+                } else {
+                    break;
+                }
+            }
             for (int i = 0; i < 7; i++) {
                 if (state.getSquare(i, 0) == currentCorner){
                     bonus[i][0] += 30;
@@ -272,7 +273,7 @@ public class IngramOthelloPlayer extends OthelloPlayer {
                 }
             }
         }
-        */
+        
         for (int r = 0; r <= 7; r++){
             for (int c = 0; c <= 7; c++){
                 if(state.getSquare(r, c) == me){
@@ -287,13 +288,5 @@ public class IngramOthelloPlayer extends OthelloPlayer {
         System.out.println(state);
         */
         return ret;
-    }
-
-    private void init(GameState currentState) {
-        if (!initialized) {
-            me = currentState.getCurrentPlayer();
-            them = currentState.getOpponent(me);
-            initialized = true;
-        }
     }
 }
