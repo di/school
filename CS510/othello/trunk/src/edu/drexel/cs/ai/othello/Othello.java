@@ -378,6 +378,9 @@ public class Othello {
 			else if(args[i].equals("-nw")) {
 				ui = new ConsoleUserInterface();
 			}
+			else if(args[i].equals("-b")) {
+			    ui = new BatchUserInterface();
+			}
 			else {
 				System.err.println("Warning: unexpected argument \"" + args[i] + "\"!");
 				printUse = true;		

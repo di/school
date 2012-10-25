@@ -11,7 +11,7 @@ import edu.drexel.cs.ai.othello.Square;
 class State {
     public GameState state;
     public Square parentMove;
-    private int value;
+    public int value;
     public int depth;
     
     public State(GameState state, Square parentMove, int depth, int value) {
@@ -42,7 +42,6 @@ public class IngramOthelloPlayer extends OthelloPlayer {
     private Player me;
     private Player them;
     private boolean initialized = false;
-    boolean endgame = false;
     private int MAX_DEPTH = 7;
     private int[][] pre16positions =  {
         { 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -76,11 +75,6 @@ public class IngramOthelloPlayer extends OthelloPlayer {
             them = currentState.getOpponent(me);
             initialized = true;
         }
-        
-        if (!endgame && currentState.getScore(me) + currentState.getScore(them) >= 46){
-            System.out.println("Entering Endgame");
-            endgame  = true;
-        }
             
         /*
         this.registerCurrentBestMove(square);
@@ -88,18 +82,10 @@ public class IngramOthelloPlayer extends OthelloPlayer {
         if (deadline != null)
             log("I have " + this.getMillisUntilDeadline() + "ms remaining until the deadline.");
         */
-        if (!endgame) {
-            State node = alphabeta(new State(currentState, null, MAX_DEPTH, 0));
-            return node.parentMove;
-        } else {
-            State node = endgameSolver(currentState);
-            return null;
-        }
-    }
-    
-    private State endgameSolver(GameState currentState) {
-        // TODO Auto-generated method stub
-        return null;
+        State node;
+        node = alphabeta(new State(currentState, null, MAX_DEPTH, 0));
+        log("Ingram moving to: " + node.parentMove);
+        return node.parentMove;
     }
 
     private State alphabeta(State state) {
@@ -159,15 +145,16 @@ public class IngramOthelloPlayer extends OthelloPlayer {
     
     // Move should be applied BEFORE passing
     int h(GameState state) {
-        if (!endgame) {
-            return discHeuristic(state) + 100*movesHeuristic(state) + positionHeuristic(state);
-        } else {
-            return discHeuristic(state);
-        }
+        float count = state.getScore(me) + state.getScore(them);
+        int dh = (int)(Math.floor(100*Math.pow((count/64), 7)))*discHeuristic(state);
+        int mh = (int)(Math.floor(100*(1-(count/64.0))))*movesHeuristic(state);
+        int ph = positionHeuristic(state);
+        //System.out.println((int)count + ", " + dh + ", " + mh + ", " + ph);
+        return dh + mh + ph;
     }
 
     private int discHeuristic(GameState state) {
-        int ret = state.getScore(me);
+        int ret = state.getScore(me) - state.getScore(them);
         //log("Disc heuristic:" + ret);
         return ret;
     }
