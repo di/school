@@ -1,14 +1,14 @@
 10
 
 dir
-14
+15
 http://svn.sultanik.com/othello/trunk/src/edu/drexel/cs/ai/othello
 http://svn.sultanik.com/othello
 
 
 
-2012-10-21T18:42:55.941200Z
-14
+2012-10-23T13:39:23.062556Z
+15
 evan
 
 
@@ -168,10 +168,10 @@ file
 
 
 
-2012-10-22T16:27:21.000000Z
-16a928894544f6f17e02b655f8b910f6
-2012-10-21T15:12:50.817965Z
-11
+2012-11-01T00:01:49.000000Z
+083aa510f56b7803f3914c5d5e5d119a
+2012-10-23T13:39:23.062556Z
+15
 evan
 
 
@@ -194,7 +194,7 @@ evan
 
 
 
-3961
+3979
 
 RandomOthelloPlayer.java
 file

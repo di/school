@@ -9,8 +9,7 @@ public class BatchUserInterface implements UserInterface, Logger {
     public void handleStateUpdate(GameState newState) {
         GameStatus status = newState.getStatus();
         if(status != GameStatus.PLAYING) {
-            System.out.println(Player.PLAYER1  + "," + newState.getScore(Player.PLAYER1));
-            System.out.println(Player.PLAYER2  + "," + newState.getScore(Player.PLAYER2));
+            System.out.println(newState.getScore(Player.PLAYER1) + "," + newState.getScore(Player.PLAYER2));
         }
     }
 

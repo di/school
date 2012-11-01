@@ -1,7 +1,7 @@
 10
 
 dir
-14
+15
 http://svn.sultanik.com/othello/trunk/doc/edu/drexel/cs/ai/othello/class-use
 http://svn.sultanik.com/othello
 
@@ -196,40 +196,6 @@ evan
 
 6223
 
-OthelloPanel.html
-file
-
-
-
-
-2012-10-22T16:27:21.000000Z
-db1e1e244bca6fcc014dc9916d5b4099
-2012-10-14T14:25:36.405219Z
-1
-evan
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-5795
-
 GameState.GameStatus.html
 file
 
@@ -263,6 +229,40 @@ evan
 
 
 9437
+
+OthelloPanel.html
+file
+
+
+
+
+2012-10-22T16:27:21.000000Z
+db1e1e244bca6fcc014dc9916d5b4099
+2012-10-14T14:25:36.405219Z
+1
+evan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5795
 
 GameState.Direction.html
 file
@@ -468,40 +468,6 @@ evan
 
 6103
 
-GraphicalUserInterface.html
-file
-
-
-
-
-2012-10-22T16:27:21.000000Z
-1efed44788d3db2badb59f4052b7a5cc
-2012-10-21T15:12:50.817965Z
-11
-evan
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-6253
-
 GameState.html
 file
 
@@ -535,4 +501,38 @@ evan
 
 
 20203
+
+GraphicalUserInterface.html
+file
+
+
+
+
+2012-10-22T16:27:21.000000Z
+1efed44788d3db2badb59f4052b7a5cc
+2012-10-21T15:12:50.817965Z
+11
+evan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6253
 

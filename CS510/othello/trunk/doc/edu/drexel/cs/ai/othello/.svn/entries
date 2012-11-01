@@ -1,7 +1,7 @@
 10
 
 dir
-14
+15
 http://svn.sultanik.com/othello/trunk/doc/edu/drexel/cs/ai/othello
 http://svn.sultanik.com/othello
 
@@ -128,40 +128,6 @@ evan
 
 18660
 
-OthelloPlayer.html
-file
-
-
-
-
-2012-10-22T16:27:21.000000Z
-9ac0ba4f72127b81f1f9a64dd2c089d1
-2012-10-21T15:12:50.817965Z
-11
-evan
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-18460
-
 package-frame.html
 file
 
@@ -195,6 +161,40 @@ evan
 
 
 2902
+
+OthelloPlayer.html
+file
+
+
+
+
+2012-10-22T16:27:21.000000Z
+9ac0ba4f72127b81f1f9a64dd2c089d1
+2012-10-21T15:12:50.817965Z
+11
+evan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+18460
 
 RandomOthelloPlayer.html
 file
@@ -264,16 +264,16 @@ evan
 
 12593
 
-OthelloPanel.html
+package-summary.html
 file
 
 
 
 
 2012-10-22T16:27:21.000000Z
-fc1c8614e5f8ba175d0c8c9dcb23b805
-2012-10-14T14:25:36.405219Z
-1
+52f2afa34e0d86965e1ce27c6bd208a6
+2012-10-21T15:12:50.817965Z
+11
 evan
 
 
@@ -296,7 +296,7 @@ evan
 
 
 
-29094
+10726
 
 GameState.GameStatus.html
 file
@@ -332,16 +332,16 @@ evan
 
 15782
 
-package-summary.html
+OthelloPanel.html
 file
 
 
 
 
 2012-10-22T16:27:21.000000Z
-52f2afa34e0d86965e1ce27c6bd208a6
-2012-10-21T15:12:50.817965Z
-11
+fc1c8614e5f8ba175d0c8c9dcb23b805
+2012-10-14T14:25:36.405219Z
+1
 evan
 
 
@@ -364,7 +364,7 @@ evan
 
 
 
-10726
+29094
 
 package-tree.html
 file
@@ -434,6 +434,9 @@ evan
 
 16898
 
+class-use
+dir
+
 InvalidMoveException.html
 file
 
@@ -467,9 +470,6 @@ evan
 
 
 14643
-
-class-use
-dir
 
 UserInterface.html
 file

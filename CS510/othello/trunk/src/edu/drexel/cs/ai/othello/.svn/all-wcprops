@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 55
-/othello/!svn/ver/14/trunk/src/edu/drexel/cs/ai/othello
+/othello/!svn/ver/15/trunk/src/edu/drexel/cs/ai/othello
 END
 Logger.java
 K 25
@@ -31,7 +31,7 @@ OthelloPlayer.java
 K 25
 svn:wc:ra_dav:version-url
 V 74
-/othello/!svn/ver/11/trunk/src/edu/drexel/cs/ai/othello/OthelloPlayer.java
+/othello/!svn/ver/15/trunk/src/edu/drexel/cs/ai/othello/OthelloPlayer.java
 END
 RandomOthelloPlayer.java
 K 25

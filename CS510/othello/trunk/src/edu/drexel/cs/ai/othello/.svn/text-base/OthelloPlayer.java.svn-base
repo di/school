@@ -76,7 +76,7 @@ public abstract class OthelloPlayer {
 	 * @param bestMove The best move that the agent has found so far.
 	 * @throws IllegalStateException if {@link #getMove(GameState, Date)} is not currently being run, or if it is being run from a different thread.
 	 */
-	protected void registerCurrentBestMove(Square bestMove) throws IllegalStateException {
+	protected final void registerCurrentBestMove(Square bestMove) throws IllegalStateException {
 		if(currentThread == null)
 			throw new IllegalStateException("This OthelloPlayer is not currently running getMove(...)!");
 		else if(currentThread != Thread.currentThread())
@@ -88,7 +88,7 @@ public abstract class OthelloPlayer {
 	/**
 	 * Returns The best move that the agent has found so far, as registered using {@link #registerCurrentBestMove(Square)}.  If no move has been registered, or if {@link #getMove(GameState, Date)} is not currently running, then <code>null</code> is returned.
 	 */
-	protected Square getCurrentBestMove() {
+	protected final Square getCurrentBestMove() {
 		return tempMove;
 	}
 
@@ -99,7 +99,7 @@ public abstract class OthelloPlayer {
 	/**
 	 * Utility function for returning the number of milliseconds remaining until the deadline.
 	 */
-	protected long getMillisUntilDeadline() {
+	protected final long getMillisUntilDeadline() {
 		if(currentDeadline == null)
 			return 0;
 		else

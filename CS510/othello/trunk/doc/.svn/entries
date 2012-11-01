@@ -1,7 +1,7 @@
 10
 
 dir
-14
+15
 http://svn.sultanik.com/othello/trunk/doc
 http://svn.sultanik.com/othello
 
@@ -230,40 +230,6 @@ evan
 
 1279
 
-package-list
-file
-
-
-
-
-2012-10-22T16:27:21.000000Z
-ec2ecafc9e49ed3c6ed400311991eb9f
-2012-10-17T16:35:47.388980Z
-6
-evan
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-60
-
 overview-summary.html
 file
 
@@ -297,6 +263,40 @@ evan
 
 
 5959
+
+package-list
+file
+
+
+
+
+2012-10-22T16:27:21.000000Z
+ec2ecafc9e49ed3c6ed400311991eb9f
+2012-10-17T16:35:47.388980Z
+6
+evan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+60
 
 overview-tree.html
 file
@@ -338,6 +338,9 @@ dir
 students
 dir
 
+resources
+dir
+
 index.html
 file
 
@@ -371,9 +374,6 @@ evan
 
 
 1410
-
-resources
-dir
 
 deprecated-list.html
 file
