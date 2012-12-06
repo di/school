@@ -26,6 +26,74 @@ evan
 
 5446e885-28b9-4acc-891c-1b71e8648e7e
 
+GraphicalUserInterface.html
+file
+
+
+
+
+2012-10-22T16:27:21.000000Z
+1efed44788d3db2badb59f4052b7a5cc
+2012-10-21T15:12:50.817965Z
+11
+evan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6253
+
+GameState.html
+file
+
+
+
+
+2012-10-22T16:27:21.000000Z
+398dce9c286f39d0f32a1eaa506f2a21
+2012-10-21T15:12:50.817965Z
+11
+evan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+20203
+
 HumanOthelloPlayer.html
 file
 
@@ -196,6 +264,40 @@ evan
 
 6223
 
+OthelloPanel.html
+file
+
+
+
+
+2012-10-29T19:06:02.870203Z
+db1e1e244bca6fcc014dc9916d5b4099
+2012-10-14T14:25:36.405219Z
+1
+evan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5795
+
 GameState.GameStatus.html
 file
 
@@ -230,47 +332,13 @@ evan
 
 9437
 
-OthelloPanel.html
-file
-
-
-
-
-2012-10-22T16:27:21.000000Z
-db1e1e244bca6fcc014dc9916d5b4099
-2012-10-14T14:25:36.405219Z
-1
-evan
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-5795
-
 GameState.Direction.html
 file
 
 
 
 
-2012-10-22T16:27:21.000000Z
+2012-10-29T19:06:02.740200Z
 564ab09c37342723a597719ab4f3c600
 2012-10-14T14:25:36.405219Z
 1
@@ -467,72 +535,4 @@ evan
 
 
 6103
-
-GameState.html
-file
-
-
-
-
-2012-10-22T16:27:21.000000Z
-398dce9c286f39d0f32a1eaa506f2a21
-2012-10-21T15:12:50.817965Z
-11
-evan
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-20203
-
-GraphicalUserInterface.html
-file
-
-
-
-
-2012-10-22T16:27:21.000000Z
-1efed44788d3db2badb59f4052b7a5cc
-2012-10-21T15:12:50.817965Z
-11
-evan
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-6253
 

@@ -5,7 +5,7 @@ import edu.drexel.cs.ai.othello.GameState.Player;
 
 public class BatchUserInterface implements UserInterface, Logger {
 
-    @Override
+	@Override
     public void handleStateUpdate(GameState newState) {
         GameStatus status = newState.getStatus();
         if(status != GameStatus.PLAYING) {
