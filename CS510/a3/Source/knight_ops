@@ -1,0 +1,41 @@
+(operator
+  MOVE
+  (params
+    (<piece> PIECE)
+    (<start> PLACE)
+    (<end> PLACE)
+  )
+  (preconds  
+    (at <piece> <start>)
+    (valid-move <start> <end>)
+    (empty <end>)
+  )
+  (effects
+    (del at <piece> <start>)
+    (empty <start>)
+    (del empty <end>)
+    (at <piece> <end>)
+  )
+)
+
+(operator
+  TAKE
+  (params 
+    (<attack> PIECE)
+    (<start> PLACE)
+    (<taken> PIECE)
+    (<end> PLACE)
+  )
+  (preconds
+    (at <attack> <start>)
+    (at <taken> <end>)
+    (valid-move <start> <end>)
+  )
+  (effects
+    (del at <attack> <start>)
+    (empty <start>)
+    (del at <taken> <end>)
+    (taken <taken>)
+    (at <attack> <end>)
+  )
+)

@@ -1,0 +1,18 @@
+This directory has C source code for Graphplan.
+
+graphplan.c, utilities.c, and hash.c contain code for interacting
+with the user and for building the planning graph.
+
+planner.c contains code for the searching phase of planning.
+
+lex.yy.c and y.tab.c contain code for reading in files in prodigy
+syntax.
+
+dummy.c contains stubs for what otherwise would be the X-interface
+code.  (Once I get that code semi-portable, that will be here
+instead).
+
+Have fun.
+
+
+
