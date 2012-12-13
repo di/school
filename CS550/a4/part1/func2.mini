@@ -1,0 +1,7 @@
+define len proc (x)
+  if nullp(x) then
+    return := 0
+  else
+    return :=  len(cdr(x)) + 1
+  fi
+end;

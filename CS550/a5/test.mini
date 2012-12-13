@@ -1,0 +1,4 @@
+n := 0 - 5;
+if n then i := n else i := 0 - n fi;
+fact := 1;
+while i do fact := fact * i; i := i - 1 od

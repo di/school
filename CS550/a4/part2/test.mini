@@ -1,0 +1,8 @@
+a := [1,2];
+b := [3,4,5];
+c := a || b;
+carc := car(c);
+cdrc := cdr(c);
+nullpc := nullp(c);
+intpc := intp(c);
+listpc := listp(c)

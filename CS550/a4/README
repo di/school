@@ -1,0 +1,37 @@
+CS 550 - Programming Languages
+Group 5
+  Tej Gill
+  Dustin Ingram
+  Kevin Martins
+  Aaron Rosenfeld
+
+Assignment 4 - Support for List Processing in Mini Language (using Python)
+
+
+
+This archive is divided into two directories, part1 and part2. The part1 directory contains the source code associated with part 1 of the assignment as well as the mini language functions for computing length. The part2 directory contains the source code associated with part 2 of the assignment. There is also a small test program at part2/test.mini that demonstrates some of the basic operations in the mini language.
+
+
+The makefile contains the following targets
+    all         - does nothing
+    view-part1  - display all source code for part 1
+    build       - does nothing (python code does not need to be built)
+    run-part1   - run parser from part1
+    view-func1  - display iterative length function in the mini language
+    view-func2  - display recursive length function in the mini language
+    view-part2  - display all source code for part2
+    run-part2   - run parser from part 2
+    clean       - clean intermediate and resulting files
+
+
+The mini language interpreter reads code out of standard input. To execute:
+   1. Run "python interpreterext.py" on the command line
+   2. Type in a mini language program and press ctrl+D when complete
+
+Alternatively, the code can be passed to the program by redirecting a file to standard input.
+   1. Enter the mini language code into a file, say foo.mini
+   2. Run "python interpreterext.py < foo.mini" on the command line
+
+Note that func1.mini and func2.mini contain only the definition of the functions and are therefore note complete programs. To test these programs they must include a line which calls the function.
+   echo "`cat func1.mini` a:= len([1,2,3,4,5])" | python interpreterext.py
+   echo "`cat func2.mini` a:= len([1,2,3,4,5])" | python interpreterext.py
