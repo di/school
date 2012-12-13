@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usetikzlibrary{arrows,automata}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\title{CS 525: Theory of Computation\\ Problem Set 6}
+\author{Dustin Ingram, Aaron Rosenfeld, Eric Simon}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item[6.4] \textbf{Solution:}
+    For the purpose of contradiction, assume ${A_{TM}}^\prime$ is decidable by a TM $A^\prime$.  Let $N$ be a TM defined
+    as:\\ \\
+    $N$ = On input $(m,c)$ where $m$ is a TM and $c$ is the code of $m$:
+    \begin{enumerate}
+        \item Simulate $A^\prime$ on $(m, c)$
+        \item If $A'$ accepts \textit{reject}; else \textit{accept}.
+    \end{enumerate}
+
+    Then, run $N$ on input $(N, m)$ where $m$ is $N$'s code.  The output provides a contradiction: $N$ accepts $w$ if and only if $N$ rejects $w$,
+    proving that ${A_{TM}}^\prime$ is undecidable relative to $A_{TM}$.
+
+    \item[6.13] \textbf{Solution:}
+    Unlike $\text{Th}(\mathcal{N}, +, \times)$ wherein the possible results of $a \times b$ is unbounded, in
+    $\text{Th}(\mathcal{Z}_m, +, \times)$, all results of $a \times b$ must be bounded by $\mathcal{Z}_m$ and therefore
+    the TM accepting $\text{Th}(\mathcal{Z}_m, +, \times)$ can test every possibility, allowing a theorem to be decided.
+
+    \item[6.14] \textbf{Solution:}
+    Let $J=\left(A \times \{0\}\right) \cup \left(B \times \{1\}\right)$.  That is, a TM $M$ deciding $J$
+    decides words in the form $w'=(w, c)$.  To decide if $w \in A$, pass $M$ the input $(w, 0)$.  This will accept if
+    and only if the word is in $A$.  Similarly, pass $M$ the word $(w, 1)$ to decide if $w \in B$.
+
+    \end{enumerate}
+\end{document}
+    \item[6.15] \textbf{Solution:}
+    For any language $A$, we can create a language $B$ that consists of the
+    set of all strings that map to Turing Machines that decide $A$. If we
+    have an oracle for $B$, then the following Turing Machine, $T^{B}$,
+    decides $A$: \\ \\
+    $T^{B} = \text{On input $w$, where $w$ is a string}$:
+    \begin{enumerate}
+        \item Enumerate strings and test for membership in $B$. Start with strings
+    of length 1, and then length 2, and so on.
+        \item If $A$ is decidable, then eventually a string $\langle M\rangle$ in $B$ will be found
+    since some Turing Machine must decide $A$.
+        \item Convert the string $\langle M\rangle$ into TM $M$, and simulate $\langle M,w \rangle$. Since $M$ decides $A$, it will halt on $w$. If $M$ accepts, accept. If
+    $M$ rejects, reject.
+    \end{enumerate}
+    If such an oracle for $B$ exists, then $A$ is decidable. Therefore, $A\leq_{T}B$.
+    On the other hand, if an oracle for $A$ exists, we can't use it to decide
+    $B$.
+
+    \item[6.16] \textbf{Solution:}
+    The languages $A_{TM}$ and $MIN_{TM}$ are not Turing-comparable.
+    The proof that $MIN_{TM}$ is not Turing-recognizable does not rely
+    on $A_{TM}$ being undecidable, so an oracle for $A_{TM}$ will not
+    decide $MIN_{TM}$, and therefore $MIN_{TM}\nleq_{T}A_{TM}$. Similarly,
+    an oracle for $MIN_{TM}$ can't decide $A_{TM}$. In the language of
+    $A_{TM}$, we must determine if a given Turing machine $M$ will accept
+    a given string $w$. The oracle for $MIN_{TM}$can determine if $M$ is
+    a minimal Turing Machine, but that does yield any information about
+    whether or not $M$ will accept a string.
+
+    \item[6.18] \textbf{Solution:}
+    A Turing Machine $M^{A_{TM}}$ with an oracle for $A_{TM}$ can be
+    encoded as a string $\langle M^{A_{TM}}\rangle$. Since the set of all strings
+    is countable, the set of all Turing Machines $M^{A_{TM}}$ is also
+    countable. Since the set of all languages is uncountable, there is
+    no way to map a correspondence from all languages to all Turing Machines
+    with oracle for $A_{TM}$. Thus, some languages are not recognizable
+    by these machines.

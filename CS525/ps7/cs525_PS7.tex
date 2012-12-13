@@ -1,0 +1,223 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usetikzlibrary{arrows,automata}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\title{CS 525: Theory of Computation\\ Problem Set 7}
+\author{Dustin Ingram, Aaron Rosenfeld, Eric Simon}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item[7.9]  \textbf{Solution:}
+    Assuming the graph has $n$ vertices and $e$ edges, TRIANGLE can be decided
+    with the following algorithm: 
+    \begin{enumerate}
+        \item For each set of three vertices:
+        \begin{enumerate}
+            \item If each pair of nodes in the set shares an edge, return \emph{true}.
+        \end{enumerate}
+        \item Return \emph{false}.
+    \end{enumerate}
+
+    Step (a) is run $\binom{n}{3} = \frac{(n-2)(n-1)n}{6} = O(n^3)$ times, once
+    for each set of three vertices.  Assuming the worst, where testing for a
+    shared edge takes $O(e)$ time, the total running time of the algorithm is
+    $O(n^3 \cdot e)$.  This is in $P$.
+
+    \item[7.13]  \textbf{Solution:} Let $Q$ be a permutation on set
+    $\mathcal{S}$.  For all $e \in \mathcal{S}$, let $\tau(e)$ be the permuted
+    value of $e$ after $Q$ is applied.  For example, if $(2,1,3)
+    \xrightarrow{\hspace{3mm}Q\hspace{3mm}} (3,2,1)$ implies $\tau(1)=2$,
+    $\tau(2)=3$, and $\tau(3)=1$.  Further, let $\tau^n(e)$ be the permuted
+    value of $e$ after $n$ applications of $Q$.
+
+    Assuming $q=(q_1,q_2,...,q_k)$ and $p=(p_1,p_2,...,p_k)$, PERM-POWER can be
+    decided as follows:
+    \begin{enumerate}
+        \item For all $e\in\mathcal{S}$, calculate $\tau^t(e)$.
+        \item For $i$ from $1$ to $k$:
+        \begin{enumerate}
+            \item If $q_i \neq \tau^t(p_i)$, return \emph{false}.
+        \end{enumerate}
+        \item Return \emph{true}.
+    \end{enumerate}
+
+    The computation of $\tau(e)$ clearly takes constant time as $Q$ is simply a
+    mapping over the set $\mathcal{S}$.  Thus, computing $\tau^n(e)$ takes
+    $O(n)$ time.
+
+    Step 1 takes $O(k \cdot t)$ time to pre-compute all $\tau^t$.  Step (a) is
+    repeated $k$ times (by Step 2), comparing $q_i$ to $\tau^t(p_i)$.  Since
+    all $\tau^t$s are already computed, this entire loop takes $O(k)$ time.
+    Clearly Step 3 runs in constant time, so the entire algorithm takes $O(k
+    \cdot t)$ time, which is in $P$.
+
+    \item[7.14] \textbf{Solution:}
+    We will demonstrate by showing how to find substring $A$ in polynomial
+    time. Thus, if $A$ can be decided in polynomial time, so can $A^{*}$.
+    Build the following machine $D$: \\ \\
+    On input $w = w_{1} \dots w_{n}$
+    Summary: $table(i,j)$ will contain the smallest $A$ such that $w_{i}\dots w_{j}$
+    $\in A^{*}$. Note that the degenerate case where $A = w_{i}\dots w_{j}$
+    always holds.
+    \begin{enumerate}
+    \item For each $i = 1 \dots n$: (examine each substring of length 1)
+    \begin{enumerate}
+    \item Place $A=w_{i}$ into table entry $(i,i)$, this indicating that $w_{i}$ is
+    a member of $A^{*}$ with multiplicity 1.
+    \end{enumerate}
+    \item For each $k = 2 \dots n$: (examine each substring of length $k$)
+    \begin{enumerate}
+    \item For $i = 1 \dots n - k + 1$ ($i$ is the start position of the substring)
+    \begin{enumerate}
+    \item $j = i + k - 1$ ($j$ is the end position of the substring)
+    \item Let $table(i,j) = w_{i} \dots w_{j}$.
+    \item For $m = i \dots j - 1$ ($m$ is the split position), if $table(i,m)$
+    and $table (m+1, j)$ contain the same entry $B$, then set $table(i,j) = B$.
+    \end{enumerate}
+    \end{enumerate}
+    \end{enumerate}
+    $D$ has three nested loops that are each proportional to the length of $w$,
+    thus $D$ runs in $O(n^{3})$ time.  To decide $w$, first run machine $D$ to
+    build the table in $O(n^{3})$ time. The result $table(1,n)$ is the smallest
+    $A$ such that $w \in A^{*}$.  Next, we must decide $A$. Since we are
+    assuming that $A\in P$, we can decide $A$ in polynomial time. Thus, the
+    overall time is in $P$. 
+\end{enumerate}
+\end{document}
+\end{document}
+    \item[Dominating Functions]  \textbf{Solution:}
+    \begin{itemize}
+        \item[(a)] In this algorithm, $t^+(n)$ will occur when there are a maximal number of carry bits. 
+        %For $t^+(n) \sim n$ it must be proven that $a \cdot n \leq t^+(n) \leq b \cdot n$ for constants $a,b>0$.
+
+        It is clear that the loop iterates until either there is no carry bit, or all $n$ bits have been visited.  Since
+        in this case we are assuming there is a maximal number of carry bits, the loop will only terminate due to the
+        latter, causing the loop to iterate $n$ times.
+        
+        Each iteration runs in some constant $c$ time, implying the entire runtime $t^+(n) = c \cdot n \Rightarrow
+        t^+(n) \sim n$.
+
+        \item[(b)] In the minimal case, there are no carry bits, implying the loop iterates only once.  Since this runs
+        in a constant time $c$, $t^-(n)=c$.  By definition, if $t^-(n) = c \Rightarrow t^-(n) \sim 1$.
+
+        \item[(c)] The average computing time is the weighted average of how frequently $k$ carries occurs and how long
+        a computation with $k$ carries takes when adding 1 to a number.  In an $n$ bit number, zero carries occurs half
+        the time, one carry occurs a quarter of the time, etc.
+        
+        In general $k$ carries occurs $\frac{1}{2^k}$ times.  Additionally, the algorithm continues until there is no
+        longer a carry bit; this implies the loop iterates $k$ times, taking $ck$ time.  Thus a weighted average of
+        computing time is given by:
+        \begin{eqnarray*}
+            t^*(n) &=& \sum_{i=0}^n \frac{ci}{2^i} \\
+                   &=& -(2^n \cdot n) - (2^{1-n}) + 2 \\
+                   &=& \frac{-n-2}{2^n} + 2
+        \end{eqnarray*}
+
+        To show $t^*(n) \sim 1$, it must first be proven that $t^*(n) \leq c$.  Let $c=2$.
+        \begin{eqnarray*}
+               \frac{-n-2}{2^n} + 2 &\leq& 2 \\
+               \frac{-n-2}{2^n} &\leq& 0 \\
+        \end{eqnarray*}
+
+        For all $n>0$, the left side of this equation is negative and the statement is true.
+
+        Secondly, it must be proven that $d \leq t^*(n)$.  Let $d=\frac{1}{2}$.
+        \begin{eqnarray*}
+               \frac{1}{2} &\leq& \frac{-n-2}{2^n} + 2 \\
+               -\frac{3}{2} &\leq& \frac{-n-2}{2^n} \\
+               \frac{3}{2} &\geq& \frac{n+2}{2^n} \\
+        \end{eqnarray*}
+
+        For all $n>0$, the right side will be greater than $\frac{3}{2}$, and is therefore true.  Thus, $t^*(n) \sim 1$.
+    \end{itemize}
+    \item[7.6]  \textbf{Solution:}
+    \begin{enumerate}
+        \item \textbf{Union}: Let $M_1$ be a TM deciding $L_1$ and $M_2$ be a TM deciding $L_2$.  Assuming $M_1$ and
+        $M_2$ decide in polynomial time, $L_1 \cup L_2$ can be decided in polynomial time with the following TM:
+
+        $M =$ On input $w$ :
+        \begin{itemize}
+            \item Run $M_1$ on $w$.  If it accepts, \emph{accept}.
+            \item Run $M_2$ on $w$.  If it accepts, \emph{accept}; otherwise \emph{reject}.
+        \end{itemize}
+
+        Clearly this simply runs (at most) both algorithms sequentially, resulting in another polynomial time algorithm.
+
+        \item \textbf{Concatenation}: Let $M_1$ be a TM deciding $L_1$ and $M_2$ be a TM deciding $L_2$.  Assuming $M_1$ and
+        $M_2$ decide in polynomial time, $L_1L_2$ can be decided in polynomial time with the following TM:
+
+        $M =$ On input $w$ :
+        \begin{itemize}
+            \item For every split of $w=ab$.
+            \begin{itemize}
+            \item Run $M_1$ on $a$.
+            \item Run $M_2$ on $b$.
+            \item If both accepts, \emph{accept}; otherwise \emph{reject}.
+            \end{itemize}
+        \end{itemize}
+
+        The first step tries every split of $w$, of which there are $|w|$.  The remaining steps run polynomial time
+        algorithms sequentially $|w|$ times.  The product of $|w|$ with these polynomials is still in $P$.
+
+        \item \textbf{Complement}: Let $M$ be a TM deciding $L$ in polynomial time, $\overline{L}$ can be decided in
+        polynomial time with the following TM:
+
+        $M =$ On input $w$ :
+        \begin{itemize}
+            \item Run $M$ on $w$.  If it accepts, \emph{reject}; otherwise \emph{accept}.
+        \end{itemize}
+
+        This simply runs $M$ once and negates the output, resulting in another polynomial time algorithm.
+
+    \end{enumerate}
+
+    \item[7.8]  \textbf{Solution:}
+    Step 1 clearly takes $O(1)$ time.  Step 3 takes $O(|V|)$ time, and is run
+    (by Step 2) $|V|$ times, resulting in a running time of $O(|V|^2)$.  Step 4
+    scans all nodes, taking $O(|V|)$ time.  Therefore the entire algorithm
+    takes $O(|V|^2+|V|)=O(|V|^2)$ time, which is in $P$.
+
+    \item[7.10]  \textbf{Solution:}
+    $\text{ALL}_\text{DFA}$ can be decided in polynomial time by running a
+    breadth-first search over the DFA's states, beginning at the start state.
+    Assuming the DFA has $s$ states and $t$ transitions, this takes $O(s+t)$
+    time.  If any visited state is not accepting, \emph{reject}.  Otherwise
+    \emph{accept}.
+
+    \item[7.12] \textbf{Solution:}
+    Raising $a$ to the power of $b$ is exponential to the length of the represenation
+    of $b$. In other words, if $b$ is encoding as an $n$-bit number, then the
+    number of times we multiple $a$ by itself is equal to $2^{n}$.
+    The polynomial solution:
+    \begin{enumerate}
+    \item $e = 0$
+    \item $d = 1$
+    \item For each binary digit of $b$, starting with the leftmost (most significant)
+    \begin{enumerate}
+    \item $e = 2e$
+    \item $d = (d \times d) \mod p$
+    \item if the binary digit equals $1$
+    \begin{enumerate}
+    \item $e = e + 1$
+    \item $d = (d \times a) \mod p$
+    \end{enumerate}
+    \end{enumerate}
+    \item $d$ is now equal to $a^{b} \mod p$
+    \item Compute $c \mod p$
+    \item if $c \mod p$ is equal to $d$, \emph{accept}. Otherwise, \emph{reject}.
+    \end{enumerate}
+    If we assume that $a$,$b$,$c$, and $p$ are all $n$-bit numbers, then the loop
+    in 3 executes once for each digit of $b$, thus it is $O(n)$. The addition
+    operation runs in $O(n)$ time and multiplication and modulus operations
+    run in $O(n^{2})$ time. Thus, each loop iteration is $O(n^{2})$
+    so the total running time is $O(n^{3})$.
+
+

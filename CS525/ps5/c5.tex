@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+
+\begin{itemize}
+    \item[5.15] Let $Q$ be the states of $M$ and $\Gamma$ be the tape alphabet.
+    
+    Simulate $M$ on input $w$:
+    \begin{enumerate}
+        \item Simulate $M$ for $|\Gamma| \cdot |Q|^{|w|}$ steps.
+        \item At each step mark the current tape position.
+        \item If the tape head ever reads a marked tape position, \textit{accept}.
+        \item If $M$ rejects or accepts the input, or the number of steps is exceeded without encountering a marked tape
+        position, \textit{reject}.
+    \end{enumerate}
+
+    \item[5.16] TODO
+    
+    \item[5.24] It is possible to reduce $\overline{A_{TM}}$ to $J$, indicating $J$ could be used to determine if $w \in
+    \overline{A_{TM}}$, which is an undecidable problem:  to check if $w \in \overline{A_{TM}}$ simply check if $0w$ is
+    in $J$.
+
+    Similarly, it would be possible to check if $w \in \overline{A_{TM}}$ by simply checking if $0w \in \overline{J}$,
+    indicating $\overline{J}$ is also not Turing-recognizable.
+
+    \item[5.29] The first property requires that the property be non-trivial.  This is required as trivial properties
+    would allow all TMs in the language, or none at all.  In the first case, one could decide on the property by simply
+    accepting on all TMs.  In the second case, one could simply reject all input TMs.
+
+    The second property requires that the property be of the language, not of the TM itself.  This is required as
+    properties of TMs are sometimes decidable.  For example, one could count how many states are in a TM, but not if any
+    of the states are useless.
+
+    \item[5.30] To prove that each language is undecidable using Rice's theorem, we must show that the languages have
+    both properties in question 28:
+    \begin{itemize}
+        \item[(b)] Let $L(M_1)=\{1011\}$ and $L(M_2)=\emptyset$.  Therefore the property is non-trivial and property 1
+        is satisfied.  For any two TMs accepting the same language, either both accept 1011 no neither do, satisfying
+        property 2.
+        \item[(c)] Let $L(M_1)=\Sigma^*$ and $L(M_2)=\emptyset$.  Therefore the property is non-trivial and property 1
+        is satisfied.  For any two TMs accepting the same language, either both have infinite (and equal) languages, or
+        neither have infinite (and equal) languages, satisfying property 2.
+    \end{itemize}
+
+    \item[5.31] Let $M_a$ be a TM that runs $f(x)$ iteratively and accepts if it encounters a 1.  Clearly this machine
+    may never terminate if there is an $x$ for which a 1 is never encountered.  Instead, let $M^{'}_a$ use $H$ to
+    determine if $M_a$ accepts $x$ which will terminate.
+
+    Next, let $M_b$ be a TM that ignores its input and iterates $x=1 ... \infty$ and uses $M^{'}_a$ to determine if $x$
+    terminates in a 1.  However, this machine may also never terminate.  Instead, use $H$ to determine if $M_b$ accepts
+    an arbitrary input.
+\end{itemize}
+
+\end{document}

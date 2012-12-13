@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usetikzlibrary{arrows,automata}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\title{CS 525: Theory of Computation\\ Problem Set 3}
+\author{Dustin Ingram, Aaron Rosenfeld, Eric Simon}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item[4.10] \textbf{Solution:}
+    Here, we assume that we are already able to determine if a CFG contains a cycle (if any word has a derivation which takes $2^{b}$ derivations or more, where $b$ is the number of variables in the CFG, it is infinite, etc.):
+    \begin{enumerate}
+        \item[1)] Convert $M$ to a CFG $C$. 
+        \item[2)] If $C$ contains a production cycle, $L(M)$ is infinite
+    \end{enumerate}
+    \item[4.12] \textbf{Solution:}
+    Here we must simply prove that $L(R)\setminus L(S)\neq\emptyset$
+    \begin{enumerate}
+        \item[1)] $L(R)\subseteq L(S) \Leftrightarrow L(R) \cap L(S) = L(R)$ 
+        \item[2)] Since regular languages are closed under intersection, $L(R) \cap L(S)$ is regular.
+        \item[3)] If $L(R) \cap L(S) = L(R)$, accept, using $EQ_{DFA}$.
+    \end{enumerate}
+    \item[4.22] \textbf{Solution:}
+    For every state $\{q_{1}, q_{2}, \dots, q_{n}\}$ in the PDA, create a $\text{CFG}_{q_{n}}$ for the PDA for which $S_{q_{n}}$ is the only accepting state. If $L(\text{CFG}_{q_{n}})=\emptyset$ for any $\text{CFG}_{q_{n}}$, $S_{q_{n}}$ is a \textbf{useless state}. The language would be as follows:
+    $$ \text{USELESS}_{PDA}\{\langle P \rangle |  \text{P is a PDA that has useless states}\} $$ 
+\end{enumerate}
+\end{document}
+\item[4.15] \textbf{Solution:}
+    In addition to the language $L(R)$, the language of the regular expression, we create two additional languages:
+    \begin{align*}
+        L(A) &= \Sigma^{*}111\Sigma^{*} \\
+        L(B) &= L(R) \cap L(A) 
+    \end{align*}
+    Thus we show that $L(B) = \emptyset$.
+    \item[4.16] \textbf{Solution:}
+    The minimum size for which we must test all possible strings to determine the equivalence of two DFAs is the 
+    \item[4.18] \textbf{Solution:}
+    Given A and B and thus $\bar{A}$ and $\bar{B}$, let
+    \begin{align*}
+        C &= \{ w | w \in T(\bar{B}), w \notin T(\bar{A})\} \\
+          &= \{ w | w \notin T(B), w \in T(A)\}
+    \end{align*}
+    thus,
+    \begin{align*}
+        C \subseteq \bar{B} &\cap \bar{C} \subseteq A \\
+        B \subseteq \bar{C} &\cap A \subseteq \bar{C}
+    \end{align*}
+    \item[4.19] \textbf{Solution:}
+    Since regular languages are closed under reverse operation there exists a $M^{\mathcal{R}}$ that recognizes $\omega^{\mathcal{R}}$
+    \item[4.20] \textbf{Solution:}
+    For each accepting state in the DFA for R, if a path to any other accept state (or, to itself) exists, reject. Otherwise accept. This approach does not work for a CFG because a CFG is based on a PDA, not just a DFA, and thus, we must also consider the state of the stack.
+    \item[4.26] \textbf{Solution:}
+    Create a CFG for $L(G)\cap L(\Sigma^{*}x\Sigma^{*})$. Use $E_{CFG}$, if true, reject, otherwise accept.
+    \item[4.27] \textbf{Solution:}
+    Assume we have a machine $A$ which decides if $L(G)$ is infinite. We use it to create a second machine $B$ that determines the following:
+    \begin{enumerate}
+        \item[a)] if $L(G)$ is infinite using $A$
+        \item[b)] if $k=\infty$
+    \end{enumerate}
+    Then there are four possible cases of the outcome of $B$:
+    \begin{enumerate}
+        \item[1)] $L(G)$ is infinite, and $k=\infty$
+        \item[2)] $L(G)$ is infinite, and $k\neq\infty$
+        \item[3)] $L(G)$ is finite, and $k=\infty$
+        \item[4)] $L(G)$ is finite, and $k\neq\infty$
+    \end{enumerate}
+    In case 1), we can assume that an infinite set of strings satisfies an infinite language, and thus the machine accepts this state;
+    In case 2), an infinite language cannot be contained in a finite set of strings, and thus the machine rejects;
+    Case 3) cannot exist, as an finite language cannot produce an infinite set of strings;
+    In case 4) both $L(G)$ and $k$ are finite, so we must then simply list every string in $k$ and check if the total is equal to $k$. 
+
+

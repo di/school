@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usetikzlibrary{arrows,automata}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\title{CS 525: Theory of Computation\\ Problem Set 5, Re-do}
+\author{Dustin Ingram, Aaron Rosenfeld, Eric Simon}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item[6.15] \textbf{Solution:}
+    For any language $A$, we can create a language $B$ that consists of the
+    set of all strings that map to Turing Machines that decide $A$. If we
+    have an oracle for $B$, then the following Turing Machine, $T^{B}$,
+    decides $A$: \\ \\
+    $T^{B} = \text{On input $w$, where $w$ is a string}$:
+    \begin{enumerate}
+        \item Enumerate strings and test for membership in $B$. Start with strings
+    of length 1, and then length 2, and so on.
+        \item If $A$ is decidable, then eventually a string $\langle M\rangle$ in $B$ will be found
+    since some Turing Machine must decide $A$.
+        \item Convert the string $\langle M\rangle$ into TM $M$, and simulate $\langle M,w \rangle$. Since $M$ decides $A$, it will halt on $w$. If $M$ accepts, accept. If
+    $M$ rejects, reject.
+    \end{enumerate}
+    If such an oracle for $B$ exists, then $A$ is decidable. Therefore, $A\leq_{T}B$.
+    On the other hand, if an oracle for $A$ exists, we can't use it to decide
+    $B$.
+    \end{enumerate}
+\end{document}
