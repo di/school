@@ -1,0 +1,86 @@
+# CS550 -- Assignment 2 -- Dustin Ingram
+
+## Part 1
+
+> Implement an interpreter for the mini language in scheme. 
+
+In `mini.scm` I modified the provided file to provide support for the
+mini-language. I fixed a number of errors (some syntax) with the original file.
+I added support for the evaluations of the different types of expressions.
+However I think there is something broken with the binding provided, as it does
+not quite work as expected:
+
+    (define prog
+      '((assign i 5) (assign j 0)
+       (while i ((assign j (+ j (* i 2)))
+       (assign i (- i 1 ))))))
+
+    (eval prog)
+
+## Part 2
+
+> Question 4.59 of SICP.
+>> a.
+
+    (meeting ?department (Friday ?time))  
+
+>> b.
+
+    (assert!
+      (rule (meeting-time ?person ?day-and-time)  
+        (or (meeting whole-company ?day-and-time)
+            (and (job ?person (?division . ?title))  
+                 (meeting ?division ?day-and-time)))))
+
+>> c.
+
+    (meeting-time (Hacker Alyssa P) (Wednesday . ?time))
+
+## Part 3
+
+> Question 4.65 of SICP.
+
+Here, this query results in a match for every pair of supervisors and
+employees. Since "Oliver Warbucks" supervises four other supervisors, he is
+listed four times. "Ben Bitdiddle" only supervises one other supervisor, so the
+rule only matches him once.
+
+## Part 4
+
+> Question 4.68 of SICP.
+
+In the query language:
+
+    (assert! (rule (reverse (?v) (?v))))
+
+    (assert! (rule (reverse (?y . ?w) ?z)
+      (and (reverse ?w ?x)
+           (append-to-form ?x (?y) ?z))))
+
+This works in normal order:
+
+    '(reverse ?v (1 2 3)))
+
+but not the opposite:
+
+    '(reverse (1 2 3) ?v))
+
+as it results in an infinite loop.
+
+In Prolog:
+
+    reverse([],V,V).
+    reverse([Y|W],Z,X) :- reverse(W,[Y|Z],X).
+
+## Part 5
+
+> Question 4.75 of SICP.
+
+I am lost on this problem.
+
+## Part 6
+
+> Complete the prolog interpreter of the mini language from lecture on the mini
+> language for the implementation of arithmetic expressions and assignment. 
+
+I did not have time to complete this portion of the assignment.

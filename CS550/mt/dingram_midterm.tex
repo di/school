@@ -1,0 +1,183 @@
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usepackage{hyperref}
+\usetikzlibrary{arrows,automata}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\renewcommand*{\thefootnote}{[\arabic{footnote}]}
+\title{CS 550: Programming Languages \\ Midterm}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\section{Functional Programming and Streams in Scheme}
+\begin{enumerate}
+    \item \textbf{Solution:}
+    \begin{verbatim}
+    (define (transpose A)
+      (if (null? (car A))
+          '()
+          (cons (map car A) (transpose (map cdr A)))))
+    \end{verbatim}
+    \vspace{-1em}
+    \item \textbf{Solution:}
+    \begin{verbatim}
+    (define (transpose A)
+      (accumulate-n cons-stream the-empty-stream A))
+    \end{verbatim}
+    \vspace{-1em}
+\end{enumerate}
+\section{Substitution Model of Computation and Lambda Calculus}
+\begin{enumerate}
+    \item \textbf{Solution:}
+    \begin{verbatim}
+    (sumf (nth-power 3) 2)
+    \end{verbatim}
+    \vspace{-1em}
+    becomes:
+    \begin{verbatim}
+    (+ ((nth-power 3) 2) (+ ((nth-power 3) 1) 0))
+    \end{verbatim}
+    \vspace{-1em}
+    substituting \texttt{nth-power} for it's procedure:
+    \begin{verbatim}
+    (+ ((lambda (x) (power x 3)) 2) (+ ((lambda (x) (power x 3)) 1) 0))
+    \end{verbatim}
+    \vspace{-1em}
+    substituting the operands for the parameters:
+    \begin{verbatim}
+    (+ (power 2 3) (+ (power 1 3) 0))
+    \end{verbatim}
+    \vspace{-1em}
+    then becomes:
+    \begin{verbatim}
+    (+ 8 (+ 1 0))
+    \end{verbatim}
+    \vspace{-1em}
+    then:
+    \begin{verbatim}
+    (+ 8 1)
+    \end{verbatim}
+    \vspace{-1em}
+    finally:
+    \begin{verbatim}
+    9
+    \end{verbatim}
+    \vspace{-1em}
+    \item \textbf{Solution:}
+    The base case is that \texttt{(mulc2 zero n) = 0}. In this case, this becomes:
+    \begin{verbatim}
+    (lambda (m n) ((zero (lambda (a) (addc n a))) zero)) 
+    \end{verbatim}
+    \vspace{-1em}
+    which becomes:
+    \begin{verbatim}
+    (lambda (m n) ((zero (addc n zero)))) 
+    \end{verbatim}
+    \vspace{-1em}
+    becomes:
+    \begin{verbatim}
+    (lambda (m n) ((zero n)))) 
+    \end{verbatim}
+    \vspace{-1em}
+    which is:
+    \begin{verbatim}
+    0
+    \end{verbatim}
+    \vspace{-1em}
+    The inductive step is to consider \texttt{mult2} when \texttt{m = one}: 
+    \begin{verbatim}
+    (lambda (m n) ((one (lambda (a) (addc n a))) zero)) 
+    \end{verbatim}
+    \vspace{-1em}
+    which becomes:
+    \begin{verbatim}
+    (lambda (m n) ((one (addc n zero)))) 
+    \end{verbatim}
+    \vspace{-1em}
+    becomes:
+    \begin{verbatim}
+    (lambda (m n) ((one n)))) 
+    \end{verbatim}
+    \vspace{-1em}
+    which is:
+    \begin{verbatim}
+    n
+    \end{verbatim}
+    \vspace{-1em}
+    Thus, we know that \texttt{(mulc2 m n)} returns the product $m \times n$.
+\end{enumerate}
+\section{Scheme Interpreter}
+\begin{enumerate}
+    \item \textbf{Solution:}
+    \begin{verbatim}
+    ((lambda (x y) (+ x y)) 1 2)
+    \end{verbatim}
+    \vspace{-1em}
+    \item \textbf{Solution:}
+    We add the following condition in \texttt{eval}:
+    \begin{verbatim}
+    ((let? exp) (eval (eval-let exp) env))
+    \end{verbatim}
+    \vspace{-1em}
+    And we add the following predicate to support this (in the SICP style):
+    \begin{verbatim}
+    (define (let? exp) (tagged-list? exp 'let))
+    \end{verbatim}
+    \vspace{-1em}
+    The definition for \texttt{eval-let} is as follows:
+    \begin{verbatim}
+    (define (eval-let exp)
+      (transform (cadr exp) (cddr exp))
+      env)
+    \end{verbatim}
+    \vspace{-1em}
+    The transformer is as follows:
+    \begin{verbatim}
+    (define (transform vars body)
+      (cons (make-lambda (assign cadar vars) body) (assign caar vars)))
+    \end{verbatim}
+    \vspace{-1em}
+    Which uses the following accessor function:
+    \begin{verbatim}
+    (define (assign f vars)
+      (if (null? vars)
+          '()
+          (cons (f vars) (assign f (cdr vars)))))
+    \end{verbatim}
+    \vspace{-1em}
+    
+\end{enumerate}
+\section{Logic Programming and Unification in Prolog}
+\begin{enumerate}
+    \item \textbf{Solution:} When \texttt{?- insert(a,[b,c],Z).} is entered into Prolog, you get:
+    \begin{verbatim}
+    Z = [a,b,c] ? 
+    \end{verbatim}
+    \vspace{-1em}
+    To get all possible values, enter \texttt{a}:
+    \begin{verbatim}
+    | ?- insert(a,[b,c],Z).
+
+    Z = [a,b,c] ? a
+
+    Z = [b,a,c]
+
+    Z = [b,c,a]
+
+    no
+    \end{verbatim}
+    \vspace{-1em}
+    \item \textbf{Solution:} Unification is used to bind variables to values. Here, \texttt{a} is being unified with \texttt{X}, etc. Backtracking is used to determine if a given goal has a match. If it matches, it continues with the next goal, but if it doesn't, it steps back to the previous goal, releases whatever values it might have obtained, and tries to match that goal again.
+    \item \textbf{Solution:} Here, \texttt{outranked-by} is being evaluated before \texttt{superior}. This causes the rule to be re-evaluated when the first part of the \texttt{and} statement is evaluated, causing an infinite loop.
+    \item \textbf{Solution:} Here, this query results in a match for every pair of supervisors and employees. Since ``Oliver Warbucks'' supervises four other supervisors, he is listed four times. ``Ben Bitdiddle'' only supervises one other supervisor, so the rule only matches him once.
+\end{enumerate}
+
+\end{document}
