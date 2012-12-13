@@ -1,0 +1,55 @@
+\par     \frametitle{Recursive and Iterative Implementations}
+\begin{columns}[l]
+\column{0.5\textwidth}
+{\tiny
+\begin{verbatim}
+void wht_iterative(double *a, int n) {
+    int m = n;
+    int N = 1;
+    for (int k = 0; k < log2(n); k++) {
+        m /= 2;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < N; j++) {
+                int i1 = i * 2 * N + j;
+                int i2 = i * 2 * N + j + N;
+                double x = a[i1];
+                double y = a[i2];
+                a[i1] = x + y;
+                a[i2] = x - y;
+            }
+        }
+        N *= 2;
+    }
+}
+
+
+
+\end{verbatim}
+}
+\column{0.5\textwidth}
+{\tiny
+\begin{verbatim}
+void wht_recursive(double *a, int n) {
+    int half = n / 2;
+
+    if (n == 2) {
+        double x = a[0];
+        double y = a[half];
+        a[0] = x + y;
+        a[half] = x - y;
+        return;
+    }
+
+    wht_recursive(a, half);
+    wht_recursive(a + half, half);
+
+    for (int i = 0; i < half; i++) {
+        double x = a[i];
+        double y = a[i + half];
+        a[i] = x + y;
+        a[i + half] = x - y;
+    }
+}
+\end{verbatim}
+}
+\end{columns}
