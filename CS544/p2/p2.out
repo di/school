@@ -1,0 +1,32 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Terminology}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{Message Types}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{Unique IDs \(UIDs\)}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Control Messages}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.3}{Presence Messages}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.4}{Chat Messages}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{States of a Node}{}% 8
+\BOOKMARK [1][-]{section.4}{Joining a Network}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Discovering Peers}{section.4}% 10
+\BOOKMARK [1][-]{section.5}{Joining a MUC}{}% 11
+\BOOKMARK [2][-]{subsection.5.1}{Channel Hash Algorithm}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.2}{Addressing}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.3}{Address Collisions}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.4}{Peer-to-peer Message Delivery}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.5}{MUC Maintenance}{section.5}% 16
+\BOOKMARK [3][-]{subsubsection.5.5.1}{Timeout/Shutdown}{subsection.5.5}% 17
+\BOOKMARK [1][-]{section.6}{Reliability Considerations}{}% 18
+\BOOKMARK [1][-]{section.7}{Security Considerations}{}% 19
+\BOOKMARK [1][-]{section.8}{Detailed Examples}{}% 20
+\BOOKMARK [2][-]{subsection.8.1}{Control Messages}{section.8}% 21
+\BOOKMARK [3][-]{subsubsection.8.1.1}{Room Discovery}{subsection.8.1}% 22
+\BOOKMARK [3][-]{subsubsection.8.1.2}{MUC Room Creation}{subsection.8.1}% 23
+\BOOKMARK [3][-]{subsubsection.8.1.3}{Room Cleanup}{subsection.8.1}% 24
+\BOOKMARK [2][-]{subsection.8.2}{MUC Messages}{section.8}% 25
+\BOOKMARK [3][-]{subsubsection.8.2.1}{Presence}{subsection.8.2}% 26
+\BOOKMARK [3][-]{subsubsection.8.2.2}{MUC Messaging}{subsection.8.2}% 27
+\BOOKMARK [1][-]{section.9}{Technology Reuse}{}% 28
+\BOOKMARK [2][-]{subsection.9.1}{IP Multicast}{section.9}% 29
+\BOOKMARK [2][-]{subsection.9.2}{UDP}{section.9}% 30
+\BOOKMARK [2][-]{subsection.9.3}{JSON}{section.9}% 31
+\BOOKMARK [2][-]{subsection.9.4}{Encryption}{section.9}% 32
