@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\title{CS 522: Data Structures and Algorithms II \\ Homework 1}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item \textbf{Solution:}
+    If both \textsc{Increment} and \textsc{Decrement} operations were included
+    in the $k$-bit counter, an amortized analysis of the cost of $n$ operations
+    would cost as much as $\Theta(nk)$ time because we would no longer be able
+    to consider each operation as a consecutive \textsc{Increment}, but rather
+    as any combination of \textsc{Increment}s and \textsc{Decrement}s. Thus, in
+    a worse-case scenario, it would be possible to alternate $n$ times between
+    two operations which cost $O(k)$ each, resulting in a total cost of
+    $\Theta(nk)$.
+
+    \item \textbf{Solution:}
+    last paragraph of 469
+
+    \item \textbf{Solution:}
+
+    \item \textbf{Solution:}
+
+    \item \textbf{Solution:}
+
+    \item \textbf{Solution:}
+
+    \item \textbf{Solution:}
+
+    \item \textbf{Solution:}
+\end{enumerate}
+\end{document}
