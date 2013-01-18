@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.8)  15 JAN 2013 17:40
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.8)  17 JAN 2013 19:00
 entering extended mode
  %&-line parsing enabled.
 **cs522_HW1.tex
@@ -457,27 +457,52 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 15.
 
 (/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-) [1
+)
+Overfull \hbox (7.94064pt too wide) in paragraph at lines 55--55
+[] 
+ []
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./cs522_HW1.aux) ) 
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+
+! Package pgfkeys Error: I do not know the key '/tikz/line' and I am going to i
+gnore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.82     \path [line] (
+                       1)--(2);
+? C
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+1 or ... or 9 to ignore the next 1 to 9 tokens of input,
+H for help, X to quit.
+? 
+[2] [3] (./cs522_HW1.aux) ) 
 Here is how much of TeX's memory you used:
- 10371 strings out of 493848
- 189325 string characters out of 1152824
- 225971 words of memory out of 3000000
- 13435 multiletter control sequences out of 15000+50000
+ 10537 strings out of 493848
+ 192057 string characters out of 1152824
+ 241678 words of memory out of 3000000
+ 13602 multiletter control sequences out of 15000+50000
  11528 words of font info for 49 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 56i,6n,55p,420b,201s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/s
-hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-
-texlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-texlive/fo
-nts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/p
-ublic/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfon
-ts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr17.
-pfb>
-Output written on cs522_HW1.pdf (1 page, 71848 bytes).
+ 56i,14n,55p,420b,1336s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfont
+s/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmcsc1
+0.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr
+/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf
+-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fon
+ts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/pub
+lic/amsfonts/cm/cmr17.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pf
+b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on cs522_HW1.pdf (3 pages, 113133 bytes).
 PDF statistics:
- 33 PDF objects out of 1000 (max. 8388607)
+ 55 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
