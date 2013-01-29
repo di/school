@@ -7,6 +7,7 @@
 \usepackage{tikz}
 \usepackage{latexsym}
 \usepackage{float}
+\usepackage{mathrsfs}
 \providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
 \renewcommand{\thealgorithm}{}
 \usetikzlibrary{arrows}
@@ -229,14 +230,116 @@
     \end{tikzpicture}
     \end{figure}
 
+    \item \textbf{Solution:} \\
+    \textbf{a.} The issue with the professor's claim is that while we can in
+    fact add $x$'s child list to the root list of $H$ in constant time, this is
+    not ``paying forward'' to the total amortized cost that it will take to do
+    the eventual \textsc{Cascading-Cut}s that are necessary.
+
+    \textbf{b.} The upper bound would be as bad as:
+
+    $$ O(x.degree \cdot c) = O(\text{lg}n) $$
+
+    \textbf{c.} The potential of $H$ might be:
+
+    $$ \phi = x.degree \cdot c + \frac{t(H)}{m(H)} $$
+
+    \textbf{d.} Thus, the amortized time for \textsc{Pisano-Delete} is no better
+    than for \textsc{Fib-Heap-Delete}.
+
     \item \textbf{Solution:}
+    We will use the stack, which we will call \texttt{stack}, to hold the actual
+    element being inserted, and the ``huge'' array \texttt{dict} to hold
+    references to where the element exists in \texttt{stack}. We will also need
+    a ``mirrored'' stack, \texttt{mirrored}, which will hold the actual values
+    of the elements. Since all actions are direct-access and of a constant
+    number for each function, all functions are $O(1)$ running time.
+
+    \textsc{Initialize}: At any given time, \texttt{stack} will contain
+    exactly the number of elements that are currently stored in \texttt{dict}.
+    Thus, at initialization, the size of \texttt{stack} is $0$, and requires no
+    initialization. Since \texttt{dict} may contain garbage, and will only be
+    overwritten, it too requires no initialization.
+
+    \textsc{Insert}: When inserting a new element, we add the element to the
+    end of \texttt{stack} as such:
+
+    $$ \texttt{stack}[\texttt{stack}.length] = \texttt{element}.key $$
+
+    We also add the value of the element to the mirrored stack:
+
+    $$ \texttt{mirror}[\texttt{stack}.length] = \texttt{element}.value $$
+
+    Since this increases the length of \texttt{stack} by $1$, the index of
+    $\texttt{element}$ is now at $\texttt{stack}.length - 1$. We add this
+    value to \texttt{dict}, overwriting whatever might be there.
+
+    $$ \texttt{dict}[\texttt{element}.key] = \texttt{stack}.length - 1 $$
+
+    \textsc{Search}: When searching for an \texttt{element}, we must satisfy two
+    conditions to know that we will return the correct element in constant time.
+    First, we must make sure that we have previously inserted this element and
+    that the reference data in \texttt{dict} is not garbage:
+
+    $$ 0 \leq \texttt{dict}[key] \leq \texttt{stack}.length -1 $$
+
+    This alone, however, does not prove that \textsc{Search} is returning the
+    correct element. We must also compare the results. The result is only valid
+    if:
+
+    $$ \texttt{stack}[\texttt{dict}[key]] = \texttt{key} $$
+
+    If this is true, then we can return the value from the mirrored stack:
+
+    $$ \texttt{mirrored}[\texttt{stack}[\texttt{dict}[key]]] $$
+
+    \textsc{Delete}: Deletion can be done simply by turning the key reference in
+    \texttt{dict} back into garbage, e.g. to a value that will never be a valid
+    key and will fail the first test:
+
+    $$ \texttt{dict}[key] = -1 $$
+
+    This will leave a gap in \texttt{stack} (and in \texttt{mirror}). If it is
+    desirable to maintain the lengths of these stacks to match the actual number
+    of keys, we could maintain a separate stack which would keep track of
+    deleted keys and re-use them when new elements are inserted.
 
     \item \textbf{Solution:}
 
-    \item \textbf{Solution:}
+    Assuming uniform hashing, given two elements $k$ and $l$ and a table of size
+    $m$ the following probability is true for two elements, $k$ and $l$, where
+    $k \neq l$ and $h(k) = h(l)$:
+
+    $$ P_{individual-collision} = 1/m $$
+
+    Thus the probability of not having a collision between $k$ and $l$ is:
+
+    $$ P_{no-individual-collision} = 1 - P_{individual-collision} $$
+
+    Therefore, the probability that there will be no collisions for a single
+    element with any of the $n-1$ other elements is:
+
+    $$ P_{never-collisions} = {P_{no-individual-collision}}^{(n-1)} $$
+
+    Thus the probability that there will be at least one collision for a single
+    element with any of the $n-1$ other elements is:
+
+    $$ P_{collision} = 1 - P_{never-collisions} $$
+
+    Therefore the expected number of collisions after inserting all $n$ nodes
+    is:
+
+    $$ n \cdot P_{collision} = n\left(1-\left(1-\frac{1}{m}\right)^{(n-1)}\right) $$
 
     \item \textbf{Solution:}
+    For each set in $ \mathscr{H} $, the probability of there being a collision
+    is $P_{collision}$ as was found in the previous question. The set $U$
+    represents the number of available elements while the set $B$ represents the
+    available locations without collisions. Thus the probability of there being
+    a collision for any of the elements is:
 
-    \item \textbf{Solution:}
+    $$ P_{collision} \cdot \left( | B | - | U | \right) $$
+
+    I'm not sure how to continue from there.
 \end{enumerate}
 \end{document}
