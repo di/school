@@ -1,0 +1,114 @@
+\documentclass[conference]{IEEEtran}
+%\usepackage{draftwatermark}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage[belowskip=-10pt,aboveskip=2pt]{caption}
+\usepackage[cmex10]{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\newcommand{\todocomment}[2]{{\bf\sc (* from #1: #2 *) }}
+
+\begin{document}
+
+\title{Behavior Identification and Analysis of Philadelphia Parking Authority Agents}
+
+\author{
+\IEEEauthorblockN{Dustin~S.~Ingram}
+\IEEEauthorblockA{Department of Computer Science\\
+Drexel University, Philadelphia, PA\\
+Email: dustin@cs.drexel.edu}
+}
+
+\maketitle
+
+\begin{abstract}
+In this project, I will use and compare various machine learning techniques in
+an attempt to discover spatio-temporal patterns within time-coded location-based
+data on Philadelphia parking ticket data. I will attempt to use the found
+patterns to build a predictive model for the most probably current location of
+an agent at a given day and time, as well as identify interesting
+characteristics and behaviors within the data.
+
+\end{abstract}
+
+\section{Related Work and Novelty}
+\label{sec:intro}
+Finding patterns in movement data is a problem that has roots in a diverse array
+of problem sets, from searching for suggestions for improvements of public and
+mass transit in pedestrian, to analysis of traffic bottlenecks based on driver
+data, to using ship movement data to detect over-used and under-used shipping
+channels, to analyzing the movements of herds of animals.
+
+This paper will attempt to use machine learning to perform a spatio-temporal
+analysis of a body of data which consists of a large portion of parking ticket
+data for the City of Philadelphia, spanning the months of December, January and
+February.
+
+The Philadelphia Parking Authority distributes over three thousand tickets per
+day over a broad geographical area which comprises the metropolitan area of
+Philadelphia for a variety of infractions. There has been little to no
+publically available analysis of the behavior or effectiveness of patterns of
+individual agents, either in Philadelphia or other cities.
+
+
+\begin{figure}[h]
+\small{\texttt{
+    \{ "\_id" : 58686207, "resolved" : false, "violation" : "METER EXPIRED CC",
+    "issueTime" : ISODate("2013-02-09T17:02:00Z"), "violationCode" : "1210051
+    C", "location" : "300 BLK SOUTH ST SS"\}}
+\caption{A sample of individual ticket data.}}
+\end{figure}
+
+
+\section{Approach}
+\label{sec:approach}
+The approach will be to collect data and process it, including geocoding, which
+requires building a data-collection system and corresponding database for
+storing the retrived data. Then, the data will be given a preliminary evaluation
+based on the amount collected at time, and may be limited to a certain
+geographic area. Because the data is discretized at the per-block level, it is a
+prime candidate for use with a Hidden Markov Model, as there is a number of
+distinct data points with very accurate corresponding time-stamps, however on
+the general path, there may be points missing from one day to the other which
+can be filled in using the model.
+
+Once a model for various agents as been built, this model can potentially be
+used to produce a predictive model for agent location at a given day and time.
+An underlying assumption of this analysis is that individual paths (and thus,
+agents) will be easy to determine and separate from one another. This may not be
+the case, as the analysis will show, and an auxiliary approach might be to
+produce a ``best-guess'' of a given agent's path.
+
+\section{Evaluation Approach}
+\label{sec:results}
+Ideally, these results will show deterministic patterns in the paths of the
+agents, which will be easily identifiable over a long period of time. If not,
+the data will be analyzed to show areas which might be undervisited, and the
+analysis will be used to attempt to create artificial agents which can be
+trained to develop the most efficient pattern based on the historical data. If
+the results do show a deterministic pattern, the data will be used to build a
+model of the agent's behavior, specific to geographic location, time of day, day
+of week, etc. These models will then be analyzed for their effectiveness as
+well. This data will reveal and identify interesting patterns or behaviors of
+the agents.
+
+\section{Milestones}
+Several milestones for the project are as follows:
+\begin{itemize}
+    \item \textbf{Mid-January:} Finalize data collection framework;
+    \item \textbf{Feb 1}: Collect over 100K records;
+    \item \textbf{Early Feb}: Geo-code all location data;
+    \item \textbf{Early Feb}: Perform basic analysis of data (location frequency analysis, etc.);
+    \item \textbf{Mid Feb}: Machine learning algorithm, introductory analysis;
+    \item \textbf{Late Feb}: In-depth analysis based on preliminary results;
+    \item \textbf{March 1}: Prepare final results, presentation and paper.
+\end{itemize}
+
+\section{Bibliography}
+%\bibliographystyle{IEEEtran}
+%\bibliography{ppa}
+
+\end{document}
