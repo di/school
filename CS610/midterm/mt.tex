@@ -1,0 +1,211 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{enumitem}
+
+\usetikzlibrary{matrix, shapes, snakes}
+
+\title{CS 610: Midterm\\Winter 2013}
+
+\author{Dustin Ingram}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}[start=0]
+
+\item{} % 1
+
+\begin{enumerate}
+
+\item{} % a
+    We consider three probabilities:
+\begin{itemize}
+    \item{The probability of being in the initial start state, $S_0$, where:}
+    \begin{align*}
+        S_0 &= \text{(\texttt{LanguageA}/Anti-Polka)}\\
+        P_0 &= 0.7 \cdot 0.6 = 0.42
+    \end{align*}
+    \item{The probability of a transition from $S_0$ to $S_1$, where:}
+    \begin{align*}
+        S_1 &= \text{(\texttt{LanguageB}/Anti-Polka)}\\
+        P_1 &= 0.15 \cdot 0.7 = 0.105
+    \end{align*}
+    \item{The transition from $S_1$ to $S_2$, where:}
+    \begin{align*}
+        S_1 &= \text{(\texttt{LanguageC}/Dummy)}\\
+        P_1 &= 0.7 \cdot 0.3 = 0.21
+    \end{align*}
+\end{itemize}
+Thus, the probability that \emph{at the beginning of the day} the machine will
+produce chips in the order $S_0 \to S_1 \to S_2$ is:
+\begin{align*}
+    P_0 \cdot P_1 \cdot P_2 &= 0.42 \cdot 0.105 \cdot 0.21\\
+    &= 0.009261\\
+    &\approx 1\%
+\end{align*}
+\item{}
+    We consider the first, heavy TV. For simplicity, we use the following
+    notation:
+    \begin{align*}
+    P(C|W_h) &= P(\text{chip}_1, \text{chip}_2 | \text{weight} = \text{heavy})\\
+    P(W_h|C) &= P(\text{weight} = \text{heavy} | \text{chip}_1, \text{chip}_2)\\
+    P(W_h) &= P(\text{weight}=\text{heavy})\\
+    P(C_s) &= P_{start}(\text{chip}_1, \text{chip}_2)
+    \end{align*}
+    The probability for the chips at the start of the run, $P(C_s)$ is given in
+    part (a) and is as follows:
+    \begin{figure}[H]
+    \centering
+    \begin{tabular}{|c||c|c|c|}
+        \hline
+        & \texttt{LanguageA} & \texttt{LanguageB} & \texttt{LanguageC}
+        \\\hline\hline
+        Anti-Polka & 0.42 & 0.14 & 0.14 \\\hline
+        Dummy & 0.18 & 0.06 & 0.06 \\\hline
+    \end{tabular}
+    \end{figure}
+    We are given $P(W_h|C)$ by the table in the question. $P(W_h)$ is given as
+    follows:
+    \begin{align*}
+        P(W_h) = \sum{\left( P(W_h|C)\cdot P(C_s)\right)} = \textbf{0.486}
+    \end{align*}
+    Using Bayes' theorem:
+    $$ P(C|W_h) = \frac{P(W_h|C) \cdot P(C_s)}{P(W_h)} $$
+    Thus, the resulting values for $P(C|W_h)$ for the first, heavy TV are as follows:
+    \begin{figure}[H]
+    \centering
+    \begin{tabular}{|c||c|}
+        \hline
+        $P(\text{Anti-Polka},\text{\texttt{LanguageA}}|\text{weight}=\text{heavy})$
+        & \textbf{0.60} \\\hline
+        $P(\text{Anti-Polka},\text{\texttt{LanguageB}}|\text{weight}=\text{heavy})$
+        & \textbf{0.14}\\\hline
+        $P(\text{Anti-Polka},\text{\texttt{LanguageC}}|\text{weight}=\text{heavy})$
+        & \textbf{0.12}\\\hline
+        $P(\text{Dummy},\text{\texttt{LanguageA}}|\text{weight}=\text{heavy})$ &
+        \textbf{0.11}\\\hline
+        $P(\text{Dummy},\text{\texttt{LanguageB}}|\text{weight}=\text{heavy})$ &
+        \textbf{0.01}\\\hline
+        $P(\text{Dummy},\text{\texttt{LanguageC}}|\text{weight}=\text{heavy})$ &
+        \textbf{0.01}\\\hline
+    \end{tabular}
+    \end{figure}
+    For the second, light TV, we use the following
+    \begin{align*}
+    P(C|W_l) &= P(\text{chip}_1, \text{chip}_2 | \text{weight} = \text{light})\\
+    P(W_l|C) &= P(\text{weight} = \text{light} | \text{chip}_1, \text{chip}_2)\\
+    P(W_l) &= P(\text{weight}=\text{light})\\
+    P(C_t) &= P_{transition}(\text{chip}_1, \text{chip}_2)
+    \end{align*}
+
+    We no longer need to consider the probabilities of the starting state, but
+    rather the transition between any two states:
+    \begin{figure}[H]
+    \centering
+    \begin{tabular}{|c||c|c|c|c|c|c|}
+        \hline
+            & AP, \texttt{LA} &
+            AP, \texttt{LB}&
+            AP, \texttt{LC}&
+            D, \texttt{LA}&
+            D, \texttt{LB}&
+            D, \texttt{LC}\\\hline
+            AP, \texttt{LA}&
+            0.490 & 0.105 & 0.105 & 0.210 & 0.045 & 0.045\\\hline
+            AP, \texttt{LB}&
+            0.105 & 0.490 & 0.105 & 0.045 & 0.210 & 0.045\\\hline
+            AP, \texttt{LC}&
+            0.105 & 0.105 & 0.490 & 0.045 & 0.045 & 0.210\\\hline
+            D, \texttt{LA}&
+            0.210 & 0.045 & 0.045 & 0.490 & 0.105 & 0.105\\\hline
+            D, \texttt{LB}&
+            0.045 & 0.210 & 0.045 & 0.105 & 0.490 & 0.105\\\hline
+            D, \texttt{LC}&
+            0.045 & 0.045 & 0.210 & 0.105 & 0.105 & 0.490\\\hline
+    \end{tabular}
+    \end{figure}
+    However, this probability of transition is assuming that we are equally
+    likely to be in any given preceding state. As we have shown in the first
+    half of the question where the first TV is heavy, in this case there is a
+    known probability for being in a certain state before the transition. We
+    must multiply this across the transition table to get the probability of
+    transition if the first TV was heavy:
+    \begin{figure}[H]
+    \centering
+    \begin{tabular}{|c||c|c|c|c|c|c|}
+        \hline
+            & AP, \texttt{LA} &
+            AP, \texttt{LB}&
+            AP, \texttt{LC}&
+            D, \texttt{LA}&
+            D, \texttt{LB}&
+            D, \texttt{LC}\\\hline
+            AP, \texttt{LA}&
+            0.296 & 0.064 & 0.064 & 0.127 & 0.027 & 0.027 \\\hline
+            AP, \texttt{LB}&
+            0.015 & 0.071 & 0.015 & 0.006 & 0.030 & 0.006 \\\hline
+            AP, \texttt{LC}&
+            0.012 & 0.012 & 0.056 & 0.005 & 0.005 & 0.024 \\\hline
+            D, \texttt{LA}&
+            0.023 & 0.005 & 0.005 & 0.054 & 0.012 & 0.012 \\\hline
+            D, \texttt{LB}&
+            0.001 & 0.003 & 0.001 & 0.001 & 0.006 & 0.001 \\\hline
+            D, \texttt{LC}&
+            0.001 & 0.001 & 0.003 & 0.001 & 0.001 & 0.006 \\\hline
+    \end{tabular}
+    \end{figure}
+    And then sum the probabilities that result in the same state to get $P(C_t)$
+    for a TV following a heavy TV:
+    \begin{figure}[H]
+    \centering
+    \begin{tabular}{|c||c|c|c|}
+        \hline
+        & \texttt{LanguageA} & \texttt{LanguageB} & \texttt{LanguageC}
+        \\\hline\hline
+        Anti-Polka & 0.348 & 0.154 & 0.143 \\\hline
+        Dummy & 0.196 & 0.082 & 0.077 \\\hline
+    \end{tabular}
+    \end{figure}
+    Again, using Bayes' theorem:
+    $$ P(C|W_l) = \frac{P(W_l|C) \cdot P(C_t)}{P(W_l)} $$
+    and:
+    \begin{align*}
+        P(W_l) = \sum{\left( P(W_l|C)\cdot P(C_t)\right)} = \textbf{0.211}
+    \end{align*}
+    Gives us the following probabilities for $P(C|W_h)$ for the second, light TV:
+    \begin{figure}[H]
+    \centering
+    \begin{tabular}{|c||c|}
+        \hline
+        $P(\text{Anti-Polka},\text{\texttt{LanguageA}}|\text{weight}=\text{light})$
+        & \textbf{0.165} \\\hline
+        $P(\text{Anti-Polka},\text{\texttt{LanguageB}}|\text{weight}=\text{light})$
+        & \textbf{0.146}\\\hline
+        $P(\text{Anti-Polka},\text{\texttt{LanguageC}}|\text{weight}=\text{light})$
+        & \textbf{0.204}\\\hline
+        $P(\text{Dummy},\text{\texttt{LanguageA}}|\text{weight}=\text{light})$ &
+        \textbf{0.186}\\\hline
+        $P(\text{Dummy},\text{\texttt{LanguageB}}|\text{weight}=\text{light})$ &
+        \textbf{0.116}\\\hline
+        $P(\text{Dummy},\text{\texttt{LanguageC}}|\text{weight}=\text{light})$ &
+        \textbf{0.182}\\\hline
+    \end{tabular}
+    \end{figure}
+
+
+
+
+
+
+\item{}
+\end{enumerate}
+\end{enumerate}
+
+\end{document}
