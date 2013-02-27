@@ -6,7 +6,8 @@
 \usepackage{amsmath}
 \usepackage{enumitem}
 
-\usetikzlibrary{matrix, shapes, snakes}
+\usetikzlibrary{matrix, shapes, snakes, arrows}
+\tikzset{>=triangle 45}
 
 \title{CS 610: Midterm\\Winter 2013}
 
@@ -116,7 +117,7 @@ produce chips in the order $S_0 \to S_1 \to S_2$ is:
             AP, \texttt{LC}&
             D, \texttt{LA}&
             D, \texttt{LB}&
-            D, \texttt{LC}\\\hline
+            D, \texttt{LC}\\\hline\hline
             AP, \texttt{LA}&
             0.490 & 0.105 & 0.105 & 0.210 & 0.045 & 0.045\\\hline
             AP, \texttt{LB}&
@@ -146,7 +147,7 @@ produce chips in the order $S_0 \to S_1 \to S_2$ is:
             AP, \texttt{LC}&
             D, \texttt{LA}&
             D, \texttt{LB}&
-            D, \texttt{LC}\\\hline
+            D, \texttt{LC}\\\hline\hline
             AP, \texttt{LA}&
             0.296 & 0.064 & 0.064 & 0.127 & 0.027 & 0.027 \\\hline
             AP, \texttt{LB}&
@@ -202,7 +203,109 @@ produce chips in the order $S_0 \to S_1 \to S_2$ is:
 \item{}
     We would create a Markov Decision Process and a stationary distribution to
     calculate the expected value for the percentage of TVs that have anti-polka
-    chips at the end of a significantly large run. We already know 
+    chips at the end of a significantly large run. The probability of any given
+    TV being heavy or light (i.e., not heavy) is simply:
+    $$ P(W_h|\text{chip}_1 = AP) =
+    \frac{\sum{P(W_h|\text{chip}_2 = \{LA, LB, LC\})}}{3}$$
+    $$ P(W_{l,m}|\text{chip}_1 = AP) =
+    \frac{\sum{P(W_{l,m}|\text{chip}_2 = \{LA, LB, LC\})}}{6}$$
+    (and similarly for the case where the dummy chip is installed)
+    This can be reduced from the given table as follows:
+
+    \begin{figure}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    & $H$ & $L$ \\\hline
+    $AP$ & 0.533 & 0.467 \\\hline
+    $D$ & 0.167 & 0.833 \\\hline
+    \end{tabular}
+    \end{figure}
+
+    We also know with 100\% probability when the chimp will flip the switch.
+
+    Here, we make the assumption that every time three heavy TVs drop off the
+    conveyor belt, the chimp not only flips the switch, but resets his count of
+    heavy TVs, so that if a \emph{fourth} heavy TV drops off, he does not flip
+    the switch again.
+
+    The following is a MDP diagram for the system, where $AP$ is a TV with an
+    anti-polka chip, $D$ is a TV with a dummy chip, $L$ is a TV that has been
+    observed to be light (or medium), and $\{H_1, H_2, H_3\}$ correspond to the
+    first, second and third heavy TVs that the chip has seen:
+
+    \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        node distance=30mm,
+        every node/.style={draw,circle,minimum size=1.5cm}
+        ]
+        \node[](apl) {$AP,L$};
+        \node[below of=apl](aph1) {$AP,H_1$};
+        \node[right of=aph1](aph2) {$AP,H_2$};
+        \node[right of=aph2](aph3) {$AP,H_3$};
+        \node[above of=aph3](dl) {$D,L$};
+        \node[above of=dl](dh1) {$D,H_1$};
+        \node[left of=dh1](dh2) {$D,H_2$};
+        \node[left of=dh2](dh3) {$D,H_3$};
+        \draw[->] (apl) -- (aph1);
+        \draw[->] (aph1) -- (aph2);
+        \draw[->] (aph2) -- (aph3);
+        \draw[->] (aph3) -- (dl);
+        \draw[->] (dl) -- (dh1);
+        \draw[->] (dh1) -- (dh2);
+        \draw[->] (dh2) -- (dh3);
+        \draw[->] (dh3) -- (apl);
+        \draw[->] (aph2) -- (apl);
+        \draw[->] (dh2) -- (dl);
+        \draw[->] (aph1) to[bend right] (apl);
+        \draw[->] (dh3) to[bend right] (aph1);
+        \draw[->] (apl) to[loop right] (apl);
+        \draw[->] (dh1) to[bend right] (dl);
+        \draw[->] (aph3) to[bend right] (dh1);
+        \draw[->] (dl) to[loop left] (dl);
+    \end{tikzpicture}
+    \end{figure}
+
+    Using the MDP above, we can produce a stationary distribution from it and
+    the probabilities for a given TV's weight:
+
+    \begin{figure}[H]
+    \centering
+    \begin{tabular}{|c||c|c|c|c|c|c|c|c|}
+    \hline
+    & $AP,L$ & $AP,H_1$ & $AP,H_2$ & $AP,H_3$ & $D,L$ & $D,H_1$ & $D,H_2$ &
+    $D,H_3$ \\\hline\hline
+    $AP,L$   & 0.467 & 0.533 & 0 & 0 & 0 & 0 & 0 & 0\\\hline
+    $AP,H_1$ & 0.467 & 0 & 0.533 & 0 & 0 & 0 & 0 & 0\\\hline
+    $AP,H_2$ & 0.467 & 0 & 0 & 0.533 & 0 & 0 & 0 & 0\\\hline
+    $AP,H_3$ & 0 & 0 & 0 & 0 & 0.833 & 0.167 & 0 & 0\\\hline
+    $D,L$    & 0 & 0 & 0 & 0 & 0.833 & 0.167 & 0 & 0\\\hline
+    $D,H_1$  & 0 & 0 & 0 & 0 & 0.833 & 0 & 0.167 & 0\\\hline
+    $D,H_2$  & 0 & 0 & 0 & 0 & 0.833 & 0 & 0 & 0.167\\\hline
+    $D,H_3$  & 0.467 & 0.533 & 0 & 0 & 0 & 0 & 0 & 0\\\hline
+    \end{tabular}
+    \end{figure}
+    Then, using the following formula for a stationary distribution, where $T$
+    is the transition matrix from the previous part:
+    $$ \pi = [1,0,\ldots,0]\cdot ((T-I)_1)^{-1} $$
+    We would sum the probabilities for the TVs with anti-polka chips installed
+    to get the expected value for the percentage of TVs that have anti-polka
+    chips at the end of the day.
+    \item{}
+    We find $\pi$ to be:
+    \begin{figure}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    $AP,L$ & $AP,H_1$ & $AP,H_2$ & $AP,H_3$ & $D,L$ & $D,H_1$ & $D,H_2$ &
+    $D,H_3$ \\\hline\hline
+    0.021 & 0.013 & 0.007 & 0.004 & 0.796 & 0.134 & 0.022 &  0.004\\\hline
+    \end{tabular}
+    \end{figure}
+    Thus the expected value for the percentage of TVs that have anti-polka chips
+    at the end of the day would be:
+    $$ 0.021 + 0.013 + 0.007 + 0.004 = 0.045 \approx \textbf{4.5\%} $$
 \end{enumerate}
 \end{enumerate}
 
