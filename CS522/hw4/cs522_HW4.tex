@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usepackage{mathrsfs}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\usetikzlibrary{arrows}
+\title{CS 522: Data Structures and Algorithms II \\ Homework 4}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item \textbf{Solution:}
+    We can reduce the subgraph-isomorphisim problem to the Hamiltonian cycle
+    problem. We simply take the graph $G$, for which we want to test for a
+    Hamiltonian cycle, and produce a second graph $G'$, which has the same
+    number of vertices $n$ as in $G$, and is a simple cycle between all $n$
+    nodes. If we can show that $G$ is isomorphic to a subgraph (here, the entire
+    graph) of $G'$ in polynomial time, we have also shown that $G$ has a
+    Hamiltonian cycle in polynomial time. However, since we know the Hamiltonian
+    cycle problem to be NP-complete, we have therefore showed that the
+    subgraph-isomorphism problem is NP-complete as well.
+
+    \item \textbf{Solution:}
+    \item \textbf{Solution:}
+    \item \textbf{Solution:}
+    \item \textbf{Solution:}
+    \item \textbf{Solution:}
+\end{enumerate}
+\end{document}
