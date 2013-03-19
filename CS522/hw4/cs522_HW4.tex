@@ -59,7 +59,7 @@
                 \RETURN
             \ENDIF
             \FOR{$v \in T.children$}
-                \STATE \textsc{Tree-Vertex-Cover($T$)}
+                \STATE \textsc{Tree-Vertex-Cover($v$)}
                 \IF{\NOT $T.colored$ \AND \NOT $v.colored$}
                     \STATE $T.colored = $ \TRUE
                 \ENDIF
@@ -81,5 +81,25 @@
     there cannot be a zero-cost edge between any two non-identical vertices.
 
     \item \textbf{Solution:}
+    We construct an MST for the graph $G$ using the algorithm provided for
+    problem 23-3. We know that a MST is a MBST by the nature of it's properties,
+    thus, one of the edges in the MST is the costliest edge in the MBST. We
+    recursively visit all the nodes in the MBST, partitioned by each of the
+    vertices which make up the costliest edge. For any node that has a degree
+    greater than 2, we find the two connecting edges of least weight. One of
+    these will be a visited (or the starting) vertex $a$, and one will be an
+    unvisited (or future) vertex $b$. For every other connecting edge $c$, we
+    remove it, and add an edge between it and the unvisited vertex $b$. We then
+    recursively call our algorithm on $b$. Once the algorithm has finished, we
+    have a Hamiltonian path through $G$ that can be connected to form a
+    Hamiltonian cycle. Because the cost function of the graph $G$ satisfies the
+    triangle inequality, we know that if the MST is a true MBST of the graph
+    $G$, our algorithm produces a cycle with a bottleneck that is at most 3
+    times longer than the optimal solution, due to the fact that any given
+    re-ordering of connected edges can produce an edge no more than 3 times the
+    length of the costliest edge. Thus, in polynomial time, we have constructed
+    a Hamiltonian cycle from the MBST which give at worst a 3-approximation of
+    the algorithm.
+
 \end{enumerate}
 \end{document}
