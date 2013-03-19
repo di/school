@@ -28,9 +28,58 @@
     subgraph-isomorphism problem is NP-complete as well.
 
     \item \textbf{Solution:}
+    To prove that the Hamiltonian-path problem is NP-complete, we must first
+    show that we can solve the Hamiltonian-path problem in nondeterministic
+    polynomial time. Given any graph $G$, we can solve the Hamiltonian-path
+    problem in polynomial time by randomly choosing $n$ edges from $G$, where
+    $n$ is the number of vertices in $G$. We can then check the path and verify
+    that it visits all $n$ vertices, which can clearly be done in polynomial
+    time.
+
+    We then show that we can reduce a known NP-complete problem to the
+    Hamiltonian-path problem. We use the Hamiltonian-cycle problem, which we
+    assume to be proven NP-complete. By adding a single vertex to $G$ such that
+    it is connected to all other vertices in $G$, it is clear that if there is a
+    Hamiltonian path through the original vertices in $G$, then there is also a
+    Hamiltonian cycle along this path, which trivially connects the endpoints of
+    the path through the newly added vertex. Thus, the Hamiltonian-path problem
+    is NP-complete.
+
     \item \textbf{Solution:}
+    We give a simple recursive linear-time algorithm,
+    \textsc{Greedy-Linear-Optimal-Tree-Vertex-Cover}, which visits each node
+    exactly once, which takes as input the root of the entire tree $T$ and
+    returns as output the same tree, with the optimal vertex cover represented
+    by the vertices $v \in T$ for which $v.colored = true$.
+    \begin{algorithm}[H]
+        \begin{algorithmic}
+            \floatname{algorithm}{Greedy-Linear-Optimal-Tree-Vertex-Cover($T$)}
+            \caption{}
+            \IF{$T.children = \emptyset$}
+                \RETURN
+            \ENDIF
+            \FOR{$v \in T.children$}
+                \STATE \textsc{Tree-Vertex-Cover($T$)}
+                \IF{\NOT $T.colored$ \AND \NOT $v.colored$}
+                    \STATE $T.colored = $ \TRUE
+                \ENDIF
+            \ENDFOR
+        \end{algorithmic}
+    \end{algorithm}
+
     \item \textbf{Solution:}
+    No, the relationship between the vertex-cover problem and the clique problem
+    does not give this implication. It is possible that any polynomial-time
+    approximation algorithm with a constant approximation ratio will give a
+    vertex covering which consists of all the nodes in a given graph $G$, thus,
+    the complement of such an optimal vertex cover will not be a maximum-sized
+    clique in the complement graph, but rather an empty set.
+
     \item \textbf{Solution:}
+    If, for any pair of vertices $u, v$, $c(u,v) = 0$, either the triangle
+    inequality must not hold, or the vertices must in fact be the same point, as
+    there cannot be a zero-cost edge between any two non-identical vertices.
+
     \item \textbf{Solution:}
 \end{enumerate}
 \end{document}
