@@ -1,0 +1,118 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usepackage{mathrsfs}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\usetikzlibrary{arrows}
+\title{CS 522: Data Structures and Algorithms II \\ Extra Credit 2}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item \textbf{33-4 Solution:}
+    \begin{enumerate}
+        \item The \textsc{Above-Or-Below} procedure:
+        \begin{algorithm}[H]
+        \begin{algorithmic}
+        \floatname{algorithm}{Above-Or-Below($A, B$)}
+        \caption{}
+            \STATE {$x_1, y_1, z_1, x_2, y_2, z_2 = a$}
+            \STATE {$x_3, y_3, z_3, x_4, y_4, z_4 = b$}
+            \STATE {$det = (x_1 - x_2)(y_3 - y_4) - (y_1 - y_2)(x_3 - x_4)$}
+            \IF {$det == 0$}
+                \IF {$max(az_1,az_2) < max(bz_1,bz_2)$ \AND $min(az_1,az_2) < min(bz_1,bz_2)$}
+                    \RETURN {$below$}
+                \ELSE
+                    \RETURN {$above$}
+                \ENDIF
+            \ELSE
+                \STATE {$x = ((x_1y_2-y_1x_2)(x_3-x_4)-(x_1-x_2)(x_3y_4-y_3x_4))/det$}
+                \STATE {$y = ((x_1y_2-y_1x_2)(y_3-y_4)-(y_1-y_2)(x_3y_4-y_3x_4))/det$}
+                \IF {$x > max(x_1, x_2, x_3, x_4)$ \OR $x < min(x_1, x_2, x_3, x_4)$}
+                    \RETURN {$unrelated$}
+                \ELSIF {$y > max(y_1, y_2, y_3, y_4) or y < min(y_1, y_2, y_3, y_4)$}
+                    \RETURN {$unrelated$}
+                \ELSE
+                    \STATE {$z_a = (((z_2-z_1)((x-x_1)/(x_2-x_1)+(y-y_1)/(y_2-y_1)))/2)+z_1$}
+                    \STATE {$z_b = (((z_4-z_3)((x-x_3)/(x_4-x_3)+(y-y_3)/(y_4-y_3)))/2)+z_3$}
+                    \IF {$z_a > z_b$}
+                        \RETURN {$above$}
+                    \ELSE
+                        \RETURN {$below$}
+                    \ENDIF
+                \ENDIF
+           \ENDIF
+        \end{algorithmic}
+        \end{algorithm}
+        Here, we assume that sticks cannot physically intersect (e.g., the
+        maximum and minimum z-values for the endpoints of two parallel sticks
+        must both correspond). We check if the sticks are parallel (the
+        determinant will be zero), then if they are unrelated, and finally we
+        compute the z-values of their cross-point and determine which is on top.
+
+        \item We simply reduce the 3D lines to their 2D ($x$ and $y$)
+        representations. We use the \textsc{Any-Segments-Intersect} algorithm to
+        determine at what point, if any, any segment intersects with any other
+        segment. When we find an intersection, we use the
+        \textsc{Above-Or-Below} procedure to determine ordering, and use this to
+        build the legal order in which we can pick the sticks up in. This can
+        simply be a sorted list similar to what \textsc{Any-Segments-Intersect}
+        uses.
+    \end{enumerate}
+    \item \textbf{35-1 Solution:}
+        \begin{enumerate}
+            \item Here, we can reduce the bin-packing problem to the known
+            NP-hard subset-sum decision problem. Given the set $S$ of $n$ items,
+            we repeatedly try to find a maximally-sized subset in $S$ which sums
+            to size $1$, such that the number of subsets is a minimum.
+            \item Since every object must be packed into a bin, and $S$
+            represents the total size of all objects, we must have $\lceil
+            S\rceil$ total bins.
+            \item The heuristic will not leave more than one bin less than half
+            full. This is simply because if there were a second bin that was
+            less than half full, its contents would have been put into the first
+            bin before allocating a second bin.
+            \item This will only be the case if every object is slightly greater
+            in size than half of the size of the bin. Thus, every object will
+            need to be packed into it's own bin, producing $n$ bins, where the
+            total size $S$ is roughly $0.5n$, but the total number of bins is
+            $n$, which will have a total size which will never be greater than
+            $\lceil 2S\rceil$.
+            \item It is clear from (b) that the optimal number of bins is
+            precisely $\lceil S\rceil$ bins, and that from (d) that the
+            worst-case number of bins is $\lceil 2S\rceil$ bins, thus the
+            first-fit heuristic has an approximation ration of $2$.
+            \item The algorithm is as follows. In a worst-case scenario, it
+            tries to place $n$ objects into $n$ different bins, for a runtime of
+            $O(n^2)$:
+                \begin{algorithm}[H]
+                \begin{algorithmic}
+                \floatname{algorithm}{Above-Or-Below($A, B$)}
+                \caption{}
+                    \FOR{$o \in objects$}
+                        \STATE{$found =$ \FALSE}
+                        \FOR{$b \in bins$}
+                            \IF{$b.emptySpace \geq o.size$}
+                                \STATE{$b.add(o)$}
+                                \STATE{$b.emptySpace -= o.size$}
+                                \STATE{$found =$ \TRUE}
+                            \ENDIF
+                        \ENDFOR
+                        \IF{\NOT $found$}
+                            \STATE{$b =$ \textsc{New-Empty-Bin()}}
+                            \STATE{$b.add(o)$}
+                            \STATE{$bins.add(b)$}
+                        \ENDIF
+                    \ENDFOR
+                \end{algorithmic}
+                \end{algorithm}
+        \end{enumerate}
+    \end{enumerate}
+\end{document}
