@@ -1,0 +1,142 @@
+# CS550 -- Assignment 2 -- Dustin Ingram
+
+## Part 1
+
+> Implement a scheme function (FV exp), which returns a list of the free
+> variables in the scheme expression exp. 
+
+In `1.scm` I implemented the function `(fv exp)` which returns a list of FV in
+`exp`. It first checks if `exp` is empty (the base case) and, if so, it returns
+the empty list. If `exp` is a symbol, `fv` simply returns a new list containing
+that symbol. If `exp` is a lambda expression, `fv` removes non-free variables
+used in that expression. Finally, if `exp` is none of these, it must be a list
+containing multiple symbols or lambda expressions, and thus `fv` is called on
+the `car` and `cdr` of `exp` and the results are combined.
+
+The `(union a b)` and `(diff a b)` are re-used from the previous assignment. 
+
+The fuction is used as follows:
+
+    (fv '((lambda (x) (lambda (y) (+ x y))) y))
+    ;Value: (+ y)
+
+## Part 2
+
+> Show that the and, or, and not functions using the lambda calculus in then
+> lecture on lambda calculus are correct by showing that the correct result is
+> obtained for all combinations of the inputs.
+
+In `2.scm` this is shown. All the functions are correct for all combinations of
+input.
+
+## Part 3
+
+> Using beta-reduction show that (succ two) is three, where two and three are
+> the Church encodings the the numbers 2 and 3 (see the scheme code for Church
+> numbers in the lecture on lambda calculus.
+
+In `3.scm`, I have the Church encoding of the number 2 as:
+
+    (define (two f)
+      (lambda (x)
+        (f (f x))))
+
+While the Church encoding of the number 3 is:
+
+    (define (three f)
+      (lambda (x)
+        (f (f (f x)))))
+
+The successor function is: 
+
+    (define (succ n)
+      (lambda (f)
+        (lambda (x)
+          (f ((n f) x)))))
+
+The evaluation of `(succ two)` is essentially:
+
+    (lambda (f)
+      (lambda (x)
+        (f ((
+          (lambda (x)
+            (f (f x)))
+        f) x))))
+
+Using beta-reduction, this becomes:
+
+    (lambda (f)
+      (lambda (x)
+        (f (f (f x)))))))
+
+Which is the same as the Church encoding of the number 3.
+
+> Use induction to prove that ((cn add1) 0) = the number n, where cn is the
+> Church encoding of n. You may assume that add1 correctly adds 1 to its input.
+
+The base case is that `n=0`. In this case, the above statement becomes:
+
+    ((zero add1) 0)
+    ;Value: 0
+
+This is the same as:
+
+    (((lambda (f) (lambda (x) x)) (lambda (x) (+ x 1))) 0)
+    ;Value: 0
+
+Which becomes:
+
+    ((lambda (x) x) 0)
+    ;Value: 0
+
+The inductive step is to consider `cn` when `n=1`:
+
+    (((lambda (f) (lambda (x) (f x))) (lambda (x) (+ x 1))) 0)
+    ;Value: 1
+
+Which becomes:
+
+    ((lambda (x) (+ x 1)) 0)
+    ;Value: 1
+
+From here, we know that `((cn add1) 0) = n`.
+
+## Part 4
+
+> Trace through the expansion (use beta reduction) of (g (Y g) 3) using the
+> functions g and Y in the lecture on lambda calculus.
+
+This should become:
+
+    (* 3 (* 2 (* 1 1)))
+    ;Value: 6
+
+> Try implementing g and Y and computing (g (Y g) 3) in scheme. What happens
+> and why? 
+
+I implemented `g` and `Y` in `4.scm`. The result is as follows:
+
+    (g (Y g) 3)
+    ;Aborting!: maximum recursion depth exceeded
+
+In the example, the application of `g` repeats indefinitely because the Scheme
+evaluator is a strict interpreter and is not lazy. That is, is attempting to
+evaluate the expansion of `g` produces an infinite call sequence of:
+
+    (g (g (g (g .... (Y g) .... n) n) n) n)
+
+> Try this again using the normal order scheme interpreter in Section 4.2.2 of
+> SICP.
+
+I was unable to get this to work in the SCIP interpreter, but since the
+interpreter is supposed to be a lazy-evaluator, it should work as intended.
+
+## Part 5
+
+> Implement a scheme function that performs a beta reduction.
+
+In `5.scm` I provide the function `(reduce exp)`. The function is used as
+follows:
+
+    (reduce '((lambda (x) ((lambda (y) ((lambda (z) (+ x y)) 1)) 2)) 3))
+    ;Value: (lambda (y) (lambda (z)(+ 3 y)) 1) 2)

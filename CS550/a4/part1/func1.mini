@@ -1,0 +1,15 @@
+define not proc (x)
+  if x then
+    return := 0
+  else
+    return := 1
+  fi
+end;
+
+define len proc (x)
+  return := 0;
+  while not(nullp(x)) do
+      x := cdr(x);
+      return := return + 1
+  od
+end;

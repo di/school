@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\title{CS 521: Data Structures and Algorithms I \\ Homework 4}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\begin{enumerate}
+\item \textbf{Solution:}
+Given a weighted, directed graph $G=(V,E)$ with no negative-weight cycles, $m+1$ would also represent the number of iterations of the Bellman-Ford algorithm, as this would mean that some shortest path from $s$ to any vertex $v$ has already been found, and any subsequent iterations would not modify the current paths. The \textsc{Relax} function can be modified to report changes as follows:
+\begin{algorithm}[H]
+\floatname{algorithm}{\normalfont\textsc{Relax}$(u, v, w)$}
+\caption{}
+\begin{algorithmic}
+\IF{$v.d > u.d + w(u,v)$}
+    \STATE $v.d = u.d + w(u,v)$
+    \STATE $v.\pi = u$
+    \RETURN \textsc{true}
+\ENDIF
+\RETURN \textsc{false}
+\end{algorithmic}
+\end{algorithm}
+Therefore, modifying the Bellman-Ford algorithm as follows to terminate after an iteration where no edges were relaxed would terminate the algorithm after $m$ total iterations.
+\begin{algorithm}[H]
+\floatname{algorithm}{\normalfont\textsc{Bellman-Ford}$(G, w, s)$}
+\caption{}
+\begin{algorithmic}
+\STATE \textsc{Initialize-Single-Source}$(G,s)$
+\FOR{each edge $(u,v) \in G.E$}
+    \IF{\textsc{Relax}$(u,v,w) == $ \textsc{false}}
+        \STATE \textsc{Break} 
+    \ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\item \textbf{Solution:} 
+For a graph which has a negative-weight cycle, we can run the Bellman-Ford algorithm once to produce the ``distance'' values and parent values for each node in the graph. \\
+If we were to run the Bellman-Ford algorithm again on the graph, with the $v.d$ and $v.\pi$ values set from the previous iteration (instead of being re-initialized), these values would not change. However, if there is some negative-weight cycle in the graph, some vertex's $v.d$ and $v.\pi$ will change.\\
+Once this is detected (by a successful call to \textsc{Relax}, which makes a change to these values), we can travel back through the negative-weight cycle from $v$ to $v.\pi$, etc., until we return to $v$, at which point we have listed all the vertices in the cycle.\\
+The complexity of this modified algorithm is bounded by running the Bellman-Ford algorithm twice, then traversing a cycle of at most $V$ vertices, for an overall runtime of $O(2(VE)+V)=O(VE)$.
+
+\item \textbf{Solution:} 
+This solution iterates over each edge $(u,v) \in G(V,E)$. Each vertex holds a variable $v.p$, which represents the number of paths to that vertex at any given moment. As each new edge is added, the number of paths to the `destination' edge increases by the number of paths to the `origin' edge, plus one (for the current edge). After the algorithm finishes, the total number of paths is the sum of all paths to each vertex. The algorithm instead maintains $total$ as it iterates over the edges; therefore the complexity is $O(E)$.
+    \begin{algorithm}[H]
+    \floatname{algorithm}{\normalfont\textsc{Total-DAG-Paths}$(G)$}
+    \caption{}
+    \begin{algorithmic}
+    \STATE $total = 0$
+    \FOR{each edge $(u,v) \in G(V,E)$}
+        \STATE $v.p$ += $u.p + 1$
+        \STATE $total$ += $u.p + 1$
+    \ENDFOR
+    \RETURN $total$
+    \end{algorithmic}
+    \end{algorithm}
+
+\item \textbf{Solution:}
+Here, we can use Dijkstra's algorithm (modified to use \textsc{Extract-Max} instead) and a modified version of \textsc{Relax} as follows:
+
+    \begin{algorithm}[H]
+    \floatname{algorithm}{\normalfont\textsc{Relax}$(u, v, r)$}
+    \caption{}
+    \begin{algorithmic}
+    \IF{$v.r < u.d \times r(u,v)$}
+        \STATE $v.r = u.r \times r(u,v)$
+        \STATE $v.\pi = u$
+    \ENDIF
+    \end{algorithmic}
+    \end{algorithm}
+
+Instead of minimizing the weight of a path (sum of weight of edges), this modified algorithm will maximize the reliability of a path (product of reliabilities of edges).
+
+\item \textbf{Solution:} 
+The solution is trivial: Instead of creating a new matrix for every iteration of the \texttt{while} loop, we keep two copies, $L^{(a)}$ and $L^{(b)}$, and use the latter to store the result of a call to \textsc{Extend-Shortest-Paths} using the former, then update it with the result.
+\begin{algorithm}[H]
+\floatname{algorithm}{\normalfont\textsc{Smaller-All-Pairs-Shortest-Paths}$(W)$}
+\caption{}
+\begin{algorithmic}
+\STATE $n = W.rows$
+\STATE $L^{(a)} = W$
+\STATE $L^{(b)} = W$
+\STATE $m=1$
+\WHILE{$m<n-1$}
+    \STATE $L^{(b)}=$ \textsc{Extend-Shortest-Paths}$(L^{(a)},L^{(a)})$
+    \STATE $L^{(a)} = L^{(b)}$
+    \STATE $m=2m$
+\ENDWHILE
+\RETURN $L^{(a)}$
+\end{algorithmic}
+\end{algorithm}
+This uses only two matrices for a space complexity of $\Theta(n^2)$.
+\item \textbf{Solution:} 
+This modification of equation (25.7) in fact reveals a third case for the assignment of $\pi_{ij}^{(k)}$, which can be interpreted as follows:
+\begin{equation*}
+\pi_{ij}^{(k)}=
+    \begin{cases}
+        \text{$\pi_{ij}^{(k-1)}$} & \text{if $d_{ij}^{(k-1)} < d_{ik}^{(k-1)} + d_{kj}^{(k-1)}$}\\
+        \text{$\pi_{kj}^{(k-1)}$} & \text{if $d_{ij}^{(k-1)} > d_{ik}^{(k-1)} + d_{kj}^{(k-1)}$}\\
+        \text{$\pi_{ij}^{(k-1)}$ \textbf{OR} $\pi_{kj}^{(k-1)}$} & \text{if $d_{ij}^{(k-1)} = d_{ik}^{(k-1)} + d_{kj}^{(k-1)}$}\\
+    \end{cases}
+\end{equation*}
+The last case simply represents the case where the existing path $i \leadsto j$ is the exact same distance as the new path $i \leadsto k \leadsto j$. In the original version of the equation, the algorithm kept the shortest path which was first found. The modified equation updates the path to use the edge $k \leadsto j$. The alternative definition of the predecessor matrix $\Pi$ is correct, but it will produce a different predecessor matrix if the third case is encountered.
+
+\item \textbf{Solution:}
+We can generate the strongly connected component graph $G^{SCC}$ from the general directed graph $G$ in $O(V+E)$ using the \textsc{Strongly-Connected-Components} algorithm. Since $G^{SCC}$ is a DAG by definition, we can then use the $f(|V|,|E|)$-time algorithm to compute $G^{+}$, the transitive closure of $G^{SCC}$ (which holds, because $G^{SCC}$ can have at most $V$ vertices and $E$ edges). Then, assuming that we have maintained knowledge of which original vertices in $G$ belong to which strongly connected component in $G^{SCC}$ (now represented by vertices in $G^{+}$), for each vertex $v$, we draw an edge between $v$ and each vertex in its strongly connected component, as well as between $v$ and each vertex in an SCC neighboring its own SCC. Since there are at most $V$ vertices and $E^{*}$ possible edges in the resulting graph, this leaves us with a running time of $f(|V|,|E|)+O(V+E^{*})$. 
+
+\item \textbf{Solution:}
+This algorithm maintains an array $S'$ as it iterates through all possible subsequences, where $S'[k]$ represents the size of the longest monotonically increasing subsequence ending at $S[k]$.
+\begin{algorithm}[H]
+\floatname{algorithm}{\normalfont\textsc{Longest-Monotonically-Increasing-Subsequence}$(S)$}
+\caption{}
+\begin{algorithmic}
+\STATE $max=0$
+\STATE $S'[0\dots (n-1)] = 0$
+\FOR{$k = 0$ \TO $(n-1)$}
+    \STATE $max'=0$
+    \FOR{$j = 0$ \TO $(k-1)$}
+        \IF{$S[k] > S[j]$}
+            \STATE $max' = $ \textsc{Max}$(max', S'[j])$
+        \ENDIF
+    \ENDFOR
+    \STATE $S'[k] = max' + 1$
+    \STATE $max = $ \textsc{Max}$(max, S'[k])$
+\ENDFOR
+\STATE $R[0\dots (max-1)] = 0$
+\FOR{$i = (n-1)$ \TO $0$}
+    \IF{$S'[i] = max$}
+        \STATE $max = max-1$
+        \STATE $R[max] = S[i]$
+    \ENDIF
+\ENDFOR
+\RETURN $R$
+\end{algorithmic}
+\end{algorithm}
+ Once $S'$ is computed, it is necessary to traverse backwards through $S'$ to fill $R$, which is the result array.
+\end{enumerate}
+\end{document}

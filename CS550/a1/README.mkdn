@@ -1,0 +1,91 @@
+# CS550 -- Assignment 1 -- Dustin Ingram
+
+## Part 1
+
+The `be`, or "boolean-evaluator" procedure is provided. This procedure can be
+used in the following fashion (NOTE: the environment style): 
+
+    (be '(and a b) '((a #t) (b #t)))
+    ;Value: #t
+
+This procedure provides an interpreter for the following syntax:
+
+  * <boolexp> -> #t | #f [boolean constants]
+  * <boolexp> -> variable [boolean variables]
+  * <boolexp> -> (and boolexp ... boolexp)
+  * <boolexp> -> (or boolexp ... boolexp)
+  * <boolexp> -> (not boolexp)
+  * <boolexp> -> (implies boolexp boolexp) [P => Q, where P is the first
+    argument and Q is the second argument]
+  * <boolexp> -> (equiv boolexp boolexp)
+
+This includes support for transformation of non-binary operators.
+
+## Part 2
+
+Building on the procedures provided in Part 1, in Part 2 the `prove?` or
+"tautology prover" procedure is provided. This procedure can be used in the
+following fashion: 
+
+    (prove? '(or a (not a)))
+    ;Value: #t
+
+This includes support for transformation of non-binary operators.
+
+## Part 3
+
+The modified SICP interpreter for this part is `ch4-mceval-part3.scm`. The diff
+is too large to include in this README, however below is the modifications
+necessary to support the missing primitives 
+
+    307a406,408
+    >         (list '= =)
+    >         (list '* *)
+    >         (list '- -)
+
+The full trace is provided in `trace.txt` This file gives a trace of every
+(relatively important) function called within the SICP interpreter, along with
+it's arguments. 
+
+In the definition of the function, the evaluation of the `define` determines
+that it is a procedure definition, and calls eval-definition on it. This in turn
+makes fact into a lambda expression, and evaluates that expression. 
+
+The actual call to fact has a much longer trace due to the recursive nature of
+fact. 
+
+## Part 4
+
+The modified SICP interpreter for this part is `ch4-mceval-part4.scm`. The diff
+is as follows:
+
+    $ diff ch4-mceval.scm ch4-mceval-part4.scm 
+    35c35
+    <                 (list-of-values (operands exp) env)))
+    ---
+    >                 (list-of-values (operands exp) env) env))
+    39c39
+    < (define (apply procedure arguments)
+    ---
+    > (define (apply procedure arguments env)
+    48c48
+    <              (procedure-environment procedure))))
+    ---
+    >              env)))
+
+This essentially switches to dynamic scope by calling apply with the context of
+the environment
+
+An exampe where the same code will provide two different answers depending on
+the scoping used:
+
+    (define (make-adder x) (lambda (y) (+ x y)))
+    (define add1 (make-adder 1))
+    (define x 2)
+    (add1 2)
+
+This was an example previously used in class. The reason this produces two
+different answers is that in a static scope, the definition of the variable `x`
+does not have any meaning within the lambda expression, and thus the answer is
+`3`. However, with dynamic scope, this definition has an effect on the `x`
+variable within the lambda expression, and thus the result is `4`.

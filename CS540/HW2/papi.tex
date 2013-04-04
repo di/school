@@ -1,0 +1,139 @@
+\documentclass{article}
+\usepackage{tikz,amsmath,siunitx}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows,snakes,backgrounds,patterns,matrix,shapes,fit,calc,shadows,plotmarks}
+\usepackage[graphics,tightpage,active]{preview}
+\PreviewEnvironment{tikzpicture}
+\PreviewEnvironment{equation}
+\PreviewEnvironment{equation*}
+\newlength{\imagewidth}
+\newlength{\imagescale}
+\pagestyle{empty}
+\thispagestyle{empty}
+\begin{document}
+\pgfplotsset{width=20cm,compat=1.4}
+\begin{tikzpicture}
+\begin{axis}[
+xlabel=Array Size,
+ylabel=Cycles,
+legend pos=north west,
+title=GCC 4.4.5 Optimization Comparisons]
+\legend{gcc -O0, gcc -O1, gcc -O2, gcc -O3, gcc -Os}
+\addplot[color=red,mark=+] coordinates {
+    (   0   ,   318 )
+    (   50  ,   3812    )
+    (   100 ,   7050    )
+    (   150 ,   10500   )
+    (   200 ,   13896   )
+    (   250 ,   17472   )
+    (   300 ,   20964   )
+    (   350 ,   24451   )
+    (   400 ,   27936   )
+    (   450 ,   31428   )
+    (   500 ,   34915   )
+    (   550 ,   38431   )
+    (   600 ,   41919   )
+    (   650 ,   45405   )
+    (   700 ,   48897   )
+    (   750 ,   52384   )
+    (   800 ,   55869   )
+    (   850 ,   59360   )
+    (   900 ,   62847   )
+    (   950 ,   66334   )
+    (   1000    ,   69820   )
+  };
+\addplot[color=blue,mark=x] coordinates {
+(   0   ,   306 )
+(   50  ,   688 )
+(   100 ,   982 )
+(   150 ,   1200    )
+(   200 ,   1432    )
+(   250 ,   1732    )
+(   300 ,   2032    )
+(   350 ,   2400    )
+(   400 ,   2630    )
+(   450 ,   2932    )
+(   500 ,   3230    )
+(   550 ,   3558    )
+(   600 ,   3832    )
+(   650 ,   4132    )
+(   700 ,   4432    )
+(   750 ,   4732    )
+(   800 ,   5031    )
+(   850 ,   5332    )
+(   900 ,   5631    )
+(   950 ,   5931    )
+(   1000    ,   6231    )
+};
+\addplot[color=green,mark=asterisk] coordinates {
+(   0   ,   751 )
+(   50  ,   622 )
+(   100 ,   1245    )
+(   150 ,   1329    )
+(   200 ,   1569    )
+(   250 ,   1767    )
+(   300 ,   2012    )
+(   350 ,   2314    )
+(   400 ,   2646    )
+(   450 ,   2914    )
+(   500 ,   3212    )
+(   550 ,   3514    )
+(   600 ,   3840    )
+(   650 ,   4114    )
+(   700 ,   4413    )
+(   750 ,   4713    )
+(   800 ,   5034    )
+(   850 ,   5325    )
+(   900 ,   5613    )
+(   950 ,   5914    )
+(   1000    ,   6213    )
+};
+\addplot[color=purple,mark=star] coordinates {
+(   0   ,   754 )
+(   50  ,   642 )
+(   100 ,   883 )
+(   150 ,   938 )
+(   200 ,   1178    )
+(   250 ,   1420    )
+(   300 ,   1658    )
+(   350 ,   2010    )
+(   400 ,   2139    )
+(   450 ,   2379    )
+(   500 ,   2620    )
+(   550 ,   2911    )
+(   600 ,   3100    )
+(   650 ,   3340    )
+(   700 ,   3578    )
+(   750 ,   3819    )
+(   800 ,   4086    )
+(   850 ,   4299    )
+(   900 ,   4539    )
+(   950 ,   4778    )
+(   1000    ,   5020    )
+};
+\addplot[color=pink,mark=triangle] coordinates {
+(   0   ,   285 )
+(   50  ,   741 )
+(   100 ,   1170    )
+(   150 ,   1842    )
+(   200 ,   2220    )
+(   250 ,   2599    )
+(   300 ,   3079    )
+(   350 ,   3552    )
+(   400 ,   4032    )
+(   450 ,   4509    )
+(   500 ,   4986    )
+(   550 ,   5467    )
+(   600 ,   5940    )
+(   650 ,   6420    )
+(   700 ,   6895    )
+(   750 ,   7374    )
+(   800 ,   7848    )
+(   850 ,   8328    )
+(   900 ,   8802    )
+(   950 ,   9281    )
+(   1000    ,   9758    )
+};
+\end{axis}
+\end{tikzpicture}
+\end{document}

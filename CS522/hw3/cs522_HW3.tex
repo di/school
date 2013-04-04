@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usepackage{mathrsfs}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\usetikzlibrary{arrows}
+\title{CS 522: Data Structures and Algorithms II \\ Homework 3}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item \textbf{Solution:}
+    First, consider $p_1$. The equation for the line that runs through this
+    point and the origin would be:
+    $$ y = \frac{y_1}{x_1}x $$
+    Or,
+    $$ 0 = x_1y-xy_1 $$
+    Next, consider $p_2$. Any pair of coordinates $(x_2, y_2)$ which satisfy the
+    previous equation would be on the line through $p_1$ and $(0,0)$ and thus
+    would be neither clockwise nor counter-clockwise from $p_1$. There are two
+    other cases:
+    \begin{enumerate}
+        \item{$x_1y_2-x_2y_1 > 0$}
+        \item{$x_1y_2-x_2y_1 < 0$}
+    \end{enumerate}
+    We determine the orientation of $p_2$ using two additional points on the
+    line:
+    \begin{align*}
+        (x_3, y_3) &= (x_2, \frac{y_1}{x_1}x_2) & (x_4, y_4) &= (\frac{x_1}{y_1}y_2, y_2)
+    \intertext{The point $p_2$ will be clockwise from $p_1$ (and thus, $p_1$
+    counter-clockwise from $p_2$) if:}
+        x_2 &> x_4                  & y_3 &> y_2\\
+        x_2 &> \frac{x_1}{y_1}y_2   & \frac{y_1}{x_1}x_2 &> y_2\\
+        x_2y_1 &> x_1y_2 & x_2y_1 &> x_1y_2\\
+        0 &> x_1y_2 - x_2y_1 & 0 &> x_1y_2 - x_2y_1
+    \end{align*}
+    We can use the same argument, in reverse, to prove counter-clockwise-ness.
+
+    \item \textbf{Solution:}
+    Given the set $S$ of points, and a point $p \in S$, we create a set of absolute
+    values of the slope of each line between $p$ and every other point in $S$,
+    and sort it. If there are two or more consecutive values, there are at least
+    two or more points in the set collinear with $p$. Creating each sorted list
+    takes $O(n\lg{n})$, which must be repeated for all $n$ points for a
+    total complexity of $O(n^2\lg{n})$.
+
+    \item \textbf{Solution:}
+    For every disk in the set of $n$ disks, we compare it to every other disk in
+    the set. Two disks intersect if the following is true:
+    $$ r_1 + r_2 \geq \sqrt{|x_1 - x_2|^2 + |y_1 - y_2|^2} $$
+    Since we only need to compare two disks once, we can reduce the complexity
+    of this algorithm from $O(n^2)$ to $O(n\lg{n})$ by only comparing the
+    current disk with those that have not been visited yet.
+
+    \item \textbf{Solution:}
+    The solution to this problem is given in it's entirety in the slides for
+    Lecture 7.
+
+    \item \textbf{Solution:}
+    Let us assume that for some point $p \in \text{CH}(Q)$, there is some other
+    point $q \not\in \text{CH}(Q)$ for which $\{p,q\}$ are the set of points
+    most distant from each other. If this is true, then $q$ must lie within
+    $\text{CH}(Q)$, and thus we can extend the line $\overline{pq}$ from $p$ through
+    $q$ to some edge in $\text{CH}(Q)$. If the point where this line intersects
+    with an edge in $\text{CH}(Q)$ is itself a vertex $\in \text{CH}(Q)$, then
+    this vertex is collinear with $p$ and $q$ and is also clearly further from
+    $p$ than $q$. Otherwise, the edge which intersects with this extended line
+    \emph{must} be drawn between two points, at least one of which must be
+    farther from $p$ than $q$. Thus, by contradiction, any two points which are
+    the farthest from each other must be vertices of $\text{CH}(Q)$.
+
+    \item \textbf{Solution:}
+    For a new point $p \in Q$, we determine whether $p$ is inside or outside the
+    existing convex hull $\text{CH}(Q)$ in $O(n)$ by comparing the polar
+    angle of $p$ and every other point $q \in \text{CH}(Q)$. If the polar angle
+    between $p$ and $q$ is either the largest or smallest between $q$ and it's
+    two neighbors, $p$ must be outside the existing $\text{CH}(Q)$, and thus
+    must be added to $\text{CH}(Q)$. Otherwise, $p$ is within $\text{CH}(Q)$ and
+    we can ignore it. If we must add $p$ to $\text{CH}(Q)$, we iterate over all
+    $q \in \text{CH}(Q)$ to determine the two points $r$ and $s$ which have the
+    largest and smallest polar coordinates with $p$. We then add $p$ to
+    $\text{CH}(Q)$, simultaneously removing any points which may exist between
+    $r$ and $s$, as these points are now within the convex hull.
+
+    \item \textbf{Solution:}
+    \begin{enumerate}
+        \item{} Here we use Jarvis' march to find the set of convex layers.
+        Jarvis' march takes $O(nh)$, where $h$ is the number of vertices of each
+        convex hull. Since each of the $i$ layers contains some subset of the
+        $n$ points of size $l_i$, we know that:
+        $$ \sum_{1}^{i}{nl_i} = n$$
+        Thus the total complexity is:
+        $$ O(nl_1 + nl_2 + \ldots + nl_i) = O(n^2) $$
+        \item{} Here we simply show a linear-time reduction between the
+        convex-layers problem and the sorting problem. Given a set of $n$ real
+        numbers, which take $\Omega(n\lg{n})$ to sort, we can produce a set of three
+        vertices which correspond to this real number, which also form a convex
+        hull:
+        $$ (n_i, 0), (-n_i, 0), (0, n_i) $$
+        Since finding the ordered set of $n$ convex hulls in this graph would be
+        analogous to ordering the set of $n$ real numbers, the reduction between
+        the two would take linear time, and the model of computation requires
+        $\Omega(n\lg{n})$ time to sort $n$ real numbers, we find that
+        $\Omega(n\lg{n})$ time is also required to compute the convex layers of
+        a set of $n$ points.
+    \end{enumerate}
+\end{enumerate}
+\end{document}

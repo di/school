@@ -1,0 +1,30 @@
+\documentclass{article}
+\title{CS 540: High Performance Computing \\ Homework 1}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\begin{enumerate}
+\item \emph{Prove that the product of an $m$ digit integer with an $n$ digit integer can have either $m+n$ or $m+n-1$ digits.}\\\\
+    As a base case, examine the range of all possible one-digit integers, $[0...9]$:\\
+    $$[0,1,2,3,...,63,72,81]$$
+    Any integer longer than one digit can be represented as $10a+b$, where $b$ is a one-digit integer. For example, $81$ would be $10*8+1$.\\\\
+    In this form, the product of two multi-digit integers would be:
+    $$(10a+b)*(10c+d) = 100ac+10(ad+bc)+bd$$
+    Ideally I would then prove that multiplying by $10*n$ would only add $n$ digits, but I'm not sure how to prove that adding would'nt increase the number of digits.
+\item \emph{Prove the master theorem. To simplify the argument, assume that $n=b^k$}.\\\\
+    We can determine an asymptotic bound on the master theorem using a recursion tree by dividing the total cost $f(n)$ a total of $a$ times for a cost of $f(n/b)$ each. Therefore, for each level of $j$ levels in the recursion tree (each time the cost is divided), we must add a cost of 
+    $$a^{j}f(n/b^{j})$$  
+    Until we reach the base cost of $\Theta(1)$ totaling
+    $$\Theta(n^{log_{b}(a)})$$
+    Resulting in a total of
+    $$T(n)=\displaystyle\sum\limits_{j=0}^{log_{b}(n-1)} a^{j}f(n/b^{j}) + \Theta(n^{log_{b}(a)})$$
+    Using the formula for geometic series, this becomes
+    $$T(n) = aT(n/b)+\Theta(n)$$
+    Where $a\ge1$ and $b>1$. 
+%%    \begin{enumerate}
+%%        \item If $a<b$ then $T(n)=\Theta(n)$
+%%        \item If $a=b$ then $T(n)=\Theta(nlog(n))$
+%%        \item If $a>b$ then $T(n)=\Theta(n^{log_{b}(a)})$
+%%    \end{enumerate}
+\end{enumerate}
+\end{document}

@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\title{CS 521: Data Structures and Algorithms I \\ Homework 5}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item \textbf{Solution:}
+    Assuming that $\textsc{Ham-Cycle} \in P$, we can propose an algorithm which either removes or adds each edge $e \in G.E$ from $G$ or an empty graph, respectively; at each iteration we can use \textsc{Ham-Cycle} to determine if the graph still contains a hamiltonian cycle and permanently accept/reject that edge as necessary. In either case, once all vertices $\in G.V$ are added, this results in a graph with a set of edges $E$ which belong to a Hamiltonian Cycle, produced in polynomial time.
+
+    \item \textbf{Solution:} 
+    If the language $\textsc{Ham-Path}=\{\langle G, u, v \rangle : $ there is a hamiltonian path from $u$ to $v$ in graph $G\}$ belongs to NP, then this means that it is possible to verify that there is a hamiltonian cycle in $G$ given some certificate $C$ in polynomial time. If $C$ is given as a graph $C(V', E')$, this is verifiable by showing that there is a simple path $P$ such that $u \leadsto v \in C(V', E')$, that this path uses all vertices $\in C.V'$ and all edges $\in C.E'$, and that $C.V' = G.V$ and $C.E' \subset G.E$, all of which can be done in polynomial time. 
+
+    \item \textbf{Solution:} 
+    To show that the $\leqslant_{p}$ relation is a transitive relation on languages, we first assume that $L_{1} \leqslant_{p} L_{2}$ and  $L_{2} \leqslant_{p} L_{3}$. Given that this is true, there must be some polynomial-time reduction function $f_{n}(l)$ which reduces $l$ such that
+    $$ \textbf{if } l \in L_{1}, \textbf{then } f_{1}(l) \in L_{2}$$
+    and
+    $$ \textbf{if } l \in L_{2}, \textbf{then } f_{2}(l) \in L_{3}$$
+    Since $f_{n}(l)$ is a polynomial-time algorithm, then $f_{n}(f_{n}(l))$ is polynomial-time as well, thus
+    $$ \textbf{if } l \in L_{1}, \textbf{then } f_{2}(f_{1}(l)) \in L_{3}$$
+    which thereby satisfies that $L_{1} \leqslant_{p} L_{3}$.
+
+    \item \textbf{Solution:} 
+    To prove that the subgraph-isomorphism problem is NP-complete, it must be shown to be a reduction of some other known NP-complete problem, in this case, the clique problem. First, we represent the subgraph-isomorphism problem as a decision problem:
+    \begin{equation*}
+        \textbf{Given inputs } G_{1}, G_{2}
+        \begin{cases}
+            \textsc{True} & \textbf{if } G_{1} \text{ is isomorphic to a subgraph of } G_{2}\\
+            \textsc{False} & \textbf{if } G_{1 } \text{ is not isomorphic to a subgraph of } G_{2}
+        \end{cases}
+    \end{equation*}
+    Next, we represent the clique problem as a decision problem as well:
+    \begin{equation*}
+        \textbf{Given inputs } G, k 
+        \begin{cases}
+            \textsc{True} & \textbf{if } \text{a complete subgraph with } k \text{ vertices} \in G\\
+            \textsc{False} & \textbf{if } \text{a complete subgraph with } k \text{ vertices} \notin G\\
+        \end{cases}
+    \end{equation*}
+    Finally, to reduce the clique problem into the subgraph-isomorphism problem, we simply let $G_{2}=G$ and let $G_{2}$ be a completely connected graph with $k$ total vertices. Since $G_{1}$ is only isomorphic to $G_{2}$ if $G_{2}$ has a clique of size $k$, this is an correct reduction from an NP-complete problem; since the reduction can be performed in polynomial time, it is clear that the subgraph-isomorphism problem is therefore NP-complete as well.
+
+    \item \textbf{Solution:} 
+    \begin{enumerate}
+        \stepcounter{enumii}
+        \item This case can be solved with a polynomial-time algorithm: after sorting the coins by value and representing them as a stack ordered from greatest to least, pop the first (largest) coin to Bonnie, then continue giving coins off the top of the stack to Clyde until he has the same amount (in which case the process is repeated) or there are no more coins (in which case it is impossible to evenly split the coins).
+        \stepcounter{enumii}
+        \item This case is clearly reducible from part (c), which is NP-complete as a reduction from the subset-sum problem. In (c), we wish to split the checks directly in half, with the maximum difference between each half being 1. In (d), the maximum difference is now 100; if we multiplied every value in (c) by 100 and solved for a maximum difference of 100, this would be analogous to the original problem statement.
+    \end{enumerate}
+\end{enumerate}
+\end{document}

@@ -1,0 +1,162 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usetikzlibrary{arrows,automata}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\title{CS 525: Theory of Computation\\ Problem Set 4}
+\author{Dustin Ingram, Aaron Rosenfeld, Eric Simon}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item[5.13] \textbf{Solution:}
+    Let $E = \{\langle M \rangle | M $ is TM with a useless state$\}$. Assume that TM $R$ decides $E$. Construct $S$ that uses $R$ to decide $E_{TM}$, thus arriving at a contradiction, as follows: \\ \\ 
+    $S = $ on input $\langle M\rangle$:
+    \begin{enumerate}
+        \item Run $R$ on $M$. If there are no useless states, then the accepting state is reachable by some input, and therefore $R$ rejects.
+        \item If there are useless states in $M$, then we must determine if the accepting state is one of them. For the set of states $Q$, create sets of states where each set represents a case where at least one non-accepting state is missing. 
+        \item For each of the sets of states created in step (a), create a machine $M_{i}$ that is identical to $M$ except that it only contains the subset of states.
+        \item Run $R$ on each machine $M_{i}$: 
+
+        \begin{enumerate}
+            \item If at least one instance of $M_{i}$ is found with no useless states, then the accepting state in this instance of $M_{i}$ is reachable. If we can reach the accepting state in $M_{i}$ then we can reach the accepting state in $M$, since $M$ has all the transitions and states that $M_{i}$ contains. $S$ will reject. 
+            \item If every instance of $M_{i}$ has a useless state, then there is no way to reach the accepting state in $M$. $L(M)$ is $\textrm{Ø}$ and therefore $S$ will accept.
+        \end{enumerate}
+    \end{enumerate}
+    $S$ decides if $L(M)$ is empty, which is a contradiction, therefore $R$ does not exist.
+
+    \item[5.14] \textbf{Solution:}
+    Let $D = \{\langle M\rangle | M $ is TM which attempts to move its head left when its head is on the left-most tape cell when run on some input $\}$. Assume that TM $R$ decides $D$. Construct $S$ that uses $R$ to decide $A_{TM}$, thus arriving at a contradiction. \\ \\
+    $S = $ on input $\langle M, w\rangle$:
+    \begin{enumerate}
+        \item Create a new machine, $M_{2}$, which is identical to $M$ but with some differences:
+        \begin{enumerate}
+            \item For every state $q_{i}$, make a state $q_{Fi}$ which moves the tape head to the left and transitions to state $q_{i}$;
+            \item Place a dot over the left-most tape cell;
+            \item For every transition that moves the tape head to the left, make a duplicate of the transition that operates on the ``dotted'' input, and which writes a dotted version of the same output, moves the tape head to the right, and then moves to state $q_{Fi}$ if the original transition moved to state $q_{i}$.
+        \end{enumerate}
+        \item $M_{2}$ will accept an input $w$ if and only if $M$ accepts $w$. The only difference is that $M_{2}$ will never move the tape head to the left from the left-most position. 
+        \item Create TM $T$ using $M_{2}$ such that: \\ \\
+        $T = $ on any input $\langle x \rangle$:
+        \begin{enumerate}
+            \item Simulate $M_{2}$ on input $w$;
+            \item If $M_{2}$ accepts $w$, move the tape head all the way to the left until it reaces the left-most position, and then attempt to move to the left again.
+        \end{enumerate}
+        \item Use $R$ to decide if $T$ ever attempts to move the tape head to the left from the left-most position. If $R$ accepts, then $M_{2}$ accepts $w$ and so $M$ accepts $w$. If $R$ rejects, then $M$ does not accept $w$.
+    \end{enumerate}
+    $S$ decides if $M$ accepts $w$, which is a contradiction, therefore $R$ does not exist.
+
+    \item[5.15] \textbf{Solution:}
+    Let $Q$ be the states of $M$ and $\Gamma$ be the tape alphabet.
+    Let $D = \{\langle M\rangle | M $ is TM which attempts to move its head left when run on some input $\}$. \\ \\
+    Simulate $M$ on input $w$:
+    \begin{enumerate}
+        \item Simulate $M$ for $|\Gamma| \cdot |Q|^{|w|}$ steps.
+        \item At each step mark the current tape position.
+        \item If the tape head ever reads a marked tape position, \textit{accept}.
+        \item If $M$ rejects or accepts the input, or the number of steps is exceeded without encountering a marked tape
+        position, \textit{reject}.
+    \end{enumerate}
+\end{enumerate}
+\end{document}
+    \item[5.9] \textbf{Solution:}
+    We create a a Turing Machine called $R$ that hypothetically decides
+    $T$. The specification of this machine is as follows:\\ \\
+    Process the input $\langle M, w \rangle$:
+    \begin{itemize}
+        \item If $M$ accepts $w$ and $w^{R}$, then accept;
+        \item If $M$ accepts $w$ but not all $w^{R}$, then reject;
+        \item If $M$ does not accept $w$, then accept. (this includes $M$ rejecting $w$, and $M$ not halting on $w$).
+    \end{itemize}
+    We use $R$ to build a TM $S$ which decides $A_{TM}$. Since $A_{TM}$ is undecidable, we arrive at a contradiction and therefore $R$ does not exist. $S$ must process input $\langle M,w \rangle$ and decide if $M$ accepts $w$, thus deciding $A_{TM}$. Therefore, $S$ is defined as follows: \\ \\
+    $S = $ on input $\langle M,w \rangle$:
+    \begin{enumerate}
+        \item Construct the following TM $M_{2}$ as such: \\ \\
+            M$_{2}$= on input $\langle x\rangle$:
+            \begin{enumerate}
+                \item If $x$ consists of a repeating sequence then find this sequence $w$ such that $w^{R} = x$ and $R\geq1$. 
+                \begin{enumerate}
+                    \item Run $M$ on $w$. If $M$ accepts $w$, then $M_{2}$ will accept $x$ (i.e, $M_{2}$ will accept $w^{R}$).
+                    \item If $M$ does not accept $w$, then $M_{2}$ will reject $x$ (i.e, $M_{2}$ will reject $w^{R}$).
+                \end{enumerate}
+                \item If $x$ does not contain a repeating sequence, then set $w = x$ and $M_{2}$ will accept $w$.
+            \end{enumerate}
+            Note that $M_{2}$ is designed to accept $w$ and $w^{R}$ if and only if $M$ accepts $w$. Otherwise, it will accept $w$ and reject $w^{R}$.
+
+        \item Run TM $R$ on input $\langle M_{2}, w \rangle$. 
+        \begin{enumerate}
+            \item If $R$ accepts, that means that $M_{2}$ accepts $w$ and $w^{R}$, and therefore $M$ accepts $w$, and so $S$ will accept; 
+            \item If $R$ rejects, then that means that $M_{2}$ accepts $w$ and rejects $w^{R}$, and therefore $M$ does not accept $w$, and so $S$ will reject.
+        \end{enumerate}
+    \end{enumerate}
+    Since $A_{TM}$ is undecidable, TM $R$ must not exist and therefore $T$ is undecidable.
+
+    \item[5.12] \textbf{Solution:}
+    Let $D = \{\langle M \rangle | M $ is single-tape TM which writes a blank symbol over a non-blank symbol when run on some input$\}$. Assume that TM $R$ decides $D$. Construct $S$ that uses $R$ to decide $A_{TM}$, thus arriving at a contradiction. \\ \\
+    $S = $ on input $\langle M, w \rangle$:
+    \begin{enumerate}
+        \item Parse the alphabet $\Gamma$ for $M$, and pick a symbol, $\Omega$, that does not appear in $\Gamma$.
+        \item Create a new machine, $M_{2}$, which is identical to $M$ but with two differences:
+        \begin{enumerate}
+            \item Replace all transitions that write a blank symbol to the tape with an equivalent transition which writes the special symbol $\Omega$. 
+            \item For any transition that has the blank symbol on the tape as an input, make a duplicate of this transition that uses $\Omega$ as input. 
+        \end{enumerate}
+        \item $M_{2}$ will accept an input $w$ if and only if $M$ accepts $w$.
+        \item Create TM $T$ using $M_{2}$ as such: \\ \\
+        $T = $ on any input $\langle x\rangle$:
+        \begin{enumerate}
+            \item Simulate $M_{2}$ on input $w$
+            \item If $M_{2}$ accepts $w$, then write a blank symbol over any non-blank symbol on the tape
+        \end{enumerate}
+        \item Use $R$ to decide if $T$ writes a blank symbol over any non-blank symbol. If so, then $M_{2}$ accepts $w$ and therefore $M$ accepts $w$.
+    \end{enumerate}
+    $S$ decides if $M$ accepts $w$, which is a contradiction, therefore $R$ does
+    not exist.
+
+    \item[5.16] \textbf{Solution:}
+     If $BB$ was computable, the halting problem could be decided.  As $BB(k)$ is the maximum number of 1s written to the tape for a $k$-state TM, it is also the maximum number of steps that can occur in a halting TM with $k$-states.  Thus, any TM taking more than $BB(k)$ steps to halt, will never halt.
+
+    \item[5.24] \textbf{Solution:}
+    It is possible to reduce $\overline{A_{TM}}$ to $J$, indicating $J$ could be used to determine if $w \in
+    \overline{A_{TM}}$, which is an undecidable problem:  to check if $w \in \overline{A_{TM}}$ simply check if $0w$ is
+    in $J$.
+
+    Similarly, it would be possible to check if $w \in \overline{A_{TM}}$ by simply checking if $0w \in \overline{J}$,
+    indicating $\overline{J}$ is also not Turing-recognizable.
+
+    \item[5.29] \textbf{Solution:}
+    The first condition requires that the property be non-trivial.  This is required as trivial properties
+    would allow all TMs in the language, or none at all.  In the first case, one could decide on the property by simply
+    accepting on all TMs.  In the second case, one could simply reject all input TMs.
+
+    The second condition requires that the property be of the language, not of the TM itself.  This is required as
+    properties of TMs are sometimes decidable.  For example, one could count how many states are in a TM, but not if any
+    of the states are useless.
+
+    \item[5.30] \textbf{Solution:}
+    To prove that each language is undecidable using Rice's theorem, we must show that the languages have
+    both properties in question 28:
+    \begin{itemize}
+        \item[b)] Let $L(M_1)=\{1011\}$ and $L(M_2)=\emptyset$.  Therefore the property is non-trivial and condition 1
+        is satisfied.  For any two TMs accepting the same language, either both accept 1011 no neither do, satisfying
+        condition 2.
+        \item[c)] Let $L(M_1)=\Sigma^*$ and $L(M_2)=\emptyset$.  Therefore the property is non-trivial and condition 1
+        is satisfied.  For any two TMs accepting the same language, either both have infinite (and equal) languages, or
+        neither have infinite (and equal) languages, satisfying condition 2.
+    \end{itemize}
+
+    \item[5.31] \textbf{Solution:}
+    Let $M_a$ be a TM that runs $f(x)$ iteratively and accepts if it encounters a 1.  Clearly this machine
+    may never terminate if there is an $x$ for which a 1 is never encountered.  Instead, let $M^{'}_a$ use $H$ to
+    determine if $M_a$ accepts $x$ which will terminate.
+
+    Next, let $M_b$ be a TM that ignores its input and iterates $x=1 ... \infty$ and uses $M^{'}_a$ to determine if $x$
+    terminates in a 1.  However, this machine may also never terminate.  Instead, use $H$ to determine if $M_b$ accepts
+    an arbitrary input.
+

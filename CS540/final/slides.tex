@@ -5,14 +5,14 @@
 \usepackage{beamerthemeshadow}
 \usepackage{graphicx}
 \usepackage{graphics}
-\usepackage{pgf}
-\usepackage{tikz, ifthen}
+\usepackage{pgf,pgfplots}
+\usepackage{listings}
+\usepackage{tikz, amsmath, siunitx, ifthen}
 %\usepackage{scalefnt}
 \usepgfmodule{shapes}
 \usepgfmodule{plot}
-\usetikzlibrary{shapes,arrows,shadows,fit}
+\usetikzlibrary{arrows,snakes,backgrounds,patterns,matrix,shapes,fit,calc,shadows,plotmarks}
 \usepackage{hyperref}   % Hyperlink references and URLs
-\usetikzlibrary{arrows,automata,petri,positioning}
 \usepackage[latin1]{inputenc}
 
 %% Hack so 'backup' slides aren't reflected in total slide count
@@ -25,14 +25,12 @@
           \addtocounter{framenumber}{\value{framenumberappendix}} 
 }
 
-\title[AHOY: Slide \insertframenumber/\inserttotalframenumber]{AHOY: A Distributed, Event-Based Simulation Environment for Networked Multi-Agent Systems}
+\title[Slide \insertframenumber/\inserttotalframenumber]{CS540: Final Exam Slides}
 
-\subtitle{Overview}
+\subtitle{Experiments with the WHT Package}
 
-\author[Ingram \& Rosenfeld]{ 
-Dustin~Ingram, Aaron~Rosenfeld, William~Regli}
-%% \author[Clark, Ingram, Kolakowska, \& Rosenfeld]{ 
-%% Frank~Clark\inst{1}, Dustin~Ingram\inst{1}, Maria~Kolakowska\inst{1}, Aaron~Rosenfeld\inst{1}, William~Regli\inst{1}, Joseph~Macker\inst{2}}
+\author[Ingram]{ 
+Dustin~Ingram\\ \scriptsize{Teamates: Aaron~Rosenfeld, Tom~Wambold}}
 
 \institute{
 %    \inst{1}%
@@ -45,451 +43,912 @@ Dustin~Ingram, Aaron~Rosenfeld, William~Regli}
 
 \begin{document}
 
-\frame{\titlepage} 
+\frame % 1
+{
+    \titlepage
+} 
 
 \section{Introduction}
-\frame
+\frame % 2
 {
-    Problem: Network Simulators \& Agent Simulators are... 
+    What we did...
     \begin{itemize}
-        \item Separate entities \& applications
-        \item Difficult to coordinate
-        \item Pre-scripted or pre-computed
-        \item Complex to scale
+        \item Implemented the following versions of the WHT:
+        \begin{itemize}
+            \item Iterative;
+            \item Recursive;
+            \item Vectorized Iterative using SSE;
+            \item Vectorized Recursive using SSE;
+            \item Multithreaded Recursive using OpenMP;
+            \item Multithreaded Recursive using Pthreads;
+            \item Multithreaded Recursive using Hybrid OpenMP/Pthreads.
+        \end{itemize}
+        \item Made the following measurements using the WHT package:
+        \begin{itemize}
+            \item Iterative speed;
+            \item Recursive speed;
+            \item Best found w/ Dynamic Programming;
+            \item WHT Performance.
+        \end{itemize}
     \end{itemize}
 }
 
-\frame
-{   
-    \frametitle{Abstract}
+\frame % 3
+{
+    \frametitle{Outline}
+    \tableofcontents
+}
+
+\section{System Background}
+\begin{frame}[fragile] % 4
+    \frametitle{System Background}
+    \begin{itemize}
+        \item Platform Information 
+\lstset{basicstyle=\tiny}
+\begin{lstlisting}
+$ uname -a
+Linux float.cs.drexel.edu 2.6.35-28-generic #50-Ubuntu SMP x86_64 GNU/Linux
+\end{lstlisting}
+        \item Compiler Information
+\begin{lstlisting}
+$ gcc --version
+gcc (Ubuntu/Linaro 4.4.4-14ubuntu5) 4.4.5
+\end{lstlisting}
+        \item Options Used 
+\begin{lstlisting}
+-std=gnu99 -Wall -fopenmp -msse -msse2 -lm -lpthread -lpapi -O3
+\end{lstlisting}
+    \end{itemize}
+    
+\end{frame}
+
+\section{Experimentation}
+\subsection{Recursive vs. Iterative Implementations}
+\begin{frame}[fragile] % 5
+
+    \frametitle{Recursive and Iterative Implementations}
+\begin{columns}[l]
+\column{0.5\textwidth}
+{\tiny
+\begin{verbatim}
+void wht_iterative(double *a, int n) {
+    int m = n;
+    int N = 1;
+    for (int k = 0; k < log2(n); k++) {
+        m /= 2;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < N; j++) {
+                int i1 = i * 2 * N + j;
+                int i2 = i * 2 * N + j + N;
+                double x = a[i1];
+                double y = a[i2];
+                a[i1] = x + y;
+                a[i2] = x - y;
+            }
+        }
+        N *= 2;
+    }
+}
+
+
+
+\end{verbatim}
+}
+\column{0.5\textwidth}
+{\tiny
+\begin{verbatim}
+void wht_recursive(double *a, int n) {
+    int half = n / 2;
+
+    if (n == 2) {
+        double x = a[0];
+        double y = a[half];
+        a[0] = x + y;
+        a[half] = x - y;
+        return;
+    }
+
+    wht_recursive(a, half);
+    wht_recursive(a + half, half);
+
+    for (int i = 0; i < half; i++) {
+        double x = a[i];
+        double y = a[i + half];
+        a[i] = x + y;
+        a[i + half] = x - y;
+    }
+}
+\end{verbatim}
+}
+\end{columns}
+\end{frame}
+
+\subsubsection{Performance Summarization}
+\frame % 6
+{
+    \frametitle{Performance Summarization}
+    \pgfplotsset{
+        legend style={font=\tiny},
+        label style={font=\tiny},
+        tick label style={font=\tiny},
+    }
     \begin{center}
-        \includegraphics[scale=.25]{../common/logo.pdf}
-    \end{center}
-    \begin{tabular}{l p{8cm}}
-        \textit{Abstract:} & AHOY is a distributed, event-based simulation environment designed to test networked multi-agent systems. \\
+    \begin{tikzpicture}
+    \begin{axis}[
+    xlabel=$log_{2}(N)$,
+    ylabel=Ratio (Recursive/Iterative),
+    legend pos=north east]
+    \legend{time, instructions, MFLOPs/s, L1 DCM}
+    
+    \addplot[color=black, mark=+,dashed] coordinates {
+(   2   ,   0.3636363636    )
+(   3   ,   0.4736842105    )
+(   4   ,   0.45    )
+(   5   ,   0.45    )
+(   6   ,   0.45    )
+(   7   ,   0.4545454545    )
+(   8   ,   0.4375  )
+(   9   ,   0.6666666667    )
+(   10  ,   0.7878787879    )
+(   11  ,   0.8979591837    )
+(   12  ,   0.9390243902    )
+(   13  ,   1.0128205128    )
+(   14  ,   1.0255591054    )
+(   15  ,   0.9618208517    )
+(   16  ,   0.888315042 )
+(   17  ,   0.6097785978    )
+(   18  ,   0.7425027767    )
+(   19  ,   0.8241612014    )
+(   20  ,   0.8241660357    )
+(   21  ,   0.645618384 )
+(   22  ,   0.6112832243    )
+(   23  ,   0.6301772173    )
+(   24  ,   0.6346003775    )
+(   25  ,   0.5719929525    )
+    };
+    
+    \addplot[color=blue, mark=asterisk,dashed] coordinates {
+(   2   ,   0.2923538231    )
+(   3   ,   0.3277634961    )
+(   4   ,   0.4902962206    )
+(   5   ,   0.5751445087    )
+(   6   ,   0.6429844098    )
+(   7   ,   0.8539134662    )
+(   8   ,   0.8454401172    )
+(   9   ,   0.7961975627    )
+(   10  ,   0.8914438355    )
+(   11  ,   0.8530643711    )
+(   12  ,   0.789812713 )
+(   13  ,   0.841098044 )
+(   14  ,   0.8183169271    )
+(   15  ,   0.7680803536    )
+(   16  ,   0.7993605267    )
+(   17  ,   0.7887772692    )
+(   18  ,   0.7505525201    )
+(   19  ,   0.7698417145    )
+(   20  ,   0.7661523137    )
+(   21  ,   0.7370922023    )
+(   22  ,   0.7486048487    )
+(   23  ,   0.7485463252    )
+(   24  ,   0.72642405  )
+(   25  ,   0.732809909 )
+    };
+    
+    \addplot[color=red, mark=x,dashed] coordinates {
+(   2   ,   2.75000275  )
+(   3   ,   2.1111111991    )
+(   4   ,   2.2222221875    )
+(   5   ,   2.22222225  )
+(   6   ,   2.2222222396    )
+(   7   ,   2.1999999853    )
+(   8   ,   2.2857142813    )
+(   9   ,   1.4999999971    )
+(   10  ,   1.269230771 )
+(   11  ,   1.1136363637    )
+(   12  ,   1.0649350646    )
+(   13  ,   0.987341771 )
+(   14  ,   0.9750778813    )
+(   15  ,   1.0396946562    )
+(   16  ,   1.1257267447    )
+(   17  ,   1.6399394858    )
+(   18  ,   1.3467963099    )
+(   19  ,   1.2133548608    )
+(   20  ,   1.2133477432    )
+(   21  ,   1.5489026099    )
+(   22  ,   1.6359029003    )
+(   23  ,   1.5868552079    )
+(   24  ,   1.5757948398    )
+(   25  ,   1.7482732889    )
+    };
+    
+    \addplot[color=green, mark=star,dashed] coordinates {
+(   2   ,   0.0256410256    )
+(   3   ,   0.0243902439    )
+(   4   ,   0.0612244898    )
+(   5   ,   0.02    )
+(   6   ,   0.04    )
+(   7   ,   0.0192307692    )
+(   8   ,   0.0090909091    )
+(   9   ,   0.0519480519    )
+(   10  ,   0.0751879699    )
+(   11  ,   0.1578947368    )
+(   12  ,   0.4233463035    )
+(   13  ,   0.1589488743    )
+(   14  ,   0.2147999446    )
+(   15  ,   0.2712712551    )
+(   16  ,   0.3140754468    )
+(   17  ,   0.3574954868    )
+(   18  ,   0.3940886203    )
+(   19  ,   0.4259602969    )
+(   20  ,   0.4557936442    )
+(   21  ,   0.4828011907    )
+(   22  ,   0.5052918227    )
+(   23  ,   0.5259060656    )
+(   24  ,   0.5457262155    )
+(   25  ,   0.5637562372    )
+    };
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+}
+
+\subsubsection{Vectorized vs. Non-Vectorized Recursive Speedup}
+\frame % 7
+{
+    \frametitle{Vectorized vs. Non-Vectorized Recursive Speedup}
+    \pgfplotsset{
+        legend style={font=\tiny},
+        label style={font=\tiny},
+        tick label style={font=\tiny},
+    }
+    \begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+    xlabel=$log_{2}(N)$,
+    ylabel=Speedup,
+    legend pos=north east]
+    \legend{recursive, iterative\_sse, recursive\_sse}
+    
+    \addplot[color=black, mark=+,dashed] coordinates {
+(   2   ,   1   )
+(   3   ,   1   )
+(   4   ,   1   )
+(   5   ,   1   )
+(   6   ,   1   )
+(   7   ,   1   )
+(   8   ,   1   )
+(   9   ,   1   )
+(   10  ,   1   )
+(   11  ,   1   )
+(   12  ,   1   )
+(   13  ,   1   )
+(   14  ,   1   )
+(   15  ,   1   )
+(   16  ,   1   )
+(   17  ,   1   )
+(   18  ,   1   )
+(   19  ,   1   )
+(   20  ,   1   )
+(   21  ,   1   )
+(   22  ,   1   )
+(   23  ,   1   )
+(   24  ,   1   )
+(   25  ,   1   )
+    };
+    
+    \addplot[color=blue, mark=asterisk,dashed] coordinates {
+(   2   ,   1   )
+(   3   ,   1.125   )
+(   4   ,   1.125   )
+(   5   ,   1.125   )
+(   6   ,   1.125   )
+(   7   ,   1.25    )
+(   8   ,   1.4 )
+(   9   ,   1.5 )
+(   10  ,   1.625   )
+(   11  ,   1.8333333333    )
+(   12  ,   1.7906976744    )
+(   13  ,   1.7954545455    )
+(   14  ,   1.8033707865    )
+(   15  ,   1.4752252252    )
+(   16  ,   1.2112676056    )
+(   17  ,   1.1010549695    )
+(   18  ,   1.076489533 )
+(   19  ,   1.090417505 )
+(   20  ,   1.0585173321    )
+(   21  ,   0.7180967994    )
+(   22  ,   0.6562587423    )
+(   23  ,   0.6772912078    )
+(   24  ,   0.6785021536    )
+(   25  ,   0.6074934784    )
+    };
+    
+    \addplot[color=red, mark=x,dashed] coordinates {
+(   2   ,   1   )
+(   3   ,   1.125   )
+(   4   ,   1.125   )
+(   5   ,   1.125   )
+(   6   ,   1.125   )
+(   7   ,   1.1111111111    )
+(   8   ,   1.4 )
+(   9   ,   1.5 )
+(   10  ,   1.4444444444    )
+(   11  ,   1.5714285714    )
+(   12  ,   1.5098039216    )
+(   13  ,   1.595959596 )
+(   14  ,   1.5891089109    )
+(   15  ,   1.5558194774    )
+(   16  ,   2.2410423453    )
+(   17  ,   1.5079847909    )
+(   18  ,   1.4279102884    )
+(   19  ,   1.4490307487    )
+(   20  ,   1.4411993769    )
+(   21  ,   1.3651367049    )
+(   22  ,   1.3555377207    )
+(   23  ,   1.3457907247    )
+(   24  ,   1.2984026693    )
+(   25  ,   1.2662430531    )
+    };
+    
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+}
+
+\subsubsection{Multithreaded vs. Vectorized Recursive Speedup}
+\frame % 8
+{
+    \frametitle{Multithreaded vs. Vectorized Recursive Speedup}
+    \pgfplotsset{
+        legend style={font=\tiny},
+        label style={font=\tiny},
+        tick label style={font=\tiny},
+    }
+    \begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+    xlabel=$log_{2}(N)$,
+    ylabel=Speedup,
+    legend pos=north west]
+    \legend{recursive\_sse, recursive\_openmp, recursive\_pthread, recursive\_hybrid}
+    
+    \addplot[color=black, mark=+,dashed] coordinates {
+(   2   ,   1   )
+(   3   ,   1   )
+(   4   ,   1   )
+(   5   ,   1   )
+(   6   ,   1   )
+(   7   ,   1   )
+(   8   ,   1   )
+(   9   ,   1   )
+(   10  ,   1   )
+(   11  ,   1   )
+(   12  ,   1   )
+(   13  ,   1   )
+(   14  ,   1   )
+(   15  ,   1   )
+(   16  ,   1   )
+(   17  ,   1   )
+(   18  ,   1   )
+(   19  ,   1   )
+(   20  ,   1   )
+(   21  ,   1   )
+(   22  ,   1   )
+(   23  ,   1   )
+(   24  ,   1   )
+(   25  ,   1   )
+    };
+    
+    \addplot[color=blue, mark=asterisk,dashed] coordinates {
+(   2   ,   1   )
+(   3   ,   0.0002073775    )
+(   4   ,   0.0002079164    )
+(   5   ,   0.0002086104    )
+(   6   ,   0.0002101723    )
+(   7   ,   0.0002317318    )
+(   8   ,   0.0002622401    )
+(   9   ,   0.0003150185    )
+(   10  ,   0.0006547597    )
+(   11  ,   0.0010123287    )
+(   12  ,   0.0018979569    )
+(   13  ,   0.0037333132    )
+(   14  ,   0.0045675523    )
+(   15  ,   0.0129926241    )
+(   16  ,   0.0225015575    )
+(   17  ,   0.034025927 )
+(   18  ,   0.0906714009    )
+(   19  ,   0.1766077384    )
+(   20  ,   0.3237192416    )
+(   21  ,   0.9090792015    )
+(   22  ,   1.2256059175    )
+(   23  ,   1.4027942246    )
+(   24  ,   1.6989259777    )
+(   25  ,   3.7759975799    )
+    };
+    
+    \addplot[color=red, mark=x,dashed] coordinates {
+(   2   ,   1   )
+(   3   ,   0.0888888889    )
+(   4   ,   0.0740740741    )
+(   5   ,   0.0707964602    )
+(   6   ,   0.0677966102    )
+(   7   ,   0.0775862069    )
+(   8   ,   0.0917431193    )
+(   9   ,   0.1008403361    )
+(   10  ,   0.1525423729    )
+(   11  ,   0.2568807339    )
+(   12  ,   0.4473684211    )
+(   13  ,   0.825   )
+(   14  ,   1.4637681159    )
+(   15  ,   2.505952381 )
+(   16  ,   3.0098039216    )
+(   17  ,   4.7818181818    )
+(   18  ,   6.6563981043    )
+(   19  ,   8.3927068724    )
+(   20  ,   9.6468820436    )
+(   21  ,   10.4115044248   )
+(   22  ,   10.2500822639   )
+(   23  ,   10.3914281317   )
+(   24  ,   11.6569496918   )
+(   25  ,   12.2171028783   )
+    };
+    
+    \addplot[color=green, mark=star,dashed] coordinates {
+(   2   ,   1   )
+(   3   ,   0.0004056589    )
+(   4   ,   0.0666666667    )
+(   5   ,   0.0457142857    )
+(   6   ,   0.0701754386    )
+(   7   ,   0.0616438356    )
+(   8   ,   0.0657894737    )
+(   9   ,   0.0882352941    )
+(   10  ,   0.140625    )
+(   11  ,   0.2105263158    )
+(   12  ,   0.3333333333    )
+(   13  ,   0.6875  )
+(   14  ,   1.5074626866    )
+(   15  ,   2.5828220859    )
+(   16  ,   3.743902439 )
+(   17  ,   6.8848167539    )
+(   18  ,   12.4844444444   )
+(   19  ,   15.8726790451   )
+(   20  ,   26.5289256198   )
+(   21  ,   24.8775330396   )
+(   22  ,   22.3457675753   )
+(   23  ,   21.976729048    )
+(   24  ,   41.4647050502   )
+(   25  ,   27.7212420317   )
+    };
+    
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+}
+
+\subsubsection{Higher Radix Versions}
+\frame % 9
+{
+    \frametitle{Vectorized vs. Non-Vectorized Recursive Speedup}
+    \begin{itemize}
+        \item No different radix versions were used.
+    \end{itemize}
+}
+
+\subsection{WHT Package Experiments}
+\subsubsection{WHT Package Data}
+\frame % 10
+{
+    \frametitle{WHT Package Data - Best by Dynamic Programming}
+    {\tiny
+    \begin{tabular}{c l l}
+    $N$ & Time ($\mu$s) & Plan \\
+    \hline
+1 & 354.0 & \texttt{small[1]} \\
+2 & 357.0 & \texttt{small[2]} \\
+3 & 518.0 & \texttt{small[3]} \\
+4 & 604.0 & \texttt{small[4]} \\
+5 & 1061.0 & \texttt{small[5]} \\
+6 & 1379.0 & \texttt{split[small[3],small[3]]} \\
+7 & 2210.0 & \texttt{split[small[4],small[3]]} \\
+8 & 3647.0 & \texttt{split[small[4],small[4]]} \\
+9 & 8005.0 & \texttt{split[small[3],small[3],small[3]]} \\
+10 & 16564.0 & \texttt{split[small[4],small[3],small[3]]} \\
+11 & 34021.0 & \texttt{split[small[4],small[4],small[3]]} \\
+12 & 70951.0 & \texttt{split[small[4],small[4],small[4]]} \\
+13 & 192616.0 & \texttt{split[small[3],small[3],small[3],small[2],small[2]]} \\
+14 & 385364.0 & \texttt{split[small[3],small[3],small[3],small[3],small[2]]} \\
+15 & 769626.0 & \texttt{split[small[3],small[3],small[3],small[3],small[3]]} \\
+16 & 1855763.0 & \texttt{split[small[3],small[3],small[3],small[3],small[2],small[2]]} \\
+17 & 3715648.0 & \texttt{split[small[3],small[3],small[3],small[3],small[3],small[2]]} \\
     \end{tabular}
-}
-
-\frame
-{
-    \frametitle{Extra - Sample Architecture Flow}
-    \begin{center}
-        \includegraphics[scale=.48]{../common/demo.pdf}
-    \end{center}
-}
-
-%\frame
-%{
-%    \frametitle{Outline}
-%    \tableofcontents
-%}
-
-\subsection{Background}
-%% SVN VISUALIZATION
-\section{Development}
-\subsection{Features}
-\frame
-{
-    \frametitle{Features}
-    \begin{itemize}
-        \item Real-time simulation allows for human-in-the-loop interaction
-        \item Enable scenarios and network topologies to be easily defined
-        \item Make writing custom agents extremely simple
-        \item Visualization flexibility
-        \item Physically distributed simulation
-        \item Entirely event-driven with comprehensive Event API
-    \end{itemize}
-}
-
-\frame
-{
-    \frametitle{Event-Based Simulation}
-    \begin{itemize}
-        \item Every action or change in the simulation is an event
-        \item All events are passed over the event channel
-        \item Event channel is available to all virtual nodes, agents
-        \item Physical nodes as well, including visualizers
-        \item New events can be inserted in real-time (human-in-the-loop)
-    \end{itemize}
-}
-
-%\frame
-%{
-%    \frametitle{Primary Design Choices}
-%    \begin{itemize}
-%        \item \textbf{Distribution:}
-%        \begin{itemize}
-%            \item Physical machines
-%            \item Processes
-%            \item Threads
-%        \end{itemize}
-%        \item \textbf{Networking:} 
-%        \begin{itemize}
-%            \item Common multicast channel
-%            \item Pairwise connections (TCP, UDP)
-%            \item Delegation Daemons
-%        \end{itemize}
-%    \end{itemize}
-%}
-\subsection{Architecture}
-\frame
-{
-    \frametitle{System Architecture Diagram}
-    \begin{center}
-    \begin{figure}
-        \resizebox{0.8\textwidth}{!}{\input{../common/distribution.tikz}}
-    \end{figure}
-    \end{center}
-}
-
-
-%\section{Demo: Delaware River Scenario}
-\subsection{Scenarios}
-%\frame
-%{
-%    \frametitle{Outline}
-%    \tableofcontents
-%}
-
-\frame
-{
-    \frametitle{Scenarios}
-    Possible scenarios:
-    \begin{itemize}
-        \item Communication \& coordination of first responders
-        \item Unmanned cars in highway traffic
-        \item Load evaluation of large WiFi network
-    \end{itemize}
-    Our scenario:
-    \begin{itemize}
-        \item Threat detection and crisis avoidance on Delaware River
-    \end{itemize} 
-}
-
-\frame
-{
-    \frametitle{Delaware River Scenario}
-    \begin{itemize}
-        \item AIS data for large commercial ships
-        \item ``Markov Model'' agent
-        \item ``Threat Ship'' agent
-        \item Radar \& Sonar sensor models
-        \item ``Threat Detection'' agent
-        \item ``UAV'' agent
-        \item Camera sensor model
-        \item Chemical sensor model
-
-    \end{itemize}
-}
-
-\frame
-{
-    \frametitle{Videos}
-    \begin{itemize}
-        \item \href{http://cs.drexel.edu/~dsi23/act1.ogv}{Act I: Threat Detection, Sensor Correlation}
-        \item \href{http://cs.drexel.edu/~dsi23/act2.ogv}{Act II: Human-Agent Interaction, Threat Validation}
-        \item \href{http://cs.drexel.edu/~dsi23/act3.ogv}{Act III: Sensor Evaluation, Behavior Modification}
-    \end{itemize}
-}
-
-\section{Future Work}
-\frame
-{
-    \frametitle{Future Work}
-    Networking \& Network Models
-    \begin{itemize}
-        \item ``Routing/Router'' agent, etc.
-    \end{itemize}
-    Library of realistic Sensor \& Agent models
-    \begin{itemize}
-        \item Reusable for multiple scenarios 
-    \end{itemize}
-    Physical Models:
-    \begin{itemize}
-        \item Terrain: Land \& Water effects 
-        \item 3D Models: Nodes, ships, buildings, etc.
-    \end{itemize}
-}
-
-%% AIS Data images
-%\frame
-%{
-%    \begin{center}
-%        \includegraphics[scale=.1]{../common/testbed.jpg}
-%    \end{center}
-%}
-%\subsection{Act I}
-%\frame
-%{
-%    \frametitle{Act I: Threat Detection, Sensor Correlation}
-%    Agent uses Radar and Sonar sensors to detect threats to AIS ships:\\
-%    \begin{itemize}
-%        \item AIS ships are moving based on Markov models
-%        \item Small boats are moving up/down river
-%        \item Sonar \& Radar sensors on riverbanks
-%        \item Threat agent uses sensors to detect non-AIS boats 
-%        \item Agent alerts human operator to potential threats
-%    \end{itemize}
-%}
-%% Act 1 Video
-%\subsection{Act II}
-%\frame
-%{
-%    \frametitle{Act II: Human-Agent Interaction, Threat Validation}
-%    Human operator commands autonomous UAV agent to improve data accuracy with Camera sensor:
-%    \begin{itemize}
-%        \item Threat has been detected by threat agent 
-%        \item Human operator initiates UAV flyover of specific region
-%        \item UAV uses camera to provide more accurate position of threat
-%    \end{itemize}
-%}
-%%% Act 2 Video
-%\subsection{Act III}
-%\frame
-%{
-%    \frametitle{Act III: Sensor Evaluation, Behavior Modification}
-%    Chemical sensors detect oil spill while human operator diverts AIS ships:
-%    \begin{itemize}
-%        \item AIS tanker is destroyed by threat causing chemical spill
-%        \item Spill activates chemical sensors \& restricts shipping channel
-%        \item Human operator plans alternative route based on sensor data
-%        \item Alternative route is sent to AIS ships via radio link
-%    \end{itemize}
-%}
-%% Act 3 Video
-%\section{Demo: Predator/Prey}
-%\frame
-%{
-%    \frametitle{Outline}
-%    \tableofcontents
-%}
-%
-%\frame
-%{
-%    \frametitle{CS485/511 Robot Lab: Predator/Prey Assignment}
-%    \begin{itemize}
-%        \item Autonomous multi-agent team coordination
-%        \item Random environment, limited sensor
-%        \item Predators' shared goal: Efficient capture of Prey
-%    \end{itemize}
-%}
-%
-%\frame
-%{
-%    \frametitle{CS485/511 Robot Lab: Predator/Prey Assignment}
-%    \begin{center}
-%    \begin{tabular}{|c|c|} \hline
-%        \textbf{Agent Implementation} & \textbf{Avg. Time to Catch Prey} \\ \hline
-%        Predator 1 & 202 seconds\\ \hline
-%        Predator 2 & 145 seconds\\ \hline
-%        Predator 3 & 132 seconds\\ \hline
-%    \end{tabular}
-%    \end{center}
-%}
-%
-%\section{Conclusion}
-%\frame
-%{
-%    \frametitle{Impact}
-%    \begin{itemize}
-%        \item Research Tool
-%        \item Educational Tool
-%        \item Cost
-%        \item Time
-%    \end{itemize}
-%}
-%
-%
-%\frame
-%{
-%    \frametitle{Challenges}
-%    \begin{itemize}
-%        \item Demonstration required completing an additional project:
-%        \begin{itemize}
-%            \item Creating realistic sensor models (Radar, Sonar, Camera)
-%            \item Designing GUI \& human interface from scratch
-%            \item Creating intelligent \& functioning agents
-%        \end{itemize}
-%        \item Testing:
-%        \begin{itemize}
-%            \item Difficult to test without accompanying scenario
-%            \item Scenario may introduce additional bugs
-%            \item Code coverage is complicated across distributed systems
-%        \end{itemize}
-%    \end{itemize}
-%}
-%
-%\frame
-%{
-%    \frametitle{Originality}
-%    \begin{quote}
-%        \small 
-%        ``There is a number of platforms that facilitate the development of agent based systems [...] Looking from another perspective, the research area of network simulators is a well established one. Although these simulators provide high fidelity simulation of network properties, they are by no means agent-oriented. An integration with one of the agent enabling platforms seems to be a non trivial problem. However, there is a recently started project AHOY that aims to employ network simulators of this kind in multi-agent simulation.''
-%    \end{quote}
-%    \vspace{0.5cm}
-%    \tiny
-%    -- Michal \v{C}\'{a}p, Ji\v{r}\'{i} Vok\v{r}\'{i}nek, Anton\'{i}n Komenda: Communication- and Computation- Bounded Agents in Multi-Agent Simulations. In: Proceedings of HoloMAS, the International Conference on Industrial Applications of Holonic and Multi-Agent Systems, 2011.
-%
-%}
-
-\frame
-{
-    \frametitle{Contact \& Links}
-    \begin{tabular}{l l}
-        \textbf{Website:} & http://ahoy.googlecode.com/ \\
-        & \\
-        \textbf{Team:} & Dustin S. Ingram - \texttt{dustin@cs.drexel.edu} \\
-        & Aaron M. Rosenfeld - \texttt{ar374@cs.drexel.edu} \\
-        & \\
-        \textbf{Advisor:} & William C. Regli - \texttt{regli@cs.drexel.edu} \\
-    \end{tabular}
-    \vspace{0.75cm}
-    \begin{center}
-    \begin{tabular}{c c c c}
-    \includegraphics[scale=.28]{../common/drexel.pdf} & \includegraphics[scale=.33]{../common/nrl.png} & \includegraphics[scale=.125]{../common/acin.pdf} & \includegraphics[scale=.125]{../common/cvut.png} \\
-    \end{tabular}
-    \end{center}
-
-}
-
-%% Begin backup slides
-\backupbegin
-
-\frame
-{
-    \begin{center}
-        \includegraphics[scale=.5]{../mindmap/mindmap1.pdf}
-    \end{center}
-}
-
-\frame
-{
-    \begin{center}
-        \includegraphics[scale=.75]{../mindmap/mindmap2.pdf}
-    \end{center}
-}
-
-\frame
-{
-    \begin{center}
-        \includegraphics[scale=.55]{../mindmap/mindmap3.pdf}
-    \end{center}
-}
-
-\frame
-{
-    \frametitle{Extra - Background on Network Simulators}
-    \begin{itemize}
-        \item Application and protocol testing without physical hardware
-        \item Mimic the properties of a physical network
-        \item Network compents are virtualized (``nodes'') 
-        \item Allow multiple virtual nodes to run on one physical machine
-        \item Scale well, easy to re-configure
-        \item Cost \& time effective
-    \end{itemize}
-}
-
-\frame
-{
-    \frametitle{Extra - Background on Agents \& Agent Frameworks}
-    \begin{block}{Definition}
-    An \emph{intelligent agent} is software which observes and acts upon an environment and directs its activity towards achieving goals (Russell, Norvig).
-    \end{block}
-
-    \textbf{Agent Simulators}
-    \begin{itemize}
-        \item Used to test agent algorithms within virtual worlds
-        \item Rules define actions to be taken based on beliefs
-        \item Agent rule-sets react to sensory information in the world
-        \item Allows for large-scale simulation unfeasible in the real-world
-    \end{itemize}
-}
-
-
-\frame
-{
-    \frametitle{Extra - Alternatives}
-    \footnotesize
-    \textbf{Networks}
-    \begin{itemize}
-        \item NS2 (http://www.isi.edu/nsnam/ns)
-        \item NS3 (http://www.nsnam.org)
-        \item CORE (http://cs.itd.nrl.navy.mil/work/core)
-        \item MANE (http://cs.itd.nrl.navy.mil/work/mane)
-        \item EMANE (http://cs.itd.nrl.navy.mil/work/emane)
-        \item QualNet (http://www.scalable-networks.com/products/qualnet)
-    \end{itemize}
-
-    \textbf{Agents}
-    \begin{itemize}
-        \item AGLOBE (http://agents.felk.cvut.cz/aglobe)
-        \item AgentFly (http://agents.felk.cvut.cz/projects)
-        \item Player/Stage (http://playerstage.sourceforge.net)
-        \item JADE (http://jade.tilab.com)
-        \item NetLogo (http://ccl.northwestern.edu/netlogo)
-        \item MASON (http://www.cs.gmu.edu/~eclab/projects/mason)
-    \end{itemize}
-}
-
-\frame
-{
-    \frametitle{Extra - Radar Specifics}
-    \small
-    Given a transmit power $P_t$, antenna gain $G_t$, aperture area $A_r$, target cross-sectional area $\sigma$, propagation factor $F$, and time to receive reflected wave $t$.      Distance to closest non-occluded entity in each sweep:
-    {\footnotesize
-    \begin{align*}
-        d = \frac{t \cdot c}{2}
-    \end{align*}
-    }
-    Entity's location $\left(\phi_t, \lambda_t\right)$ can be estimated with:
-    {\footnotesize
-    \begin{align*}
-        \phi_t = sin^{-1}\left(sin\left(\phi_r\right) \cdot cos\left(d/R_{e}\right) + cos\left(\phi_r\right) \cdot sin\left(d/R_{e}\right) \cdot cos\left(\theta\right)\right) \\ 
-        \lambda_t = \lambda_t + tan^{-1}\left(sin\left(\theta\right) \cdot sin\left(d/R_{e}\right) \cdot cos\left(\phi_r\right), cos\left(d/R_{e}\right)-sin\left(\phi_r\right) \cdot sin\left(\phi_t\right)\right)
-    \end{align*}
-    }
-    An estimate of velocity is calculated by the Doppler equation:
-    {\footnotesize
-    \begin{align*}
-        \left|\vec{v_{\parallel}}\right| = -\frac{c \cdot \left(f_{recv} - f_{trans}\right)}{f_{trans}}.
-    \end{align*}
-    }
-    Further, pathloss of radio waves is incorporated. If $P_r$ falls below the sensitivity of the antenna, the target will not be detected.
-    {\footnotesize
-    \begin{align*}
-        P_r = \frac{P_t G_t A_r \sigma F^4}{\left(4 \pi\right)^4 d^4}
-    \end{align*}
     }
 }
 
-\frame
+\subsubsection{WHT Performance}
+\frame % 11
 {
-    \frametitle{Extra - Sonar Specifics}
-    \small
-    Given a sonar source transformed into cartesian coordinates $(x_s, y_s, z_s)$ and entity at $(x_e, y_e, z_e)$, the round-trip time of sound is given by:
-    \begin{align*}
-        \Delta t = \int\limits_{z_s}^{z_e}{s(z) \cdot \sqrt{1 + \left(\frac{\Delta x}{\Delta z}\right)^2} \mathrm{d}z}
-    \end{align*}
-    Signal-to-noise ratio is given by:
-    \begin{align*}
-        \frac{S}{N} = L_s - 20 \cdot log(d) + L_t - \mathcal{N}(n_\mu, n_\sigma) - 10 \cdot log(S_b)
-    \end{align*}
-    Where $L_s$ is the source level, $d$ is the distance between the sonar and an entity, $L_t$ is the target level, $\mathcal{N}$ is a normal distribution, and $S_b$ is the source bandwidth.  If the SNR falls below a certain threshold, sonar will not pick up an entity.
+    \frametitle{WHT Performance - Cycles}
+    \pgfplotsset{
+        legend style={font=\tiny},
+        label style={font=\tiny},
+        tick label style={font=\tiny},
+    }
+    \begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+    ybar,
+    bar width=1pt,
+    xlabel={Cycles ($N=16$)},
+    ylabel=Number of Algorithms (10\,000 Samples),
+]
+        \addplot coordinates{
+(   200000  ,   0   )
+(   400000  ,   0   )
+(   600000  ,   0   )
+(   800000  ,   0   )
+(   1000000 ,   0   )
+(   1200000 ,   0   )
+(   1400000 ,   0   )
+(   1600000 ,   0   )
+(   1800000 ,   0   )
+(   2000000 ,   19  )
+(   2200000 ,   38  )
+(   2400000 ,   89  )
+(   2600000 ,   150 )
+(   2800000 ,   130 )
+(   3000000 ,   188 )
+(   3200000 ,   182 )
+(   3400000 ,   171 )
+(   3600000 ,   196 )
+(   3800000 ,   148 )
+(   4000000 ,   162 )
+(   4200000 ,   162 )
+(   4400000 ,   161 )
+(   4600000 ,   158 )
+(   4800000 ,   203 )
+(   5000000 ,   239 )
+(   5200000 ,   258 )
+(   5400000 ,   253 )
+(   5600000 ,   286 )
+(   5800000 ,   266 )
+(   6000000 ,   260 )
+(   6200000 ,   241 )
+(   6400000 ,   260 )
+(   6600000 ,   227 )
+(   6800000 ,   264 )
+(   7000000 ,   222 )
+(   7200000 ,   237 )
+(   7400000 ,   242 )
+(   7600000 ,   249 )
+(   7800000 ,   257 )
+(   8000000 ,   250 )
+(   8200000 ,   242 )
+(   8400000 ,   242 )
+(   8600000 ,   197 )
+(   8800000 ,   241 )
+(   9000000 ,   218 )
+(   9200000 ,   205 )
+(   9400000 ,   172 )
+(   9600000 ,   164 )
+(   9800000 ,   136 )
+(   10000000    ,   175 )
+(   10200000    ,   154 )
+(   10400000    ,   167 )
+(   10600000    ,   138 )
+(   10800000    ,   104 )
+(   11000000    ,   123 )
+(   11200000    ,   110 )
+(   11400000    ,   105 )
+(   11600000    ,   91  )
+(   11800000    ,   90  )
+(   12000000    ,   86  )
+(   12200000    ,   74  )
+(   12400000    ,   61  )
+(   12600000    ,   56  )
+(   12800000    ,   60  )
+(   13000000    ,   54  )
+(   13200000    ,   38  )
+(   13400000    ,   40  )
+(   13600000    ,   39  )
+(   13800000    ,   28  )
+(   14000000    ,   32  )
+(   14200000    ,   24  )
+(   14400000    ,   23  )
+(   14600000    ,   21  )
+(   14800000    ,   19  )
+(   15000000    ,   16  )
+(   15200000    ,   17  )
+(   15400000    ,   12  )
+(   15600000    ,   12  )
+(   15800000    ,   8   )
+(   16000000    ,   7   )
+(   16200000    ,   6   )
+(   16400000    ,   2   )
+(   16600000    ,   7   )
+(   16800000    ,   1   )
+(   17000000    ,   1   )
+(   17200000    ,   2   )
+(   17400000    ,   1   )
+(   17600000    ,   2   )
+(   17800000    ,   2   )
+(   18000000    ,   1   )
+(   18200000    ,   2   )
+(   18400000    ,   1   )
+(   18600000    ,   1   )
+(   18800000    ,   1   )
+(   19000000    ,   1   )
+(   19200000    ,   0   )
+(   19400000    ,   0   )
+(   19600000    ,   0   )
+(   19800000    ,   0   )
+(   20000000    ,   0   )
+};
+    \end{axis}
+    \end{tikzpicture}
+    \end{center}
 }
 
-\frame
+\frame % 11
 {
-    \frametitle{Extra - Log Loss Links}
-    In the log-loss model of radio propagation, the received signal strength is given by:
-    \begin{align*}
-        P_{rx} = P_{tx} - l_0 - 10 \cdot \gamma log(\frac{d}{d_0}) + \chi
-    \end{align*}
-    Where $P_{tx}$ is the transmission power, $\gamma$ is a path loss exponent, $l_0$ the loss at a reference distance $d_0$, and $\chi$ is a flat-fading factor.
+    \frametitle{WHT Performance - Instructions}
+    \pgfplotsset{
+        legend style={font=\tiny},
+        label style={font=\tiny},
+        tick label style={font=\tiny},
+    }
+    \begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+    ybar,
+    bar width=1pt,
+    xlabel={Instructions ($N=16$)},
+    ylabel=Number of Algorithms (10000 Samples),
+]
+        \addplot coordinates{
+(   300000  ,   0   )
+(   600000  ,   0   )
+(   900000  ,   0   )
+(   1200000 ,   0   )
+(   1500000 ,   0   )
+(   1800000 ,   0   )
+(   2100000 ,   0   )
+(   2400000 ,   0   )
+(   2700000 ,   0   )
+(   3000000 ,   0   )
+(   3300000 ,   0   )
+(   3600000 ,   0   )
+(   3900000 ,   16  )
+(   4200000 ,   14  )
+(   4500000 ,   60  )
+(   4800000 ,   40  )
+(   5100000 ,   79  )
+(   5400000 ,   110 )
+(   5700000 ,   123 )
+(   6000000 ,   141 )
+(   6300000 ,   147 )
+(   6600000 ,   187 )
+(   6900000 ,   173 )
+(   7200000 ,   167 )
+(   7500000 ,   201 )
+(   7800000 ,   183 )
+(   8100000 ,   199 )
+(   8400000 ,   235 )
+(   8700000 ,   241 )
+(   9000000 ,   271 )
+(   9300000 ,   263 )
+(   9600000 ,   266 )
+(   9900000 ,   286 )
+(   10200000    ,   304 )
+(   10500000    ,   274 )
+(   10800000    ,   271 )
+(   11100000    ,   306 )
+(   11400000    ,   311 )
+(   11700000    ,   272 )
+(   12000000    ,   292 )
+(   12300000    ,   274 )
+(   12600000    ,   282 )
+(   12900000    ,   274 )
+(   13200000    ,   249 )
+(   13500000    ,   250 )
+(   13800000    ,   272 )
+(   14100000    ,   229 )
+(   14400000    ,   260 )
+(   14700000    ,   227 )
+(   15000000    ,   211 )
+(   15300000    ,   194 )
+(   15600000    ,   181 )
+(   15900000    ,   166 )
+(   16200000    ,   144 )
+(   16500000    ,   148 )
+(   16800000    ,   119 )
+(   17100000    ,   121 )
+(   17400000    ,   113 )
+(   17700000    ,   124 )
+(   18000000    ,   90  )
+(   18300000    ,   99  )
+(   18600000    ,   78  )
+(   18900000    ,   63  )
+(   19200000    ,   45  )
+(   19500000    ,   56  )
+(   19800000    ,   48  )
+(   20100000    ,   35  )
+(   20400000    ,   27  )
+(   20700000    ,   36  )
+(   21000000    ,   28  )
+(   21300000    ,   27  )
+(   21600000    ,   19  )
+(   21900000    ,   20  )
+(   22200000    ,   10  )
+(   22500000    ,   7   )
+(   22800000    ,   13  )
+(   23100000    ,   6   )
+(   23400000    ,   7   )
+(   23700000    ,   4   )
+(   24000000    ,   3   )
+(   24300000    ,   2   )
+(   24600000    ,   2   )
+(   24900000    ,   0   )
+(   25200000    ,   0   )
+(   25500000    ,   2   )
+(   25800000    ,   1   )
+(   26100000    ,   1   )
+(   26400000    ,   0   )
+(   26700000    ,   1   )
+(   27000000    ,   0   )
+(   27300000    ,   0   )
+(   27600000    ,   0   )
+(   27900000    ,   0   )
+(   28200000    ,   0   )
+(   28500000    ,   0   )
+(   28800000    ,   0   )
+(   29100000    ,   0   )
+(   29400000    ,   0   )
+(   29700000    ,   0   )
+(   30000000    ,   0   )
+        };
+    \end{axis}
+    \end{tikzpicture}
+    \end{center}
 
-    If $P_{rx}$ falls below a threshold, the interface will not receive the data.
 }
 
-%% End backup slides
-\backupend
+\frame % 11
+{
+    \frametitle{WHT Performance - L1 DCM}
+    \pgfplotsset{
+        legend style={font=\tiny},
+        label style={font=\tiny},
+        tick label style={font=\tiny},
+    }
+    \begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+    ybar,
+    bar width=1pt,
+    xlabel={L1 DCM ($N=16$)},
+    ylabel=Number of Algorithms (10\,000 Samples),
+]
+        \addplot coordinates{
+(   7000    ,   0   )
+(   14000   ,   0   )
+(   21000   ,   0   )
+(   28000   ,   0   )
+(   35000   ,   473 )
+(   42000   ,   1148    )
+(   49000   ,   1161    )
+(   56000   ,   1171    )
+(   63000   ,   714 )
+(   70000   ,   303 )
+(   77000   ,   193 )
+(   84000   ,   214 )
+(   91000   ,   308 )
+(   98000   ,   274 )
+(   105000  ,   240 )
+(   112000  ,   255 )
+(   119000  ,   130 )
+(   126000  ,   69  )
+(   133000  ,   30  )
+(   140000  ,   11  )
+(   147000  ,   17  )
+(   154000  ,   107 )
+(   161000  ,   175 )
+(   168000  ,   145 )
+(   175000  ,   77  )
+(   182000  ,   58  )
+(   189000  ,   53  )
+(   196000  ,   17  )
+(   203000  ,   14  )
+(   210000  ,   32  )
+(   217000  ,   64  )
+(   224000  ,   141 )
+(   231000  ,   160 )
+(   238000  ,   145 )
+(   245000  ,   104 )
+(   252000  ,   83  )
+(   259000  ,   71  )
+(   266000  ,   56  )
+(   273000  ,   53  )
+(   280000  ,   81  )
+(   287000  ,   139 )
+(   294000  ,   162 )
+(   301000  ,   144 )
+(   308000  ,   122 )
+(   315000  ,   88  )
+(   322000  ,   53  )
+(   329000  ,   34  )
+(   336000  ,   44  )
+(   343000  ,   32  )
+(   350000  ,   93  )
+(   357000  ,   120 )
+(   364000  ,   93  )
+(   371000  ,   61  )
+(   378000  ,   41  )
+(   385000  ,   23  )
+(   392000  ,   22  )
+(   399000  ,   15  )
+(   406000  ,   29  )
+(   413000  ,   39  )
+(   420000  ,   48  )
+(   427000  ,   63  )
+(   434000  ,   26  )
+(   441000  ,   25  )
+(   448000  ,   16  )
+(   455000  ,   8   )
+(   462000  ,   6   )
+(   469000  ,   7   )
+(   476000  ,   10  )
+(   483000  ,   10  )
+(   490000  ,   9   )
+(   497000  ,   5   )
+(   504000  ,   9   )
+(   511000  ,   7   )
+(   518000  ,   2   )
+(   525000  ,   3   )
+(   532000  ,   5   )
+(   539000  ,   4   )
+(   546000  ,   12  )
+(   553000  ,   4   )
+(   560000  ,   2   )
+(   567000  ,   1   )
+(   574000  ,   0   )
+(   581000  ,   0   )
+(   588000  ,   2   )
+(   595000  ,   1   )
+(   602000  ,   2   )
+(   609000  ,   3   )
+(   616000  ,   1   )
+(   623000  ,   1   )
+(   630000  ,   1   )
+(   637000  ,   0   )
+(   644000  ,   2   )
+(   651000  ,   1   )
+(   658000  ,   2   )
+(   665000  ,   0   )
+(   672000  ,   0   )
+(   679000  ,   0   )
+(   686000  ,   0   )
+(   693000  ,   1   )
+(   700000  ,   0   )
+        };
+    \end{axis}
+    \end{tikzpicture}
+    \end{center}
+
+}
+\section{Conclusion}
+\frame % 12
+{
+    \frametitle{Conclusion}
+    \begin{itemize}
+        \item We see significant improvements with the recursive WHT algorithm over the iterative version;
+        \item Vectorization of the algorithm will improve speed, but for a large length, this only works for the vectorized recursive version;
+        \item Adding multithreading to the algorithm significantly improves the speed, by up to a factor of 40;
+        \item A hybrid openmp/Pthreads algorithm provided the fastest speedup;
+        \item Examining random WHT package performance via a histogram reveals trends in the cycles, instruction count, and L1 DCM for the processor.
+    \end{itemize}
+}
 
 \end{document}

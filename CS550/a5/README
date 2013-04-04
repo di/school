@@ -1,0 +1,36 @@
+# CS 550 - Programming Languages
+
+Group 5
+* Tej Gill
+* Dustin Ingram
+* Kevin Martins
+* Aaron Rosenfeld
+
+# Assignment 5 - Mini Language Compiler (version 1) 
+
+The makefile contains the following targets
+    all         - does nothing
+    view        - display all source code
+    compile     - builds the parser 
+    view-trans  - display symbolic RAL program 
+    view-link   - display compiled RAL program 
+    view-op     - display compiled, optimized RAL program 
+    run         - run the unoptimized RAL program
+    run-op      - run the optimized RAL program
+    clean       - clean intermediate and resulting files
+
+The mini language interpreter reads code out of standard input. To execute, run:
+
+    python interpreterext.py
+
+Then type in a mini language program and press ctrl+D when complete.
+
+Alternatively, the code can be passed to the program by redirecting a file to
+standard input. Enter the mini language code into a file, say `foo.mini`, and
+run:
+
+    python interpreterext.py < foo.mini
+
+To enable optimization:
+
+    python interpreterext.py -O < foo.mini

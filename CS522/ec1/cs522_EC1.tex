@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usepackage{mathrsfs}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\usetikzlibrary{arrows}
+\title{CS 522: Data Structures and Algorithms II \\ Extra Credit 1}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item \textbf{17-1 Solution:}
+    \begin{enumerate}
+        \item The bit-reversal permutation algorithm:
+        \begin{algorithm}[H]
+        \begin{algorithmic}
+        \floatname{algorithm}{Bit-Reversal-Permutation($A$)}
+        \caption{}
+        \FOR{$i \in 0\ldots n-1$}
+        \IF{$rev_k(i) > i$}
+        \STATE $swap(A[i], A[rev_{k}(i)]$
+        \ENDIF
+        \ENDFOR
+        \end{algorithmic}
+        \end{algorithm}
+        \item This is nearly identical to a binary counter. The
+        \textsc{Bit-Reversed-Increment} procedure simply flips every bit that is
+        zero to a one and vice versa. The amortized analysis is the same and
+        allows for the bit-reversal permutation of an $n$-element array in
+        $O(n)$ time.
+        \item Yes, it is possible, and is again similar to the binary counter.
+        We would use the accounting method to make every shift ``pay forward''
+        for a future, larger shift.
+    \end{enumerate}
+    \item \textbf{26-3 Solution:}
+        \begin{enumerate}
+            \item Because the cut $(S,T)$ is a finite capacity cut, only edges
+            of the form $s\rightarrow A_{i}$ and $J_{i}\rightarrow t$ cross the
+            cut, and since none of these edges can be infinite (a job cannot
+            have infinite revenue or infinite cost), then if $J_{i}\in T$ then
+            $A_{k}\in T$ for each $A_{k}\in R_{i}$.  \item The maximum net
+            revenue, where $c_{G}$ is the capacity of the minimum cut of $G$ and
+            corresponds to the cost per expert, is: $$
+            \left(\sum_{i=1}^{m}{p_i}\right) - c_{G}$$ \item We will use a
+            \textsc{Max-Flow} algorithm to find the maximum flow of the
+            described flow network $G$. For every edge $(s, A_{i})$ which the
+            algorithm selects, we hire expert $A_i$ and for every edge $(J_{i},
+            t)$ which the algorithm selects, we accept job $J_i$. If we use the
+            optimal max-flow algorithm, the complexity is $O(E\cdot f)$, where
+            $E$ is the number of edges, and $f$ is the max flow. In this case,
+            the maximum number of edges is:
+            $$ E = m + mn + n $$
+            Here, $f=r$. Thus the complexity of this algorithm is:
+            $$ O(mnr) $$
+        \end{enumerate}
+    \end{enumerate}
+\end{document}

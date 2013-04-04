@@ -247,15 +247,13 @@ for (i=1;i<m1;i+=NB)
                         // Hand-unrolled micro-MMM kij loop
                         // MU=NU=2, KU=1
                         a0 = A[ii][kk];
-                        a2 = A[ii][kk+1];
-                        a4 = A[ii][kk+2];
-                        a6 = A[ii][kk+3];
-
                         a1 = A[ii+1][kk];
+                        a2 = A[ii][kk+1];
                         a3 = A[ii+1][kk+1];
+                        a4 = A[ii][kk+2];
                         a5 = A[ii+1][kk+2];
+                        a6 = A[ii][kk+3];
                         a7 = A[ii+1][kk+3];
-
                         b0 = B[kk][jj];
                         b1 = B[kk][jj+1];
                         b2 = B[kk+1][jj];

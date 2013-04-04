@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usetikzlibrary{arrows,automata}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\renewcommand*{\thefootnote}{[\arabic{footnote}]}
+\title{CS 525: Theory of Computation\\ Midterm 2}
+\author{Dustin Ingram}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item \textbf{Solution:}
+    \begin{enumerate}
+        \item To show that the set of nodes in $T$ is countable, we must show that there is a one-to-one, onto function $f$ for which $f(A)=B$ if:
+        \begin{align*}
+            A &= \text{the set of natural numbers } \{1,2,3,\dots\} \\
+            B &= \text{the set of nodes} \in T
+        \end{align*}
+        For the nodes in $T$, this function is simply $f(n) = n$.
+        \item Here, we let $S$ represent the infinite list of all paths from the root, and thus let each $s_{1}$, $s_{2}$, $s_{3}$, etc. represent each unique path. Because any path can be represented as a unique sequence of `directions' at each node, each path is equivalent to a series of `lefts' and `rights', since every node in $T$ has exactly two children. Therefore, if we let `left'$=0$ and `right'$=1$, each $s_{n}$ can be represented as a series of $0$'s and $1$'s. \\
+        Based on the diagonalization argument, this also means that, for any given set $S'$, it is possible to construct a sequence $s_{OPP}$ from the `diagonalization' of $S$ such that $s_{0,n} = opposite(s_{n,n})$. This sequence $s_{OPP}$ is therefore not contained in $S$, but a valid sub-seqence of $S$. Therefore, $S$ is uncountable.
+    \end{enumerate}
+    \item \textbf{Solution:}
+    To test if a DFA $A$ has no useless states, for every state $q_{n} \in A$, we create a new DFA $A_{n}$ which has the same states and transitions as $A$, except $q_{n}$ is the only accepting state. Then, if for any $A_{n}$, $L(A_{n}) = \emptyset$, reject (because $q_{n}$ is a useless state); otherwise, accept. 
+    \item \textbf{Solution:}
+    If we assume that TM $M$ decides $L_{3}$, then we can construct TM $N$ such that it decides the (undecidable) reduction of $L_{3}$ as follows: \\
+
+    $N$: on input $(O, w)$ 
+    \begin{enumerate}
+        \item Design TM $P$ such that it only accepts the input word $w$;
+        \item Run $M(O,P)$;
+        \item Accept if $M(O,P)$ accepts, reject otherwise.
+    \end{enumerate}
+    Thus, $M(O,P)$ will only accept if $w \in L(O)$; however, this would also decide the reduction of $M$, and thus is a contradiction.
+    \item \textbf{Solution:}
+    Since the complement of $M$ must also be non-Turing recognizable, this would mean that $M$ accepts all input except some single input $w$, which might never be found by $M$, and thus $M$ is not Turing recognizable.
+    \item \textbf{Solution:}
+    To prove that any infinite subset of MIN$_{TM}$ is not Turing recognizable, let us first assume that there is some Turing recognizable subset $S \in \text{MIN}_{TM}$; each element $n \in S$ is therefore enumerable by some TM $N$. We then design a Turing machine as follows: \\
+
+    $M$: on input $(N, w)$
+    \begin{enumerate}
+        \item Obtain the description of M\footnote{Theorem 6.3, pg. 220}
+        \item Determine the length $m$ of $M$
+        \item Use $N$ to list all $n \in S$
+        \item For each $N$ determine the length $n$ of $N$
+        \item If $n>m$, simulate $N(w)$
+    \end{enumerate}
+    The result is a TM $N$ which recognizes the same langague as $M$, but has a longer length, thus resulting in a contradiction.
+    \item \textbf{Solution:}
+    \begin{enumerate}
+        \item $\forall x \exists y [x \cdot y = 1] \notin \text{Th}(\mathbb{N},\cdot)$ \\
+        \textbf{Reason:} This can be proven by letting $x>1$; there is no natural number by which we can multiply $x$ to produce $1$.
+        \item $\forall x \exists y [x \cdot y = 1] \in \text{Th}(\mathbb{Q},\cdot)$ \\
+        \textbf{Reason:} This proven based on the definition of rational numbers; if $x$ is a rational number, it can be represented by the quotient of two integers. 
+        \item $\forall x, y \exists z [z \cdot z + x = y] \in \text{Th}(\mathbb{R},+,\cdot)$ \\
+        \textbf{Reason:} This implements the operator `less than or equal to' such that $x\leq y$; no matter what $z$ is, its square can represent the positive difference between two rational numbers.
+    \end{enumerate}
+\end{enumerate}
+\end{document}

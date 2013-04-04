@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[noend]{algorithmic}
+\usepackage[nothing]{algorithm}
+\usepackage{tikz}
+\usepackage{latexsym}
+\usepackage{float}
+\usetikzlibrary{arrows,automata}
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\renewcommand{\thealgorithm}{}
+\title{CS 525: Theory of Computation\\ Problem Set 5}
+\author{Dustin Ingram, Aaron Rosenfeld, Eric Simon}
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item[5.28] \textbf{Solution:}
+    By contradiction, assume $M$ decides $P$: \\ \\
+    $N$: on input $(M, w)$
+    \begin{enumerate}
+        \item Obtain code of $\langle M \rangle$
+        \item Simulate $M$ on $w$
+        \item If $M$ accepts $w$, reject, otherwise accept.
+    \end{enumerate}
+    Then $N(M,w)$ returns the opposite of $M$, and therefore no $M$ exists for an arbitrary $P$.
+\end{enumerate}
+\end{document}
+
+    \item[6.6] \textbf{Solution:} \\ \\
+    M = ``On any input:
+    \begin{enumerate}
+        \item Obtain, via the recursion theorem, own description $\langle M\rangle$
+        \item Construct the following machine $N$:
+        \begin{enumerate}
+            \item N = ``On any input:
+            \begin{enumerate}
+                \item Erase input;
+                \item Write $\langle M \rangle$ on the tape;
+                \item Halt.
+            \end{enumerate}
+            \item Output $\langle N \rangle$
+        \end{enumerate}
+    \end{enumerate}
+
