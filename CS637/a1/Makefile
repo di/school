@@ -3,6 +3,6 @@ GL_OPTIONS=-lGLEW -lGL -lglut
 OPTIONS=$(GCC_OPTIONS) $(GL_OPTIONS)
 
 
-.cpp: 
-	g++ $@.cpp Common/InitShader.o $(OPTIONS) -o $@  
+red_triangle:
+	g++ $@.cpp Common/InitShader.o $(OPTIONS) -o $@
 

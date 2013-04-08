@@ -3,7 +3,7 @@ Author: Dustin Ingram
 
 # Compiling
 
-    $ make red_triangle
+    $ make
 
 # Running
 
