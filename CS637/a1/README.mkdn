@@ -1,3 +1,14 @@
+# CS637 Assignment 1
+Author: Dustin Ingram
+
+# Compiling
+
+    $ make red_triangle
+
+# Running
+
+    $ ./red_triangle
+
 # Notes
 Developed on "Ubuntu 12.04.2 LTS":
 
