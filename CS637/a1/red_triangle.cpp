@@ -3,7 +3,7 @@
 
 #include "Angel.h"
 
-const int NumPoints = 3;
+const int NumPoints = 18;
 
 //--------------------------------------------------------------------------
 
@@ -11,15 +11,19 @@ void
 init( void )
 {
     // Specifiy the vertices for a triangle
-    vec2 vertices[3] = {
-        vec2( -0.75, -0.75 ), vec2( 0.0, 0.75 ), vec2( 0.75, -0.75 )
+    vec2 vertices[NumPoints] = {
+        vec2( -0.25, -0.25 ), vec2( 0.0, 0.25 ), vec2( 0.25, -0.25 ), // Triangle
+        vec2( 0.30, 0.70 ), vec2(0.70, 0.70), vec2(0.70, 0.30), // Square
+        vec2( 0.70, 0.30 ), vec2(0.30, 0.30), vec2(0.30, 0.70), // Square
+        vec2( -0.7, -0.8) , vec2(-0.4,-0.8), vec2(-0.55,-.3),  // Pentagon
+        vec2( -0.3, -0.5) , vec2(-0.4,-0.8), vec2(-0.55,-.3), // Pentagon
+        vec2( -0.7, -0.8) , vec2(-0.8,-0.5), vec2(-0.55,-.3)  // Pentagon
     };
 
     // Create a vertex array object
     GLuint vao[1];
     glGenVertexArrays( 1, vao );
     glBindVertexArray( vao[0] );
-    
 
     // Create and initialize a buffer object
     GLuint buffer;
@@ -72,8 +76,8 @@ main( int argc, char **argv )
     glutInitWindowSize( 512, 512 );
 
     glutCreateWindow( "Red Triangle" );
-    glewExperimental=GL_TRUE; 
-    glewInit();    
+    glewExperimental=GL_TRUE;
+    glewInit();
     init();
 
     glutDisplayFunc( display );
