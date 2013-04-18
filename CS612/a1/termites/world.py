@@ -35,17 +35,21 @@ class world:
             for _y in range(y-1, y+2):
                 if 0 <= _x < self.size and 0 <= _y < self.size:
                     _adj += self.world[_y][_x]
-        return _adj > 0
+        return _adj
 
     def take_wood(self, x, y):
         if self.world[y][x]:
-            self.world[y][x] = 0
-            return 1
+            _adj = self.wood_adjacent(x,y)
+            if _adj < 5:
+                self.world[y][x] = 0
+                return 1
+            else:
+                return 0
         else:
             return 0
 
     def drop_wood(self, x, y):
-        if self.wood_adjacent(x,y):
+        if self.wood_adjacent(x,y) > 2 and not self.world[y][x]:
             self.world[y][x] = 1
             return 0
         else :
@@ -67,8 +71,11 @@ class world:
             count += 1
             while len(to_search) > 0:
                 x,y = to_search.pop()
+                '''
                 for l in [(x-1,y-1), (x, y-1), (x+1, y-1), (x-1, y), (x+1, y),
                     (x-1, y+1), (x, y+1), (x+1, y+1)]:
+                '''
+                for l in [(x, y-1), (x-1, y), (x+1, y), (x, y+1)]:
                     if l in woods:
                         woods.remove(l)
                         to_search.add(l)
