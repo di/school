@@ -15,8 +15,6 @@ class termite:
             self.has_wood = world.drop_wood(self.x, self.y)
         else :
             self.has_wood = world.take_wood(self.x, self.y)
-            #if self.has_wood:
-            #    self.flip_direction()
 
     def update_direction(self, i):
         self.direction = [0 for _ in range(8)]
