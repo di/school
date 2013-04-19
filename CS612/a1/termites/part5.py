@@ -23,10 +23,9 @@ for n_termites in range(1,50):
 
 x, y = zip(*avg)
 
-print avg
 plt.plot(np.array(x), np.array(y))
 
-plt.title("Average Pile Changes Over Time")
-plt.xlabel("Iteration")
+plt.title("Average Piles Left After 100,000 Iterations")
+plt.xlabel("Number of Termites")
 plt.ylabel("Average Number of Piles")
 plt.show()
