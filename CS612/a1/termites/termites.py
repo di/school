@@ -6,10 +6,11 @@ import pygame
 import argparse
 import random
 
+
 def run(e, n_termites=1, n_woods=1, size=100, ticks=100000, command_line=True):
     w = world(density=0.3, size=size, n_woods=n_woods)
     for _ in range(n_termites):
-        w.add_termite(termite(x=random.randint(0,size-1),y=random.randint(0,size-1)))
+        w.add_termite(termite(x=random.randint(0, size-1), y=random.randint(0, size-1)))
 
     if not command_line:
         disp = display(size=size, scale=4)
@@ -37,5 +38,4 @@ if __name__ == '__main__':
     args = vars(parser.parse_args())
     args_e = int(args['e'])
     command_line = args['c']
-    print '\n'.join(["%d,%d" % x for x in run(args_e, command_line=command_line)])
-
+    print('\n'.join(["%d,%d" % x for x in run(args_e, command_line=command_line)]))

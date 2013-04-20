@@ -3,6 +3,7 @@ import random
 import math
 from wood import wood
 
+
 class world:
 
     def __init__(self, size=100, density=0.3, n_woods=1):
@@ -19,17 +20,17 @@ class world:
 
         woods = set()
         while len(woods) < wood_size:
-            woods.add((random.randint(0,self.size-1),random.randint(0,self.size-1)))
+            woods.add(tuple([random.randint(0, self.size-1) for _ in range(2)]))
         wood_types = [wood(i) for i in range(n_woods)]
         for x, y in woods:
-            self.world[y][x] = wood_types[random.randint(0,n_woods-1)]
+            self.world[y][x] = wood_types[random.randint(0, n_woods-1)]
 
     def add_termite(self, t):
         self.termites.append(t)
 
     def tick(self):
         self.ticks += 1
-        for t in self.termites :
+        for t in self.termites:
             t.tick(self)
 
     def has_wood(self, x, y, wood_type=None):
@@ -63,18 +64,18 @@ class world:
         for y in range(self.size):
             for x in range(self.size):
                 if self.world[y][x]:
-                    woods.add((x,y))
+                    woods.add((x, y))
         to_search = set()
         count = 0
         type_count = 0
         mixed_count = 0
         types = set()
         while len(woods) > 0:
-            x,y = woods.pop()
-            to_search.add((x,y))
+            x, y = woods.pop()
+            to_search.add((x, y))
             count += 1
             while len(to_search) > 0:
-                x,y = to_search.pop()
+                x, y = to_search.pop()
                 types.add(self.world[y][x].wood_type)
                 for l in [(x, y-1), (x-1, y), (x+1, y), (x, y+1)]:
                     if l in woods:
@@ -84,9 +85,4 @@ class world:
             if len(types) > 1:
                 mixed_count += 1
             types.clear()
-#        print count, type_count, type_count/count, mixed_count, mixed_count/count
         return count, mixed_count
-
-    def _print(self):
-        for y in range(self.size):
-            print ' '.join(str(x) for x in self.world[y])
