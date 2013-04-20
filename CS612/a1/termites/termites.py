@@ -6,13 +6,13 @@ import pygame
 import argparse
 import random
 
-def run(e, n_termites=1, command_line=True):
-    w = world(density=0.3, size=100)
+def run(e, n_termites=1, n_woods=1, size=100, ticks=100000, command_line=True):
+    w = world(density=0.3, size=size, n_woods=n_woods)
     for _ in range(n_termites):
-        w.add_termite(termite(x=random.randint(0,100-1),y=random.randint(0,100-1)))
+        w.add_termite(termite(x=random.randint(0,size-1),y=random.randint(0,size-1)))
 
     if not command_line:
-        disp = display(size=100, scale=4)
+        disp = display(size=size, scale=4)
 
     running = True
     out = []
@@ -26,7 +26,7 @@ def run(e, n_termites=1, command_line=True):
             out.append((w.ticks, w.pile_count()))
             if not command_line:
                 disp.redraw(w)
-        if w.ticks > 100000:
+        if w.ticks > ticks:
             running = False
     return out
 

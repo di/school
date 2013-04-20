@@ -13,9 +13,9 @@ n = 100
 res = None
 for i in range(n):
     if res is None:
-        res = [(a,[b]) for a,b in termites.run(e=1000)]
+        res = [(a,[b[0]]) for a,b in termites.run(e=1000)]
     else :
-        res = [(a[0], a[1] + [b[1]]) for a,b in zip(res, termites.run(e=1000))]
+        res = [(a[0], a[1] + [b[1][0]]) for a,b in zip(res, termites.run(e=1000))]
 
 ci = []
 for x in res:

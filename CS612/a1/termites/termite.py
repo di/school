@@ -5,16 +5,24 @@ class termite:
     def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
-        self.has_wood = 0
+        self.wood = None
         self.direction = [0 for i in range(8)]
         self.update_direction(random.randint(0,8))
 
     def tick(self, world):
         self.move(world)
-        if self.has_wood:
-            self.has_wood = world.drop_wood(self.x, self.y)
+        if self.wood is not None:
+            self.drop_wood(world, self.x, self.y, self.wood)
         else :
-            self.has_wood = world.take_wood(self.x, self.y)
+            self.take_wood(world, self.x, self.y)
+
+    def take_wood(self, world, x, y):
+        if world.has_wood(x, y) and world.wood_adjacent(x, y) < 5:
+            self.wood = world.take_wood(x, y)
+
+    def drop_wood(self, world, x, y, wood):
+        if not world.has_wood(x,y) and world.wood_adjacent(x,y,wood.wood_type) > 2:
+            self.wood = world.drop_wood(x, y, wood)
 
     def update_direction(self, i):
         self.direction = [0 for _ in range(8)]
@@ -25,7 +33,7 @@ class termite:
         self.direction = [int(not x) for x in self.direction]
 
     def color(self):
-        if self.has_wood:
+        if self.wood is not None:
             return (0, 255, 0)
         else:
             return (255, 0, 0)

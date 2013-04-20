@@ -21,8 +21,11 @@ class display:
     def redraw(self, world):
         for y in range(self.size):
             for x in range(self.size):
-                color = int(not world.world[y][x])*255
-                self.draw_pix(x=x, y=y, color=(color, color, color))
+                cell = world.world[y][x]
+                color = (255,255,255)
+                if cell is not None:
+                    color = cell.color
+                self.draw_pix(x=x, y=y, color=color)
         for t in world.termites:
             self.draw_pix(t.x, t.y, t.color())
         pygame.display.flip()
