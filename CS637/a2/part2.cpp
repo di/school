@@ -119,25 +119,22 @@ void display()
     glEnableClientState( GL_VERTEX_ARRAY );
     glEnableClientState(GL_COLOR_ARRAY);
 
-    Shape circ60 = Shape(-0.6, 0.75, 0.2, 0.12, 1.0f, 0.0f, 0.0f, 100) ;
-    circ60.draw();
-    Shape square1 = Shape(0.0, -0.2, 0.8, 0.8, 1.0f, 1.0f, 1.0f, 4) ;
-    square1.draw();
-    Shape square2 = Shape(0.0, -0.2, 0.666, 0.666, 0.0f, 0.0f, 0.0f, 4) ;
-    square2.draw();
-    Shape square3 = Shape(0.0, -0.2, 0.532, 0.532, 1.0f, 1.0f, 1.0f, 4) ;
-    square3.draw();
-    Shape square4 = Shape(0.0, -0.2, 0.398, 0.398, 0.0f, 0.0f, 0.0f, 4) ;
-    square4.draw();
-    Shape square5 = Shape(0.0, -0.2, 0.264, 0.264, 1.0f, 1.0f, 1.0f, 4) ;
-    square5.draw();
-    Shape square6 = Shape(0.0, -0.2, 0.13, 0.13, 0.0f, 0.0f, 0.0f, 4) ;
-    square6.draw();
-    Shape triangleRGB = Shape(0.0, 0.7, 0.3, 0.3, 1.0f, 0.0f, 0.0f, 3);
-    triangleRGB.drawRGB();
-    Shape circleSweep = Shape(0.6, 0.7, 0.2, 0.2, 1.0f, 0.0f, 0.0f, 100);
-    circleSweep.drawSweep();
-
+    Shape shape1 = Shape(0.0, 0.0, 0.8, 0.8, 0.0f, 1.0f, 0.0f, 29);
+    shape1.drawSweep();
+    Shape shape8 = Shape(0.0, 0.0, 0.7, 0.7, 0.0f, 0.0f, 1.0f, 23);
+    shape8.drawSweep();
+    Shape shape2 = Shape(0.0, 0.0, 0.6, 0.6, 1.0f, 0.0f, 0.0f, 19);
+    shape2.drawSweep();
+    Shape shape7 = Shape(0.0, 0.0, 0.5, 0.5, 0.0f, 1.0f, 0.0f, 17);
+    shape7.drawSweep();
+    Shape shape3 = Shape(0.0, 0.0, 0.4, 0.4, 0.0f, 0.0f, 1.0f, 13);
+    shape3.drawSweep();
+    Shape shape4 = Shape(0.0, 0.0, 0.3, 0.3, 1.0f, 0.0f, 0.0f, 11);
+    shape4.drawSweep();
+    Shape shape5 = Shape(0.0, 0.0, 0.2, 0.2, 0.0f, 1.0f, 0.0f, 7);
+    shape5.drawSweep();
+    Shape shape6 = Shape(0.0, 0.0, 0.1, 0.1, 0.0f, 0.0f, 1.0f, 5);
+    shape6.drawSweep();
 
     glDisableClientState( GL_VERTEX_ARRAY );
     glDisableClientState(GL_COLOR_ARRAY);
