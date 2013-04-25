@@ -9,7 +9,8 @@
 \usetikzlibrary{matrix, shapes, snakes, arrows}
 \tikzset{>=triangle 45}
 
-\title{CS 612: Final Assignment Proposal \\Spring 2013}
+\title{\textbf{Simulation of Emergent Behaviors in Coral Spawning Synchrony} \\
+CS 612: Final Assignment Proposal \\Spring 2013 }
 
 \author{Dustin Ingram}
 
@@ -19,12 +20,70 @@
 
 \maketitle
 
-\section*{}
+\section{Problem Statement}
+About 75\% of all hermatypic corals ``broadcast spawn'' by releasing
+gametes--eggs and sperm--into the water to spread
+offspring\footnote{\url{http://en.wikipedia.org/wiki/Coral#Reproduction}}. Over
+millions of years of evolution, these ``broadcast'' species have developed an
+emergent behavior known as a \emph{synchronous spawning event}: a single night
+each year on which all the members of one (or more) species spawn at the same
+time.
 
-\begin{enumerate}[label=(\alph*)]
+\section{Hypothesis}
+The multi-species synchronization implies that the synchronous spawning event is
+not based on any communication between same-species corals, and is in fact due
+to other influences within their shared environment.
 
-\item{} % a
+The main influence on a coral's environment is the moon, through two means:
+\begin{itemize}
+    \item Light dynamics -- the amount of light the moon sheds on the ocean;
+    \item Tide dynamics -- the ``activeness'' of the tide at any given time.
+\end{itemize}
 
-\end{enumerate}
+The tide dynamics, while they cannot be immediately sensed by the coral, play an
+important role in the reproduction of the coral's ``broadcast'': the more active
+the tide is, the less time the reproductive cells have to unite before being
+washed
+away\footnote{\url{http://bio.fsu.edu/~levitan/publication_pdfs/Evolution\%20et\%20al\%202011\%20genetic.pdf}}.
+
+Light dynamics, on the other hand, have been shown to be ``sensed'' by the
+coral\footnote{\url{http://micheli.stanford.edu/pdf/effects\%20of\%20light\%20dynamics.pdf}}
+and also have a role in protecting the reproductive cells of the coral from
+predators: the less light that is available in the environment, the less likely
+the reproductive cells are to be consumed by predators before uniting.
+
+\section{Planned Empirical Approach}
+The approach will be to simulate the reproductive cycles of multiple coral
+species simultaneously. These species will differ by the difference in timing
+they choose to reproduce, based on the factors of their environment--namely, the
+number of lunar cycles they have experienced, and the current brightness of
+their environment.
+
+Coral species will be randomly populated in the world, given random initial
+reproduction decision factors.
+
+Coral reproduction will occur when the reproductive cells of two species with
+relatively similar reproduction decision factors meet after spawning from their
+respective hosts and randomly flowing through the environment. A new species
+will evolve from the two, averaging their reproduction decision factors at the
+location which they have met, and eventually begin reproducing.
+
+Coral reproduction will be hindered by the brightness level during the
+reproduction period (mimicking predators consuming reproductive cells) and the
+activeness of the tide (which will shorten the reproduction period).
+
+The goal will be to show that a common behavior will emerge in which one (or
+more) species reproduces at the same time.
+
+\section{Metrics}
+Interesting metrics to collect will be:
+\begin{itemize}
+    \item The amount of time (lunar cycles) for a single species to emerge and
+    synchronize;
+    \item The rate of occurrence of multiple synchronous species after a given
+    amount of time;
+    \item The factors on which eventually synchronizing coral settle on;
+    \item and more!
+\end{itemize}
 
 \end{document}
