@@ -301,7 +301,7 @@ int main( int argc, char **argv )
 
     second = glutCreateWindow( "window 2");
     glutDisplayFunc( display2 );
-//    glutKeyboardFunc(mykey);
+    glutKeyboardFunc(mykey);
     glutIdleFunc(myidle);
 
     glewExperimental=GL_TRUE;
