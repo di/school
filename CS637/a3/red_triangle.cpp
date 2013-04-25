@@ -5,16 +5,20 @@
 #include <cmath>
 using namespace std;
 
-enum Color { WHITE, BLACK, RED, GREEN, BLUE };
+enum Color { WHITE, BLACK, RED, GREEN, BLUE, WHITE_SQ, RED_SQ, GREEN_SQ, START, STOP};
 float s_red = 1.0;
 float s_green = 1.0;
 float s_blue = 1.0;
+float sq_red = 1.0;
+float sq_green = 1.0;
+float sq_blue = 1.0;
 float w2_red = 1.0;
 float w2_green, w2_blue;
 int offset = 0;
 float pi_offset = 0.0;
 float sc_offset = 1.0;
 int first, second;
+bool animate = true;
 
 struct Shape
 {
@@ -159,15 +163,15 @@ void display()
     glEnableClientState( GL_VERTEX_ARRAY );
     glEnableClientState(GL_COLOR_ARRAY);
 
-    Shape square1 = Shape(0.0, -0.2, 0.8, 0.8, 1.0f, 1.0f, 1.0f, 4) ;
+    Shape square1 = Shape(0.0, -0.2, 0.8, 0.8, sq_red, sq_green, sq_blue, 4) ;
     square1.draw(1);
     Shape square2 = Shape(0.0, -0.2, 0.666, 0.666, 0.0f, 0.0f, 0.0f, 4) ;
     square2.draw(1);
-    Shape square3 = Shape(0.0, -0.2, 0.532, 0.532, 1.0f, 1.0f, 1.0f, 4) ;
+    Shape square3 = Shape(0.0, -0.2, 0.532, 0.532, sq_red, sq_green, sq_blue, 4) ;
     square3.draw(1);
     Shape square4 = Shape(0.0, -0.2, 0.398, 0.398, 0.0f, 0.0f, 0.0f, 4) ;
     square4.draw(1);
-    Shape square5 = Shape(0.0, -0.2, 0.264, 0.264, 1.0f, 1.0f, 1.0f, 4) ;
+    Shape square5 = Shape(0.0, -0.2, 0.264, 0.264, sq_red, sq_green, sq_blue, 4) ;
     square5.draw(1);
     Shape square6 = Shape(0.0, -0.2, 0.13, 0.13, 0.0f, 0.0f, 0.0f, 4) ;
     square6.draw(1);
@@ -219,6 +223,11 @@ switch (option)
  case BLUE : s_red = 0.0; s_green = 0.0; s_blue = 1.0; break;
  case WHITE : s_red = 1.0; s_green = 1.0; s_blue = 1.0; break;
  case BLACK: s_red = 0.0; s_green = 0.0; s_blue = 0.0; break;
+ case WHITE_SQ: sq_red = 1.0; sq_green = 1.0; sq_blue = 1.0; break;
+ case RED_SQ: sq_red = 1.0; sq_green = 0.0; sq_blue = 0.0; break;
+ case GREEN_SQ: sq_red = 0.0; sq_green = 1.0; sq_blue = 0.0; break;
+ case START: animate = true; break;
+ case STOP: animate = false; break;
  }
  glutPostRedisplay();
 }
@@ -240,18 +249,21 @@ void mykey(unsigned char key, int x, int y)
 
 void myidle()
 {
- offset = (offset + 1) % 90;
- pi_offset = offset * ((2.0f * 3.1416f)/90);
- sc_offset = float(offset) / 90.0f;
- if (offset > 45)
-{
-    sc_offset = 1.0f-sc_offset;
-}
- sc_offset = 2*sc_offset;
- glutSetWindow(first);
- glutPostRedisplay();
- glutSetWindow(second);
- glutPostRedisplay();
+    if (animate)
+    {
+     offset = (offset + 1) % 90;
+     pi_offset = offset * ((2.0f * 3.1416f)/90);
+     sc_offset = float(offset) / 90.0f;
+     if (offset > 45)
+        {
+        sc_offset = 1.0f-sc_offset;
+        }
+     sc_offset = 2*sc_offset;
+     glutSetWindow(first);
+     glutPostRedisplay();
+     glutSetWindow(second);
+     glutPostRedisplay();
+    }
 }
 
 int main( int argc, char **argv )
@@ -259,32 +271,42 @@ int main( int argc, char **argv )
     glutInit( &argc, argv );
     glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowSize( 500, 500 );
-    
+
     first = glutCreateWindow( "Red Triangle" );
     glutDisplayFunc( display );
     glutIdleFunc(myidle);
 
+    int submenu;
+    submenu = glutCreateMenu(processMenuEvents);
+    glutAddMenuEntry("White",WHITE_SQ);
+    glutAddMenuEntry("Red",RED_SQ);
+    glutAddMenuEntry("Green",GREEN_SQ);
+
+    glutCreateMenu(processMenuEvents);
+    glutAddMenuEntry("Stop Animation",STOP);
+    glutAddMenuEntry("Start Animation",START);
+    glutAddSubMenu("Square Colors", submenu);
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+
     glutCreateSubWindow(first, 0, 0, 150, 150);
     glutDisplayFunc( sub );
-    int menu;
-    menu = glutCreateMenu(processMenuEvents);
+
+    glutCreateMenu(processMenuEvents);
     glutAddMenuEntry("White",WHITE);
     glutAddMenuEntry("Black",BLACK);
     glutAddMenuEntry("Red",RED);
     glutAddMenuEntry("Green",GREEN);
     glutAddMenuEntry("Blue",BLUE);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
-    
+
     second = glutCreateWindow( "window 2");
     glutDisplayFunc( display2 );
-    glutKeyboardFunc(mykey);
+//    glutKeyboardFunc(mykey);
     glutIdleFunc(myidle);
-
 
     glewExperimental=GL_TRUE;
     glewInit();
     init();
-
 
     glutMainLoop();
     return 0;

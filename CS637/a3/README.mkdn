@@ -1,4 +1,4 @@
-# CS637 Assignment 2
+# CS637 Assignment 3
 Author: Dustin Ingram
 
 # Compiling
@@ -8,14 +8,6 @@ Author: Dustin Ingram
 # Running
 
     $ make
-
-Running `make` will run both parts 1 and 2. To run them individually:
-
-    $ ./red_triangle
-
-Or
-
-    $ ./part2
 
 # Notes
 Developed on "Ubuntu 12.04.2 LTS":
