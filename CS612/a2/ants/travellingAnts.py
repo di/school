@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 import sys
 import string
 import math
@@ -8,6 +7,7 @@ from itertools import izip
 import operator
 import random
 import bisect
+from timeout import timeout
 
 q = 1.0
 alpha = 1.0
@@ -59,7 +59,7 @@ class ant:
 
 class world:
 
-    def __init__(self, filename, cpu):
+    def __init__(self, filename):
         lines = open(filename, 'r').readlines()
         while lines[0][0] not in string.digits:
            lines.pop(0) 
@@ -72,6 +72,7 @@ class world:
                 i, x, y = l.strip().split()
             except :
                 pass
+
             self.x_coords.append(float(x))
             self.y_coords.append(float(y))
 
@@ -89,7 +90,7 @@ class world:
         y_delta = abs(self.y_coords[i] - self.y_coords[j])
         dist = math.sqrt(x_delta**2 + y_delta**2)
         if dist == 0.0:
-            dist = 1e-20
+            dist = 1.0
         return dist
 
     def get_distance(self, i, j):
@@ -108,19 +109,30 @@ class world:
             if ant.tour_length < self.shortest_tour_length:
                 self.shortest_tour = ant.tour
                 self.shortest_tour_length = ant.tour_length
-                print self.shortest_tour_length
 
         self.pher *= (1 - rho)
         for a in self.ants:
             a.lay_pher(self)
             a.reset()
 
+    def out(self, filename):
+        with open(filename, 'w') as f:
+            for _id in self.shortest_tour:
+                f.write("%d\n" % (_id))
+
+    @timeout(int(sys.argv[2]))
+    def run(self):
+        while True:
+            self.tick()
+
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("usage: python travellingAnts.py input.tsp maxseconds")
         sys.exit(0)
 
-    w = world(sys.argv[1], sys.argv[2])
-
-    while True:
-        w.tick()
+    w = world(sys.argv[1])
+    try:
+        w.run()
+    except:
+        print("%s %d" % (sys.argv[1], w.shortest_tour_length))
+        w.out("out.tour")
