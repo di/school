@@ -1,0 +1,64 @@
+# CS637 Assignment 3
+Author: Dustin Ingram
+
+# Compiling
+
+    $ make
+
+# Running
+
+    $ make
+
+# Interaction
+
+## Current transformation
+
+Right click the mouse to select "SCALE", "ROTATE" or "TRANSLATE".
+
+## Delta
+
+Type `d` to increase the delta, `D` to decrease the delta.
+
+## X, Y and Z components
+
+Type `x`, `y`, or `z` to increase the respective component of the current
+translation by the current delta value.
+
+Type `X`, `Y`, or `Z` to decrease the respective component of the current
+translation by the current delta value.
+
+# Notes
+Developed on "Ubuntu 12.04.2 LTS":
+
+    $ cat /etc/lsb-release
+    DISTRIB_ID=Ubuntu
+    DISTRIB_RELEASE=12.04
+    DISTRIB_CODENAME=precise
+    DISTRIB_DESCRIPTION="Ubuntu 12.04.2 LTS"
+
+    $ glxinfo | grep -i opengl
+    OpenGL vendor string: NVIDIA Corporation
+    OpenGL renderer string: GeForce 8600 GTS/PCIe/SSE2
+    OpenGL version string: 3.3.0 NVIDIA 310.14
+    OpenGL shading language version string: 3.30 NVIDIA via Cg compiler
+    OpenGL extensions:
+
+    $ gcc -v
+    Using built-in specs.
+    COLLECT_GCC=gcc
+    COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.6/lto-wrapper
+    Target: x86_64-linux-gnu
+    Configured with: ../src/configure -v --with-pkgversion='Ubuntu/Linaro
+    4.6.3-1ubuntu5' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs
+    --enable-languages=c,c++,fortran,objc,obj-c++ --prefix=/usr
+    --program-suffix=-4.6 --enable-shared --enable-linker-build-id
+    --with-system-zlib --libexecdir=/usr/lib --without-included-gettext
+    --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6
+    --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu
+    --enable-libstdcxx-debug --enable-libstdcxx-time=yes
+    --enable-gnu-unique-object --enable-plugin --enable-objc-gc --disable-werror
+    --with-arch-32=i686 --with-tune=generic --enable-checking=release
+    --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+    Thread model: posix
+    gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5)
+
