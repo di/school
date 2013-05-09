@@ -15,25 +15,37 @@ typedef Angel::vec4  point4;
 
 const int NumVertices = 6320*3;
 point4 vertices[3644];
-vec3 normals[6320];
 point4 points[NumVertices];
+vec3 normals[NumVertices];
 //color4 colors[NumVertices];
 
 enum Projection {PARALLEL, PERSPECTIVE};
 int currentProjection;
+mat4 projection;
 GLuint  program;
+
+GLfloat  o_left = -1.0, o_right = 1.0;
+GLfloat  bottom = -1.0, top = 1.0;
+GLfloat  zNear = 0.5, zFar = 3.0;
 
 GLfloat delta;
 GLfloat  r_x, r_y, r_z;
 GLfloat  s_x, s_y, s_z;
 GLfloat  t_x, t_y, t_z;
 
+GLfloat radius = 1.0;
+GLfloat theta = 0.0;
+GLfloat phi = 0.0;
+GLfloat height = 0.5;
+
+int camspeed = 60;
+
+bool animate = true;
+
 // OpenGL initialization
 void
 init()
 {
-    //colorcube();
-
     // Create a vertex array object
     GLuint vao;
     glGenVertexArrays( 1, &vao );
@@ -57,7 +69,7 @@ init()
     glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0,
                BUFFER_OFFSET(0) );
 
-    GLuint vNormal = glGetAttribLocation( program, "vNormal" ); 
+    GLuint vNormal = glGetAttribLocation( program, "vNormal" );
     glEnableVertexAttribArray( vNormal );
     glVertexAttribPointer( vNormal, 3, GL_FLOAT, GL_FALSE, 0,
                BUFFER_OFFSET(sizeof(points)) );
@@ -66,15 +78,17 @@ init()
     glClearColor( 1.0, 1.0, 1.0, 1.0 );
 
     t_x = 0.0;
-    t_y = -1.0;
+    t_y = 0.0;
     t_z = 0.0;
     r_x = 0.0;
     r_y = 0.0;
     r_z = 0.0;
-    s_x = 0.3;
-    s_y = 0.3;
-    s_z = 0.3;
+    s_x = 0.2;
+    s_y = 0.2;
+    s_z = 0.2;
     delta = 0.01;
+
+    projection = Ortho( o_left, o_right, bottom, top, zNear, zFar );
 
 }
 
@@ -95,6 +109,17 @@ display( void )
     glUniform1f(glGetUniformLocation( program, "s_y" ), s_y);
     glUniform1f(glGetUniformLocation( program, "s_z" ), s_z);
 
+    glUniformMatrix4fv(glGetUniformLocation( program, "projection" ), 1, GL_TRUE, projection );
+
+    point4  eye( radius*sin(theta)*cos(phi),
+         radius*sin(theta)*sin(phi),
+         radius*cos(theta),
+         1.0 );
+    point4  at( 0.0, height, 0.0, 0.0 );
+    vec4    up( 0.0, 1.0, 0.0, 0.0 );
+    mat4  mv = LookAt( eye, at, up );
+    glUniformMatrix4fv( glGetUniformLocation( program, "model_view" ), 1, GL_TRUE, mv );
+
     glDrawArrays( GL_TRIANGLES, 0, NumVertices );
 
     glutSwapBuffers();
@@ -105,29 +130,44 @@ display( void )
 void
 keyboard( unsigned char key, int x, int y )
 {
-    switch( currentProjection ) {
-        case PARALLEL:
-            switch( key ) {
-            }
-            break;
-        case PERSPECTIVE:
-            switch( key ) {
-            }
-            break;
+    switch( key ) {
+        case 's': camspeed += 1; break;
+        case 'S': camspeed -= 1; if (camspeed < 1) { camspeed = 1; } break;
+        case 'r': radius *= 2.0; break;
+        case 'R': radius *= 0.5; break;
+        case 'h': height += 0.1; break;
+        case 'H': height *= 0.1; break;
+        case ' ': animate = !animate; break;
+
     }
     glutPostRedisplay();
 }
 
 //----------------------------------------------------------------------------
 
-void processMenuEvents(int option)
+void myidle()
 {
-   currentProjection = option;
+    if (animate)
+    {
+        theta += 3.14159/camspeed;
+        theta = fmodf(theta, (2*3.14159));
+        glutPostRedisplay();
+    }
 }
 
-void CalculateSurfaceNormal(){
+//----------------------------------------------------------------------------
 
-        return;
+void processMenuEvents(int option)
+{
+     switch( option ) {
+        case PARALLEL:
+            projection = Ortho( o_left, o_right, bottom, top, zNear, zFar);
+            break;
+        case PERSPECTIVE:
+            projection = Perspective(90.0, 1.0, 0.5, 3.0);
+            break;
+    }
+    glutPostRedisplay();
 }
 
 int
@@ -147,7 +187,7 @@ main( int argc, char **argv )
     {
         switch (t) {
             case 'v' :
-                vertices[v_i] = point4( atof(x.c_str()), atof(y.c_str()), atof(z.c_str()), 1.0);
+                vertices[v_i]=point4(atof(x.c_str()),atof(y.c_str()),atof(z.c_str())-10.0,1.0);
                 v_i++;
                 break;
             case 'f' :
@@ -171,11 +211,9 @@ main( int argc, char **argv )
                 n_y = Normal_y / NormalisationFactor;
                 n_z = Normal_z / NormalisationFactor;
 
-                normals[f_i/3] = vec3( n_x, n_y, n_z );
-
-                //colors[f_i] = color4( 1.0, 0.0, 0.0, 1.0 );
-                //colors[f_i+1] = color4( 1.0, 0.0, 0.0, 1.0 );
-                //colors[f_i+2] = color4( 1.0, 0.0, 0.0, 1.0 );
+                normals[f_i] = vec3( n_x, n_y, n_z );
+                normals[f_i+1] = vec3( n_x, n_y, n_z );
+                normals[f_i+2] = vec3( n_x, n_y, n_z );
 
                 f_i += 3;
                 break;
@@ -196,6 +234,7 @@ main( int argc, char **argv )
     init();
 
     glutDisplayFunc( display );
+    glutIdleFunc(myidle);
     glutKeyboardFunc( keyboard );
 
     glutMainLoop();

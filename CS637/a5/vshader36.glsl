@@ -3,6 +3,8 @@ attribute vec3 vNormal;
 attribute vec4 vColor;
 uniform float r_x, r_y, r_z, s_x, s_y, s_z, t_x, t_y, t_z;
 varying vec4 color;
+uniform mat4 model_view;
+uniform mat4 projection;
 
 mat4 scale() {
     return mat4(s_x, 0, 0, 0,
@@ -42,10 +44,10 @@ mat4 trans() {
 
 void main()
 {
-    gl_Position = scale() * rotate() * trans() * vPosition;
+    gl_Position =  model_view * projection * scale() * rotate() * trans() * vPosition;
 
     vec3 lightDir;
-    lightDir = normalize(vec3(0.0,  1.0,  2.0));
+    lightDir = normalize(vec3(3.0,  3.0,  -3.0));
 
     float NdotL;
     NdotL = max(dot(vNormal, lightDir), 0.0);
