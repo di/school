@@ -1,0 +1,83 @@
+# CS637 Assignment 7
+Author: Dustin Ingram
+
+# Compiling
+
+    $ make
+
+# Running
+
+    $ make
+
+# Tasks: 
+
+## Reading in and storing control points
+The application reads in the `patchPoints.txt` file for the relevant points.
+
+## Tessellating patch
+The application successfully tessellates the patch.
+
+## Smooth-shading
+Not implemented.
+
+## Drawing axes and control points
+The application draws the axes and control points successfully.
+
+## Changing view of patch
+To change the view of the patch, press `x`, `y`, or `z` to change the respective
+rotational axes. To rotate in the opposite direction, press `X`, `Y`, and `Z`.
+
+## Selecting control point
+To cycle through the control points, press `p`. The selected control point will
+be larger than the other control points.
+
+## Moving control point
+To move the control point, press `q`, `w` or `e` to move the point in the
+positive X, Y and Z directions, respectively. To move the point in the negative
+direction, press `Q`, `W` or `E`.
+
+## Updating patch triangles
+The patch triangles are updated successfully when the control points are
+modified.
+
+## Modifying triangle resolution
+To increase the triangle resolution, press `r`. To decrease, press `R`.
+
+## Being able to switch to flat shading
+Not implemented.
+
+# Notes
+Developed on "Ubuntu 12.04.2 LTS":
+
+    $ cat /etc/lsb-release
+    DISTRIB_ID=Ubuntu
+    DISTRIB_RELEASE=12.04
+    DISTRIB_CODENAME=precise
+    DISTRIB_DESCRIPTION="Ubuntu 12.04.2 LTS"
+
+    $ glxinfo | grep -i opengl
+    OpenGL vendor string: NVIDIA Corporation
+    OpenGL renderer string: GeForce 8600 GTS/PCIe/SSE2
+    OpenGL version string: 3.3.0 NVIDIA 310.14
+    OpenGL shading language version string: 3.30 NVIDIA via Cg compiler
+    OpenGL extensions:
+
+    $ gcc -v
+    Using built-in specs.
+    COLLECT_GCC=gcc
+    COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.6/lto-wrapper
+    Target: x86_64-linux-gnu
+    Configured with: ../src/configure -v --with-pkgversion='Ubuntu/Linaro
+    4.6.3-1ubuntu5' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs
+    --enable-languages=c,c++,fortran,objc,obj-c++ --prefix=/usr
+    --program-suffix=-4.6 --enable-shared --enable-linker-build-id
+    --with-system-zlib --libexecdir=/usr/lib --without-included-gettext
+    --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6
+    --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu
+    --enable-libstdcxx-debug --enable-libstdcxx-time=yes
+    --enable-gnu-unique-object --enable-plugin --enable-objc-gc --disable-werror
+    --with-arch-32=i686 --with-tune=generic --enable-checking=release
+    --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+    Thread model: posix
+    gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5)
+
