@@ -1,4 +1,4 @@
-# CS637 Assignment 3
+# CS637 Assignment 5
 Author: Dustin Ingram
 
 # Compiling
@@ -11,21 +11,17 @@ Author: Dustin Ingram
 
 # Interaction
 
-## Current transformation
+## Change the orbit height:
+Typing `h` reduces the rotation radius, `H` increases it.
 
-Right click the mouse to select "SCALE", "ROTATE" or "TRANSLATE".
+## Change the orbit radius:
+Typing `r` reduces the rotation radius, `R` increases it.
 
-## Delta
+## Change camera speed:
+Typing `s` reduces the rotation speed, `S` increases it.
 
-Type `d` to increase the delta, `D` to decrease the delta.
-
-## X, Y and Z components
-
-Type `x`, `y`, or `z` to increase the respective component of the current
-translation by the current delta value.
-
-Type `X`, `Y`, or `Z` to decrease the respective component of the current
-translation by the current delta value.
+## Changing the projection mode:
+Right click and choose either "PARALLEL" or "PERSPECTIVE"
 
 # Notes
 Developed on "Ubuntu 12.04.2 LTS":
