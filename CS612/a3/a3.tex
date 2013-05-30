@@ -1,0 +1,144 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+
+\usetikzlibrary{matrix, shapes, snakes, arrows}
+\tikzset{>=triangle 45}
+
+\title{CS 612: Assignment 3\\Spring 2013}
+
+\author{Dustin Ingram}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Written}
+
+\begin{enumerate}
+
+\item{} % 1
+
+\textbf{Ontology for Cooking Utensils:} I developed my ontology based on the
+principle that the key differences in kitchen utensils arise from their intended
+uses, their materials, and the types of ``ends'' that they have. I further broke
+down the materials (e.g., heat-resistant or non-heat-resistant) as well as the
+uses as these were the dominant features driving the delineation between utensil
+types. The kitchen utensils I used were all considered ``unitaskers'' in the
+sense that they had only one intended use. For example, you \emph{could} cut a
+piece of meat with a candy thermometer, but you probably wouldn't if you
+actually had your wits about you. Furthermore, I considered a utensil's material
+to simply be it's most important material (usually that which makes up the
+business end), e.g. the material which makes up the handle on a steak knife does
+not affect it's usefulness very much.
+
+\item{} % 2
+
+\textbf{Representing sentences using modal logic:} 
+Here, I'm considering the $\in$ symbol to represent being ``in'' a place,
+whether it is swimming in a pool or sitting in a cabana.
+\begin{enumerate}
+    \item $K_{Chris}(John \in robots)$
+    \item $K_{John}(K_{Chris}(John \in robots)$
+    \item $\lozenge robots \neg \in waterproof$
+    \item $\square \phi \neg \in waterproof \rightarrow \phi \square \neg \in pool$
+    \item $\square \phi \neg \in pool \rightarrow \lozenge \phi \in cabana$ 
+\end{enumerate}
+
+\end{enumerate}
+
+\section*{Programming}
+
+I based my rules off of the \texttt{washington.edu} example \texttt{.clp} file.
+I adapted it to work in JESS. It can be run by doing:
+
+\begin{verbatim}
+$ jess dsi23_cam.clp
+\end{verbatim}
+
+I also modified the program to support arbitrary numbers of cannibals and
+missionaries. It can be modified by changing the following lines:
+
+\begin{verbatim}
+;;;***********************
+;;;* ARBITRARY VARIABLES *
+;;;***********************
+
+(defglobal ?*n-missionaries* = 3)
+(defglobal ?*n-cannibals* = 3)
+\end{verbatim}
+
+The output for a 3-missionary 3-cannibal problem is as follows:
+
+\begin{verbatim}
+Jess, the Rule Engine for the Java Platform
+Copyright (C) 2008 Sandia Corporation
+Jess Version 7.1p2 11/5/2008
+
+This copy of Jess will expire in 29 day(s).
+
+Solution found:
+
+Move 1 missionary and 1 cannibal to shore-2.
+Move 1 missionary to shore-1.
+Move 2 cannibals to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 missionaries to shore-2.
+Move 1 missionary and 1 cannibal to shore-1.
+Move 2 missionaries to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 cannibals to shore-2.
+Move 1 missionary to shore-1.
+Move 1 missionary and 1 cannibal to shore-2.
+
+Solution found:
+
+Move 1 missionary and 1 cannibal to shore-2.
+Move 1 missionary to shore-1.
+Move 2 cannibals to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 missionaries to shore-2.
+Move 1 missionary and 1 cannibal to shore-1.
+Move 2 missionaries to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 cannibals to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 cannibals to shore-2.
+
+Solution found:
+
+Move 2 cannibals to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 cannibals to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 missionaries to shore-2.
+Move 1 missionary and 1 cannibal to shore-1.
+Move 2 missionaries to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 cannibals to shore-2.
+Move 1 missionary to shore-1.
+Move 1 missionary and 1 cannibal to shore-2.
+
+Solution found:
+
+Move 2 cannibals to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 cannibals to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 missionaries to shore-2.
+Move 1 missionary and 1 cannibal to shore-1.
+Move 2 missionaries to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 cannibals to shore-2.
+Move 1 cannibal to shore-1.
+Move 2 cannibals to shore-2.
+\end{verbatim}
+
+\end{document}

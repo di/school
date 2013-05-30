@@ -1,0 +1,591 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns="http://www.owl-ontologies.com/Ontology1369857933.owl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://www.owl-ontologies.com/Ontology1369857933.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="Wood">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="HeatResistantMaterial"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Serrated">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="KnifeEdge"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Dull">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#KnifeEdge"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="RegularSpatula">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasMaterial"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="NonHeatResistantMaterial"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Spatula"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="InsertingUse">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="UtensilUse"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="SolidHoldingEnd">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="HoldingEnd"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="NamedUtensil">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Utensil"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="SharpEnd">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasUse"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <owl:Class rdf:ID="CuttingUse"/>
+              <owl:Class rdf:about="#InsertingUse"/>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="UtensilEnd"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Thermometer">
+    <rdfs:subClassOf>
+      <owl:Class>
+        <owl:complementOf>
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="UtensilHandle"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="hasHandle"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:complementOf>
+      </owl:Class>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasUse"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="MeasuringUse"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#NamedUtensil"/>
+  </owl:Class>
+  <owl:Class rdf:ID="IndividualMeasuringCup">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <owl:Class rdf:ID="Metal"/>
+              <owl:Class rdf:ID="Plastic"/>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="MeasuringCup"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Glass">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#HeatResistantMaterial"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Plastic">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#NonHeatResistantMaterial"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Utensil">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasEnd"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#UtensilEnd"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="UtensilMaterial"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#UtensilUse"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasUse"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </owl:Class>
+  <owl:Class rdf:about="#KnifeEdge">
+    <rdfs:subClassOf rdf:resource="#UtensilEnd"/>
+  </owl:Class>
+  <owl:Class rdf:ID="FlatEnd">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasUse"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <owl:Class rdf:ID="ScrapingUse"/>
+              <owl:Class rdf:ID="FlippingUse"/>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#UtensilEnd"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Spoon">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasUse"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:intersectionOf rdf:parseType="Collection">
+              <owl:Class rdf:ID="SpooningUse"/>
+              <owl:Class rdf:about="#MeasuringUse"/>
+            </owl:intersectionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#NamedUtensil"/>
+  </owl:Class>
+  <owl:Class rdf:about="#HoldingEnd">
+    <rdfs:subClassOf rdf:resource="#UtensilEnd"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Whisk">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="WhiskEnd"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#UtensilHandle"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasHandle"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#NamedUtensil"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Strainer">
+    <rdfs:subClassOf>
+      <owl:Class>
+        <owl:complementOf>
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="LiquidHoldingEnd"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#hasEnd"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:complementOf>
+      </owl:Class>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#SolidHoldingEnd"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasHandle"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#UtensilHandle"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#NamedUtensil"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Spatula">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasHandle"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#UtensilHandle"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasUse"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="#FlippingUse"/>
+              <owl:Class rdf:about="#ScrapingUse"/>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#FlatEnd"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#NamedUtensil"/>
+  </owl:Class>
+  <owl:Class rdf:ID="ButterKnife">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#Dull"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Knife"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#SpooningUse">
+    <rdfs:subClassOf rdf:resource="#UtensilUse"/>
+  </owl:Class>
+  <owl:Class rdf:about="#WhiskEnd">
+    <rdfs:subClassOf rdf:resource="#UtensilEnd"/>
+  </owl:Class>
+  <owl:Class rdf:about="#HeatResistantMaterial">
+    <rdfs:subClassOf rdf:resource="#UtensilMaterial"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Fork">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#Metal"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#NamedUtensil"/>
+  </owl:Class>
+  <owl:Class rdf:about="#MeasuringUse">
+    <rdfs:subClassOf rdf:resource="#UtensilUse"/>
+  </owl:Class>
+  <owl:Class rdf:ID="BreadKnife">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Serrated"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Knife"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#ScrapingUse">
+    <rdfs:subClassOf rdf:resource="#UtensilUse"/>
+  </owl:Class>
+  <owl:Class rdf:about="#NonHeatResistantMaterial">
+    <rdfs:subClassOf rdf:resource="#UtensilMaterial"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MetalSpoon">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#Metal"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Spoon"/>
+  </owl:Class>
+  <owl:Class rdf:ID="SlottedSpoon">
+    <rdfs:subClassOf>
+      <owl:Class>
+        <owl:complementOf>
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:about="#LiquidHoldingEnd"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#hasEnd"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:complementOf>
+      </owl:Class>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#SolidHoldingEnd"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Spoon"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Silicone">
+    <rdfs:subClassOf rdf:resource="#HeatResistantMaterial"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Metal">
+    <rdfs:subClassOf rdf:resource="#HeatResistantMaterial"/>
+  </owl:Class>
+  <owl:Class rdf:ID="HeatResistantSpatula">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#HeatResistantMaterial"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Spatula"/>
+  </owl:Class>
+  <owl:Class rdf:about="#CuttingUse">
+    <rdfs:subClassOf rdf:resource="#UtensilUse"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MeatKnife">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:intersectionOf rdf:parseType="Collection">
+              <owl:Class rdf:ID="NonSerrated"/>
+              <owl:Class rdf:about="#SharpEnd"/>
+            </owl:intersectionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Knife"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#MeasuringCup">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasHandle"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#UtensilHandle"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#LiquidHoldingEnd"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#MeasuringUse"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasUse"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#NamedUtensil"/>
+  </owl:Class>
+  <owl:Class rdf:about="#FlippingUse">
+    <rdfs:subClassOf rdf:resource="#UtensilUse"/>
+  </owl:Class>
+  <owl:Class rdf:ID="WoodenSpoon">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Wood"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Spoon"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MeatThermometer">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#Metal"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#SharpEnd"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Thermometer"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Knife">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#KnifeEdge"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Metal"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#NamedUtensil"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MeatFork">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#SharpEnd"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasEnd"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Fork"/>
+  </owl:Class>
+  <owl:Class rdf:about="#NonSerrated">
+    <rdfs:subClassOf rdf:resource="#KnifeEdge"/>
+  </owl:Class>
+  <owl:Class rdf:about="#LiquidHoldingEnd">
+    <rdfs:subClassOf rdf:resource="#HoldingEnd"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasUse"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="#SpooningUse"/>
+              <owl:Class rdf:about="#MeasuringUse"/>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MultipleMeasuringCup">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Glass"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#MeasuringCup"/>
+  </owl:Class>
+  <owl:Class rdf:ID="CandyThermometer">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMaterial"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#Glass"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class>
+        <owl:complementOf>
+          <owl:Restriction>
+            <owl:someValuesFrom rdf:resource="#SharpEnd"/>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#hasEnd"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:complementOf>
+      </owl:Class>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#Thermometer"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="#hasMaterial">
+    <rdfs:range rdf:resource="#UtensilMaterial"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasEnd">
+    <rdfs:range rdf:resource="#UtensilEnd"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasHandle">
+    <rdfs:range rdf:resource="#UtensilHandle"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasUse">
+    <rdfs:range rdf:resource="#UtensilUse"/>
+  </owl:ObjectProperty>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
