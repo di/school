@@ -1,0 +1,3 @@
+\frametitle {Putting it all together}
+    \inputminted[firstline=59,lastline=60,linenos,frame=lines,firstnumber=59,gobble=8]{python}{brain.py}
+    \inputminted[firstline=66,lastline=67,linenos,frame=lines,firstnumber=66,gobble=4]{python}{brain.py}
