@@ -1,0 +1,53 @@
+# Explanations:
+
+## Sploit 3
+Similar to #2, the goal is to overflow the buffer to overwrite an address on
+the stack.  It is an off by one error, which means we are only able to
+overwrite one byte (the LSB).  In #2, the goal was to overwrite the saved EBP
+to alter how the stack frames were returned, causing our address to be loaded
+into EIP indirectly after a few returns.  In this one, we are able to alter the
+saved EIP directly which makes things even easier.  Because the buffer is
+immediately above the saved EIP on the stack, all we need to do is prevent the
+ESP from being modified before it returns. Essentially, we overwrite the saved
+EIP to point at another ret instruction, so the flow performs two consequtive
+returns without altering ESP. This causes the saved EIP to get popped on the
+first return, then the first value in the buffer to get popped on the second
+return. After that, the program counter is executing the buffer, and we win.
+
+## Sploit 4
+This solution exploits the call to strlen(), which will return -1 if the length
+of the argument is greater than the maximum size for an int. This lets the
+comparison to maxlen pass, and the buffer is copied into memory, containing the
+shellcode. We need to specifically set the bits just past the 4000-element
+limit of the buffer to overwrite the EIP with an overflow, jumping to the start
+of buf (the shellcode) instead.
+
+## Sploit 5
+Using tfree here makes p actually q. obsd_strlcpy overwrites p, which also
+allows us to overwrite the links of q. By making these links point to the EIP
+of foo and the start of the buffer (which contains the shellcode) we can
+execute shellcode. The one hangup is GET_FREEBIT looks for a valid (odd) byte,
+so we must include a jump. This also helps because the fake right link (the
+start of the buffer) is not a valid assembly instruction.
+
+## Sploit 6
+The %n causes the number of characters to be written to the address on the
+stack.  Because of the way the snprintf is written, the %x's are able to
+increase the internal stack pointer of the snprintf function up into the actual
+arguments.  This means we can choose the addresses that get overwritten by %n.
+The written values (in decimal) are chosen specifically to be equivalent to the
+start address of the nop sled in the buffer, and the address being overwritten
+is the saved eip in foo's stack frame.  The overwrite is done in four stages;
+one byte at a time.  Because the %n writes 4 bytes, we must write the address
+from LSB towards MSB.  For each %x, a junk value must be written as an argument
+(literally used "JUNK").
+
+## Sploit 7
+A bug in nstrcpy allows us to overflow buf by exactly one byte. Because the
+addressing is little-endian, this byte is able to override the last byte of the
+location of a. By specifically choosing this value, we can change the address
+to a location within buf, where we can write a new pointer and value for a,
+which actually allows us to write an arbitrary value to an arbitrary address.
+By overwriting the EIP to the start of buf, we can execute the shellcode and
+get r00t.
+
