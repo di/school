@@ -1,0 +1,44 @@
+# README
+# CS645
+# Project 4
+# Dustin Ingram
+# Ryan Petersen
+# Joe Ruether
+
+Included in the zip are some scripts that can be used to run the system:
+- genkeystore.sh : Creates "keystore.jks" with the password "password". Takes no arguments
+- runserver.sh : Runs the server using "keystore.jks" and saves output to "logfile". Takes no arguments.
+- runclient.sh : Runs the client. Takes three arguments: <username> <password> <command>
+
+In addition, the following files are included:
+- Makefile : Builds the project
+- password.properties : Contains the usernames and passwords for authentication, describes how to add new passwords to the file
+- keystore.jks : Keystore containing "user" : "password"
+- logfile : Successful dump of paypal (fake) credentials
+
+How to run the program:
+1) Run the server: ./runserver.sh
+2) Configure your webbrowser to use the proxy (localhost:8001). We used Midori browser.
+3) Go to an https webpage. We used https://www.paypal.com
+4) Enter a fake username and password. In our example we used a username of "foo" and a password of "taco"
+5) Run the client with the username "username" and the password "password" to get statistics: ./runclient.sh username password stats
+6) Shutdown the server: ./runclient.sh username password shutdown
+7) Grep the logfile for "password": grep password logfile
+
+The reason this attack is less successful on Firefox 3 is because Firefox 3 does not allow self-signed certificates, which is what we are generating.
+Self signed certificates are only useful for establishing an identity if they can be verified over some non-internet medium (ie: in person or over the phone).
+Otherwise, as we have shown, it is too easy to generate them on the fly to rely on them as proof of identity.
+The advantages to disallowing self signed certificates is that Firefox is helping to ensure the safety of your data.
+Encryption without trust is worthless, as you could be talking to an attacker in an encrypted way without knowing it.
+Likewise, trust without encryption is worthless, because anyone can listen in on the conversation.
+To have secure communication, you must have encryption as well as be able to identify the receiver as someone you trust.
+The disadvantage is that it is less convenient for smaller sites to offer SSL encryption as they must buy certificates from a Certificate Authority, which can cost money.
+The average citizen who does not understand the importance of proper certificates might click through the dialog box to allow self-signed certificates if the dialog is interfering with their web browsing experience.
+Or, frustrated users might switch browsers.
+
+How might we change a web browser to make it less likely that a user would be fooled by an MITM attack?
+I personally like how some browsers display a prominant icon of a broken lock and color the address bar a bright red as an indicator that the https is insecure.
+In addition, I would color in bring red all forms on the page where users could input sensitive information such as credit cards or passwords.
+Finally, I would give an explaination of the issue in the status bar so it was easily apparent what the problem is (why everything is red).
+I think that the approach Firefox 3 took is a little overkill and might drive users away to a different, less secure browser.
+Instead, users need to be educated to understand why there are security risks and how to solve the problem.
