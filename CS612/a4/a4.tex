@@ -1,0 +1,82 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+
+\usetikzlibrary{matrix, shapes, snakes, arrows}
+\tikzset{>=triangle 45}
+
+\title{CS 612: Assignment 4\\Spring 2013}
+
+\author{Dustin Ingram}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Written}
+
+\begin{enumerate}
+
+\item{} % 1
+
+\begin{enumerate}
+
+\item{} % a
+
+Here, the Nash Equilibrium is also the pareto optimal solution, in which the child lives, and neither parent resents the other. However, this is because they must both quit their jobs, and thus have no income, so it can be assumed that all three eventually die:
+
+\begin{center}
+  \begin{tabular}{ r || p{3cm} | p{3cm} }
+      & \textbf{Parent B Quits} & \textbf{Parent B Works} \\ \hline \hline
+    \textbf{Parent A Quits} & Child lives, no resentment & Child lives, B resents A \\ \hline
+    \textbf{Parent A Works} & Child lives, A resents B & Child dies, Good Luck Trolls and Garbage Pail Kids for everyone \\
+  \end{tabular}
+\end{center}
+
+However, it seems as though we are ignoring the scenario in which both parents continue working, and we allow the child to be raised by the dogs. In this solution, all five agents benefit: the parents both have independent income, can ``invest'' in their hobbies, the child lives (although it might turn out a bit peculiar) and the dogs both get an additional playmate during the day.
+
+\item{} % b
+
+Here, since the potential of dying at sea greatly outweighs the embarrassment of admitting it was a bad idea, the pareto optimal solution is for just one of the kayakers to admit It Was A Bad Idea, thus saving the other kayaker from embarrassment. However, since both agents can assume that neither want to admit It Was A Bad Idea, the pure strategy Nash equilibrium would be for both to made the admission, ensuring that neither dies.
+
+\begin{center}
+\begin{tabular}{ p{3cm} || p{3cm} | p{3cm} }
+    & \textbf{Kayaker B Admits It Was A Bad Idea} & \textbf{Kayaker B Keeps His Mouth Shut} \\ \hline \hline
+  \textbf{Kayaker A Admits It Was A Bad Idea} & Mutually embarrassed, but alive & A is embarrassed, but everybody lives \\ \hline
+  \textbf{Kayaker A Keeps His Mouth Shut} & B is embarrassed, but everybody lives & You both potentially die a terrible, lonesome death at sea\\
+\end{tabular}
+\end{center}
+
+
+\end{enumerate}
+
+\item{} % 2
+
+As follows:
+
+\begin{enumerate}
+
+\item{} Yes, when each rancher grazes exactly 25 head of cattle.
+
+\item{} Yes, when each rancher grazes all (50) head of cattle.
+
+\item{} No, there is not.
+
+\item{} No, there is not.
+
+\end{enumerate}
+
+\end{enumerate}
+
+\section*{Programming}
+
+I modified the tutorial program (pirate/wench) to give the wench goals (namely, throwing the rum into the ocean) and the ability to move.
+
+\end{document}
