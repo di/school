@@ -1,0 +1,31 @@
+# 4.1
+a) C = {1, 2, 3, 4, 5}
+b) C = {3}
+c) C = {1, 2}
+d) TRUE
+e) {1, 2, 3}
+f) {2, 3}
+g) 1
+
+# 4.7
+a) [[343], [1, 8, 64], [], [], [], [], [27, 125, 216]]
+b) [125, 1, 8, 64, 216, 343, 27]
+
+# 4.10
+
+    procedure RESIZE ( var A: DICT)
+    var
+        a_index: integer;
+        a_bucket: celltype;
+        B: DICT;
+    begin
+        for a_index := 0 to B1 do
+            a_bucket = A[a_index]
+            for i := 0 to a_bucket.last do
+                x = a_bucket[i]
+                INSERT(x, B)
+        return B
+    end; {RESIZE}
+
+# 4.11
+k = 3 and k = 9
