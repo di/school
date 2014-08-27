@@ -1,0 +1,8 @@
+Included files:
+
+a2.pdf        - The report, in LaTeX
+changes.patch - A patch file showing all changes in the MASON source
+/sim
+  /app
+    /pacman
+      *.java  - All Java files that were modified to fulfill the reqs of the problems

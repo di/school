@@ -1,0 +1,12 @@
+Included files:
+
+a3.pdf              - The report, in LaTeX
+/sim
+  /app
+    /antsforage
+      *.java        - All Java files that were modified to fulfill the reqs of the problems
+  /engine
+    Simstate.java   - Slight modification for experiment
+antsforage_batch.py - Python file to run batch experiments
+ants.out            - Resulting data file from batch experiments
+a3.py               - Python file to process and plot data file

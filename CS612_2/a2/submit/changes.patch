@@ -1,0 +1,26 @@
+diff --git a/sim/app/pacman/Blinky.java b/sim/app/pacman/Blinky.java
+index 4ac4821..45ce573 100644
+--- a/sim/app/pacman/Blinky.java
++++ b/sim/app/pacman/Blinky.java
+@@ -35,15 +35,15 @@ public class Blinky extends Ghost
+         Pac pman = pacman.pacClosestTo(location);
+         double x_diff = Math.abs(this.location.x - pman.location.x);
+         double y_diff = Math.abs(this.location.y - pman.location.y);
+-        if (y_diff <= 3)
++        double manhattan_dist = Math.sqrt(Math.pow(x_diff, 2) + Math.pow(y_diff, 2));
++        if (manhattan_dist <= 3){
+             loc.x = 0;
++            loc.y = 0;
++        }
+         else {
+-            loc.x = Math.min(Math.abs(pman.location.x + rand.nextInt((int)y_diff) - (int)(y_diff/2)), 28);
++            loc.x = Math.min(Math.abs(pman.location.x + rand.nextInt((int)manhattan_dist/2) - (int)(manhattan_dist/4)), 28);
++            loc.y = Math.min(Math.abs(pman.location.y + rand.nextInt((int)manhattan_dist/2) - (int)(manhattan_dist/4)), 28);
+         }
+-        if (x_diff <= 3)
+-            loc.y = 0;
+-        else
+-            loc.y = Math.min(Math.abs(pman.location.y + rand.nextInt((int)x_diff) - (int)(x_diff/2)), 28);
+ 
+         return new Double2D(loc);  
+         }

@@ -1,0 +1,11 @@
+Included files:
+
+a1.pdf        - The report, in LaTeX
+changes.patch - A patch file showing all changes in the MASON source
+/sim
+  /app
+    /heatbugs
+      *.java  - All Java files that were modified to fulfill the reqs of the problems
+/data
+  *.py        - Files used for data processing from the output of the simulation
+  sample.out  - Sample output file used for data processing

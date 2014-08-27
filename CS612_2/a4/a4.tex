@@ -1,0 +1,110 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor,colortbl}
+\usepackage[outdir=./]{epstopdf}
+
+\usetikzlibrary{matrix, shapes, snakes, arrows}
+\tikzset{>=triangle 45}
+
+\title{CS 612: Assignment 4\\Summer 2014}
+
+\author{Dustin Ingram}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Written}
+
+
+\begin{enumerate}
+
+\item{} % 1
+
+\begin{enumerate}
+
+\item{} % a
+
+Here, since the imminent likelihood of dying in a horrible fire outweighs the potential of being mauled by a lion, the pareto optimal solution is for just one of the friends to leave the house first and be mauled by the lion, thus saving the other friend from the potential of being eaten alive. However, since both friends can assume that neither particularly wants to become a lion snack, the pure strategy Nash equilibrium would be for both to leave the house, ensuring that neither is guaranteed to die.
+
+\begin{center}
+\begin{tabular}{ p{3cm} || p{3cm} | p{3cm} }
+    & \textbf{Friend B Leaves the house first} & \textbf{Friend B sits around watching the fire grow} \\ \hline \hline
+  \textbf{Friend A Leave the house first} & Both potentially mauled by a hungry lion, but possibly alive & A is maybe eaten, but it's possible everyone lives\\ \hline
+  \textbf{Friend A sits around watching the fire grow} & B is maybe eaten, but it's possible everyone lives & You both are burnt to a crisp\\
+\end{tabular}
+\end{center}
+
+\item{} % b
+
+Here, the Nash Equilibrium is also the pareto optimal solution. However, this is because they must both quit browsing their respective websites:
+
+\begin{center}
+  \begin{tabular}{ r || p{3cm} | p{3cm} }
+      & \textbf{Worker B actually Works} & \textbf{Worker B wastes time} \\ \hline \hline
+    \textbf{Worker A actually works} & The project is completed & The project is completed, but A resents B \\ \hline
+    \textbf{Worker A wastes time} & The project is completed, but B resents A & Everyone gets fired eventually \\
+  \end{tabular}
+\end{center}
+
+\end{enumerate}
+
+\item{} % 2
+
+As follows:
+
+\begin{enumerate}
+
+\item{} Yes, when each rancher grazes exactly 25 head of cattle.
+
+\item{} Yes, when each rancher grazes all (50) head of cattle.
+
+\item{} No, there is not.
+
+\item{} No, there is not.
+
+\end{enumerate}
+
+\item{} % 3
+
+\begin{enumerate}
+
+\item{} You would attempt team yourself with the worst possible developers, thus elevating your rank within the 10-person team and increasing the likelihood that you will receive a bonus.
+
+\item{} You would attempt to outperform only the members of your team (potentially, only some of them if your goal is to receive any bonus, or only one of them, if your goal is to not be fired.)% b
+
+\item{} During the Cravathon, high-performing workers are attempting to place themselves on teams with low-performing workers. % c
+
+\item{} During the year, the teams are not operating at full capacity, as there is only an incentive to work hard enough to get a bonus and not get fired.% d
+
+\end{enumerate}
+
+\end{enumerate}
+
+\newpage
+
+\section*{Programming}
+
+I created an agent framework for voting in which each agent is given a name from the 100 most popular male and female names in the US in 2010. Each agent also has a very unique preference from five potential preferences:
+
+\begin{itemize}
+    \item{Preference for agents with popular names (based on US Census statistical data);}
+    \item{Preference for agents with a name which, when each character of the name is converted to its ASCII value and summed, then averaged by the length of the name, has a high value;}
+    \item{Preference for agents with a high integer value of the MD5 hash of the name;}
+    \item{Preference for agents with a name which, when converted to ``leet speak'', the sum of all the numerical characters has a high value;}
+    \item{Preference for agents with a name which returns a large number of Google search results.}
+\end{itemize}
+
+The differences in preferences ensured that agents would vote differently. For each of the 100 agents, each one was randomly assigned a preference.
+
+When the agents are run through the different voting algorithms, it becomes apparent how much the choice of voting algorithm effects the outcome of of the election. It is possible to randomly assign preferences to the agents in such a way that each form of election produces a different winner.
+
+\end{document}

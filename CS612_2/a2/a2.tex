@@ -1,0 +1,100 @@
+\documentclass{article}
+
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor,colortbl}
+\usepackage[outdir=./]{epstopdf}
+
+\usetikzlibrary{matrix, shapes, snakes, arrows}
+\tikzset{>=triangle 45}
+
+\title{CS 612: Assignment 2\\Summer 2014}
+
+\author{Dustin Ingram}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Written}
+
+
+\begin{enumerate}
+
+\item{} % 1
+To solve the MKP with ACO, I would construct a graph where each item for each knapsack would be represented as vertices on the graph, and would add an edge between all vertices, representing the potential for every possible combination of items in each knapsack. As the ants try to find an optimal path through the graph, they will be essentially solving the MKP problem. At each step, they maintain an optimal path based on the size of the items and the capacity of the knapsacks. The ants will lay pheromones on the edges of the graph based on the quality of their solution (the current path). Since the graph is fully connected, it becomes possible for any and all solutions to be found by the ACO algorithm. In this way, ACO is a good fit for the MKP problem, since it is easily reducible to a graph and the solution can be found.
+
+\item{} % 2
+My goals for the design of the robots would be twofold. First, I would seek to reduce the ratio of human operators to robots, and potentially make the robots fully autonomous. This would be important in reducing the expense of the project, while simultaneously allowing for the project to be arbitrarily scaled to a much larger size. Secondly, I would try to find an optimal balance between the complexity of each individual robot and the complexity of the system as a whole. That is, I would want to find the ``sweet spot'' between having nothing but a single type of robot, and having robots which are specifically purposed. This would allow robots to both share tasks and have unique tasks, allowing multiple different types of robots to work together as a system to build the human environment (e.g., maintaining natural light, temperature, humidity, energy use).
+
+
+\item{} % 3
+First, we start with the original cost matrix:
+
+\begin{tabular}{ c|c|c|c|c|c }
+    & Task1 & Task2 & Task3 & Task4 & Task5 \\
+    Worker1 & 49 & 89 & 38 & 33 & 10 \\
+    Worker2 & 93 & 42 &  3 &  2 & 85 \\
+    Worker3 & 95 & 94 & 15 & 34 & 76 \\
+    Worker4 & 86 & 61 & 17 & 35 & 66 \\
+    Worker5 & 39 & 92 & 21 & 44 & 45 \\
+\end{tabular}
+
+Next, we subtract the lowest cost in each row from every element in that row:
+
+\begin{tabular}{ c|c|c|c|c|c }
+    & Task1 & Task2 & Task3 & Task4 & Task5 \\
+    Worker1 & 39 & 79 & 28 & 23 &  0 \\
+    Worker2 & 91 & 40 &  1 &  0 & 83 \\
+    Worker3 & 80 & 79 &  0 & 19 & 61 \\
+    Worker4 & 69 & 44 &  0 & 18 & 49 \\
+    Worker5 & 18 & 71 &  0 & 23 & 24 \\
+\end{tabular}
+
+Since this result does not give us a solution, we then do the same for the columns:
+
+\begin{tabular}{ c|c|c|c|c|c }
+    & Task1 & Task2 & Task3 & Task4 & Task5 \\
+    Worker1 & 21 & 39 & 28 & 23 &  0 \\
+    Worker2 & 73 &  0 &  1 &  0 & 83 \\
+    Worker3 & 62 & 39 &  0 & 19 & 61 \\
+    Worker4 & 51 &  4 &  0 & 18 & 49 \\
+    Worker5 &  0 & 31 &  0 & 23 & 24 \\
+\end{tabular}
+
+This gives us the following result:
+
+\begin{tabular}{ c|c|c|c|c|c }
+    & Task1 & Task2 & Task3 & Task4 & Task5 \\
+    Worker1 & 21 & 39 & 28 & 23 &  \cellcolor{gray!25}0 \\
+    Worker2 & 73 &  0 &  1 &  \cellcolor{gray!25}0 & 83 \\
+    Worker3 & 62 & 39 &  \cellcolor{gray!25}0 & 19 & 61 \\
+    Worker4 & 51 &  \cellcolor{gray!25}4 &  0 & 18 & 49 \\
+    Worker5 & \cellcolor{gray!25}0 & 31 &  0 & 23 & 24 \\
+\end{tabular}
+
+
+\item{} % 4
+In short, the paper describes the key challenges in developing a Multi-Agent System or a Mobile-Ad-Hoc-Network, including, but not limited to, a lack of high-quality tools for testing and modeling such systems, scalability issues, and more, and discusses current advances within these particular issues. Generally, as the reliability, connectedness and density of the network increases, the quality of the agent coordination improves. After studying a variety of MAS algorithms across a diverse field of MANETs, it becomes apparent that there is not an end-all be-all algorithm for all possible network conditions. Rather, there is a need for a ``hybrid'' algorithm which is capable of responding to network conditions and responding appropriately.
+
+\end{enumerate}
+
+\newpage
+
+\section*{Programming}
+
+In my experiments with the PacMan ghosts, I decided to improve upon the existing algorithms for the ghosts, with some tweaks. I also decided to test with the random PacMan, which was perhaps a bad idea as my ghosts are fine-tuned for it's behavior. I initially allowed all the ghosts to leave the waiting area at the beginning of the game, in order to determine which of their algorithms was best against the random PacMan. I let every game continue until the RandomPacMan captured every token, and counted which ghosts made which kills. I found that the red ghost (Blinky) out performed the other ghosts by a factor of 3-4 times as many ``kills'' every round, regardless of the point within the game. Incidentally, Inky (the cyan ghost) did not make any kills at all.
+
+I then modified the Blinky ghost to make it act a little more randomly, based on its Manhattan distance from the PacMan. The idea is that it would take a given ghost a certain number of steps to reach its target, and the farther away it is, the less likely that the target will still be there after those steps have passed. Instead, the ghost chooses from a ``random field'' around the target, which narrows in scope until the ghost is close enough for the target to simply be the PacMan.
+
+The result is four ghosts that often travel together, but occasionally separate when their decision about the most probably future location of the PacMan differs. Often, this works extremely well to their advantage, and results in an extremely high number of kills per score unit.
+
+Ideally, this method can be improved by narrowing the random field based on the PacMan's current direction within it. This may give the ghosts a more precise idea about where to go within the playing field.
+
+\end{document}
